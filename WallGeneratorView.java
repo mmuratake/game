@@ -1,5 +1,6 @@
 import java.awt.FileDialog;
 import java.awt.Frame;
+import java.awt.GridLayout;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,10 +19,12 @@ import javax.imageio.ImageIO;
  * the images and modifying settings, and the right is for previewing the result.
  * */
 public class WallGeneratorView extends java.awt.Frame implements WallGeneratorSettingsObserver {
+
   /** This is the default window width
    * that is assumed when the program starts up.
    * */
   final int startupWidth = 640;
+
   /** This is the default window height
    * that is assumed when the program starts up. */
   final int startupHeight = 480;
@@ -70,7 +73,9 @@ public class WallGeneratorView extends java.awt.Frame implements WallGeneratorSe
       }
     });
 
-    setLayout(new java.awt.GridLayout(1, 2));
+    GridLayout layout = new GridLayout(1, 2);
+
+    setLayout(layout);
 
     setSize(startupWidth, startupHeight);
 
