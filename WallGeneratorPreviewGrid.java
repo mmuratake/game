@@ -86,11 +86,6 @@ class TilePreview extends Component {
           graphics.setColor(Color.GRAY);
         }
 
-        System.out.println("x: " + x * rectW);
-        System.out.println("y: " + y * rectH);
-        System.out.println("w: " + rectH);
-        System.out.println("h: " + rectW);
-
         graphics.fillRect(xOffset + (x * rectW),
                           yOffset + (y * rectH),
                           rectW,
