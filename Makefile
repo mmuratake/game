@@ -4,5 +4,13 @@
 .PHONY: all
 all: WallGeneratorApp.class
 
+WallGeneratorApp.class: WallGeneratorApp.java WallGeneratorSettings.class
+
+WallGeneratorSettings.class: WallGeneratorSettings.java
+
 %.class: %.java
 	javac $<
+
+.PHONY: clean
+clean:
+	$(RM) *.class
