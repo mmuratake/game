@@ -8,7 +8,7 @@ import java.awt.event.WindowEvent;
  * divided into two sides. The left side is responsible for choosing
  * the images and modifying settings, and the right is for previewing the result.
  * */
-public class WallGeneratorApp extends java.awt.Frame {
+public class WallGeneratorView extends java.awt.Frame {
   /** This is the default window width
    * that is assumed when the program starts up.
    * */
@@ -19,7 +19,7 @@ public class WallGeneratorApp extends java.awt.Frame {
 
   /** Constructs a new instance of the wall generator program.
    * */
-  public WallGeneratorApp() {
+  public WallGeneratorView() {
 
     add(new WallGeneratorSettings());
     add(new WallGeneratorPreviewGrid());
@@ -41,9 +41,5 @@ public class WallGeneratorApp extends java.awt.Frame {
     setSize(startupWidth, startupHeight);
 
     setVisible(true);
-  }
-
-  public static void main(String[] args) {
-    new WallGeneratorApp();
   }
 }
