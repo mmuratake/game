@@ -37,8 +37,25 @@ class TilePreview extends Component {
     paintCheckeredBackground(graphics);
 
     if (image != null) {
-      graphics.drawImage(image, 0, 0, this);
+      paintImage(graphics);
     }
+  }
+
+  /** Paints the image contained by the tile view.
+   * The image should be null-checked before calling
+   * this function.
+   * */
+  private void paintImage(Graphics graphics) {
+
+    int w = getWidth();
+    int h = getHeight();
+
+    int minSize = (w < h) ? w : h;
+
+    int xOffset = (w - minSize) / 2;
+    int yOffset = (h - minSize) / 2;
+
+    graphics.drawImage(image, xOffset, yOffset, minSize, minSize, this);
   }
 
   /** This is the function that's called
