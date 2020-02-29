@@ -4,11 +4,20 @@
 .PHONY: all
 all: App.class
 
-App.class: App.java
+App.class: App.java WallGeneratorView.class
 
-WallGeneratorApp.class: WallGeneratorApp.java WallGeneratorSettings.class
+WallGenerator.class: WallGenerator.java
 
-WallGeneratorSettings.class: WallGeneratorSettings.java
+WallGeneratorView.class: WallGeneratorView.java \
+                         WallGenerator.class \
+                         WallGeneratorPreviewGrid.class \
+                         WallGeneratorSettings.class \
+                         WallGeneratorSettingsObserver.class
+
+WallGeneratorPreviewGrid.class: WallGeneratorPreviewGrid.java
+
+WallGeneratorSettings.class: WallGeneratorSettings.java \
+                             WallGeneratorSettingsObserver.class
 
 %.class: %.java
 	javac $<

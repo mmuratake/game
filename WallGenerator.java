@@ -1,0 +1,147 @@
+import java.awt.image.BufferedImage;
+
+/** This class implements the wall generation logic.
+ * To use it, you give it the three primary images
+ * and then run the "generate" function to perform
+ * the calculations.
+ * */
+public class WallGenerator {
+
+  /** This enumerates the several
+   * types of tiles produced by this
+   * class.
+   * */
+  enum TileID {
+    /** A concave corner at zero degrees of rotation. */
+    CONCAVE_CORNER,
+    /** A convex corner at zero degrees of rotation. */
+    CONVEX_CORNER,
+    /** A flat wall tile with zero degrees of rotation. */
+    FLAT_WALL
+  }
+
+  /** The image for the ceiling texture. */
+  private BufferedImage ceilingImage;
+
+  /** The image for the floor texture. */
+  private BufferedImage floorImage;
+
+  /** The image for the wall texture. */
+  private BufferedImage wallImage;
+
+  /** Generates a tile, specified by the tile ID.
+   * @param tileID Specifies which tile we want produced.
+   * @param rotation The degrees of rotation that we want from the tile.
+   * Valid values are: 0, 90, 180, or 270.
+   * @return A generated image for the tile.
+   * */
+  BufferedImage generate(TileID tileID, int rotation) {
+
+    BufferedImage nonRotatedOutput = null;
+
+    switch (tileID) {
+      case CONCAVE_CORNER:
+        nonRotatedOutput = generateConcaveCorner();
+        break;
+      case CONVEX_CORNER:
+        nonRotatedOutput = generateConvexCorner();
+        break;
+      case FLAT_WALL:
+        nonRotatedOutput = generateFlatWall();
+        break;
+    }
+
+    if (nonRotatedOutput == null) {
+      return generateFallbackImage();
+    }
+
+    BufferedImage rotatedOutput = rotate(nonRotatedOutput, rotation);
+
+    if (rotatedOutput != null) {
+      return rotatedOutput;
+    } else {
+      /* This is reached if the rotate
+       * function returns null, which
+       * means the function hasn't been
+       * implemented yet. We'll just return
+       * the non-rotated output instead. */
+      return nonRotatedOutput;
+    }
+  }
+
+  /** Sets the ceiling texture.
+   * @param image The image containing the ceiling texture.
+   * */
+  void setCeiling(BufferedImage image) {
+    this.ceilingImage = image;
+  }
+
+  /** Sets the floor texture.
+   * @param image The image containing the floor texture.
+   * */
+  void setFloor(BufferedImage image) {
+    this.floorImage = image;
+  }
+
+  /** Sets the wall texture.
+   * @param image The image containing the wall texture.
+   * */
+  void setWall(BufferedImage image) {
+    this.wallImage = image;
+  }
+
+  /** Generates a concave corner tile.
+   * @return The generated concave corner tile.
+   * */
+  private BufferedImage generateConcaveCorner() {
+    return null;
+  }
+
+  /** Generates a wall tile with no corners.
+   * @return A convex corner tile.
+   * */
+  private BufferedImage generateConvexCorner() {
+    return null;
+  }
+
+  /** Generates a wall tile with no corners.
+   * @return The generated flat wall tile.
+   * */
+  private BufferedImage generateFlatWall() {
+    return null;
+  }
+
+  /** Rotates an image by a certain number of degrees.
+   * @param image The image to be rotated.
+   * @param rotation The degrees of rotation to make.
+   * @return The rotated image instance.
+   * */
+  private BufferedImage rotate(BufferedImage image, int rotation) {
+
+    if (rotation == 0) {
+      return image;
+    } else if (rotation == 90) {
+      return null;
+    } else if (rotation == 180) {
+      return null;
+    } else if (rotation == 270) {
+      return null;
+    } else {
+      throw new IllegalArgumentException("Tile rotation angle is invalid");
+    }
+  }
+
+  /** This function is called for when
+   * we need to create an image object but
+   * we haven't implemented the function.
+   * When this class is fully implemented,
+   * we can just take out this function altogether.
+   * @return An empty buffered image instance.
+   * */
+  private BufferedImage generateFallbackImage() {
+    int width = 256;
+    int height = 256;
+    int type = BufferedImage.TYPE_INT_ARGB;
+    return new BufferedImage(width, height, type);
+  }
+}
