@@ -36,37 +36,8 @@ public class WallGenerator {
    * @return A generated image for the tile.
    * */
   BufferedImage generate(TileID tileID, int rotation) {
-
-    BufferedImage nonRotatedOutput = null;
-
-    switch (tileID) {
-      case CONCAVE_CORNER:
-        nonRotatedOutput = generateConcaveCorner();
-        break;
-      case CONVEX_CORNER:
-        nonRotatedOutput = generateConvexCorner();
-        break;
-      case FLAT_WALL:
-        nonRotatedOutput = generateFlatWall();
-        break;
-    }
-
-    if (nonRotatedOutput == null) {
-      return generateFallbackImage();
-    }
-
-    BufferedImage rotatedOutput = rotate(nonRotatedOutput, rotation);
-
-    if (rotatedOutput != null) {
-      return rotatedOutput;
-    } else {
-      /* This is reached if the rotate
-       * function returns null, which
-       * means the function hasn't been
-       * implemented yet. We'll just return
-       * the non-rotated output instead. */
-      return nonRotatedOutput;
-    }
+    // TODO
+    return generateFallbackImage();
   }
 
   /** Sets the ceiling texture.
@@ -88,47 +59,6 @@ public class WallGenerator {
    * */
   void setWall(BufferedImage image) {
     this.wallImage = image;
-  }
-
-  /** Generates a concave corner tile.
-   * @return The generated concave corner tile.
-   * */
-  private BufferedImage generateConcaveCorner() {
-    return null;
-  }
-
-  /** Generates a wall tile with no corners.
-   * @return A convex corner tile.
-   * */
-  private BufferedImage generateConvexCorner() {
-    return null;
-  }
-
-  /** Generates a wall tile with no corners.
-   * @return The generated flat wall tile.
-   * */
-  private BufferedImage generateFlatWall() {
-    return null;
-  }
-
-  /** Rotates an image by a certain number of degrees.
-   * @param image The image to be rotated.
-   * @param rotation The degrees of rotation to make.
-   * @return The rotated image instance.
-   * */
-  private BufferedImage rotate(BufferedImage image, int rotation) {
-
-    if (rotation == 0) {
-      return image;
-    } else if (rotation == 90) {
-      return null;
-    } else if (rotation == 180) {
-      return null;
-    } else if (rotation == 270) {
-      return null;
-    } else {
-      throw new IllegalArgumentException("Tile rotation angle is invalid");
-    }
   }
 
   /** This function is called for when
