@@ -1,5 +1,7 @@
 dist: bionic
 sudo: false
+git:
+  depth: false
 os: linux
 language: java
 script: make
