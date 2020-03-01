@@ -3,3 +3,4 @@ sudo: false
 os: linux
 language: java
 script: make
+after_success: scripts/deploy_docs.sh
