@@ -3,15 +3,15 @@ import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/** This is a view of the game using
+/** This is a user interface of the game using
  * Java's builtin AWT framework. The
  * AWT is quite old and very basic, but
  * it has all of the required items to
- * implement the game view.
+ * implement the game interface.
  * */
-public class GameView extends Frame {
+public class GameUi extends Frame {
 
-  /** An instance of the game being viewed. */
+  /** An instance of the game being played. */
   private Game game;
 
   /** The width of the window on startup.
@@ -24,14 +24,14 @@ public class GameView extends Frame {
    * it can be expected for most game players. */
   final int startupHeight = 720;
 
-  /** Constructs a new instance of a game view.
+  /** Constructs a new instance of a user interface.
    * This opens up a new window in which the
    * game is shown to the user. The keyboard
    * keys captured by this window are used to
    * control the game.
-   * @param game The game to be viewed.
+   * @param game The game to be played.
    * */
-  public GameView(Game game) {
+  public GameUi(Game game) {
 
     this.game = game;
 

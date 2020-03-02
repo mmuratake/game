@@ -9,11 +9,11 @@ GameApp.jar: GameApp.class
 
 GameApp.class: GameApp.java \
                Game.class \
-               GameView.class
+               GameUi.class
 
 Game.class: Game.java
 
-GameView.class: GameView.java KeyboardController.class
+GameUi.class: GameUi.java KeyboardController.class
 
 KeyboardController.class: KeyboardController.java
 
