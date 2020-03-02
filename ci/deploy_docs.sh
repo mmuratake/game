@@ -31,7 +31,7 @@ git checkout gh-pages
 rm -Rf docs
 
 # Add new docs
-cp -R $tmp_dir docs
+cp -R $out_dir docs
 
 # Setup Travis CI credentials
 git config --global user.email "travis@travis-ci.org"
