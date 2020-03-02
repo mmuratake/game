@@ -25,7 +25,9 @@ out_dir=$(mktemp -d)
 test -d $out_dir || mkdir $out_dir
 
 # Build documentation in docs/ directory
-cd $out_dir && javadoc $src_dir/*.java && cd $src_dir
+cd $out_dir
+javadoc $src_dir/*.java
+cd $src_dir
 
 # Go to the branch where the documentation is at.
 git checkout gh-pages
