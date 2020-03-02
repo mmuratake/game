@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Compile sources
+make
+
+# The code below is for when the game
+# gets a web interface with TeaVM
+exit 0
+
 test -d build || mkdir build
 
 cd build

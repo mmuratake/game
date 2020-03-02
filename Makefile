@@ -2,31 +2,28 @@
 # to automatically compile certain source files from the command line.
 
 .PHONY: all
-all: GameApp.class WallGeneratorApp.class
+all: GameApp.class
+
+GameApp.jar: GameApp.class
+	jar cf $@ *.class
 
 GameApp.class: GameApp.java \
                Game.class \
-               GameView.class \
-               KeyboardController.class
+               GameView.class
 
-WallGeneratorApp.class: WallGeneratorApp.java WallGeneratorView.class
+Game.class: Game.java
 
-WallGenerator.class: WallGenerator.java
+GameView.class: GameView.java KeyboardController.class
 
-WallGeneratorView.class: WallGeneratorView.java \
-                         WallGenerator.class \
-                         WallGeneratorPreviewGrid.class \
-                         WallGeneratorSettings.class \
-                         WallGeneratorSettingsObserver.class
-
-WallGeneratorPreviewGrid.class: WallGeneratorPreviewGrid.java
-
-WallGeneratorSettings.class: WallGeneratorSettings.java \
-                             WallGeneratorSettingsObserver.class
+KeyboardController.class: KeyboardController.java
 
 %.class: %.java
 	javac $<
 
 .PHONY: clean
 clean:
-	$(RM) *.class
+	$(RM) *.class GameApp.jar
+
+.PHONY: docs
+docs:
+	javadoc *.java

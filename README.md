@@ -1,7 +1,11 @@
-# Tile Utilities
+# About
 
-[![Build Status](https://travis-ci.org/tay10r/tile_utilities.svg?branch=master)](https://travis-ci.org/tay10r/tile_utilities)
+[![Build Status](https://travis-ci.org/tay10r/game.svg?branch=master)](https://travis-ci.org/tay10r/game)
 
-Creating 2D games is relatively easy, but it can still be difficult.
-This project aims at easing the process of generating 2D tiles for tile-map games.
+This is the source code repository of a game being developed by the computer science group at YCCC.
+
+It contains game code as well as some utility code for generating tile images.
+
+The documentation for the source code in this project is automatically generated [here.](https://tay10r.github.io/game/package-summary.html)
+
 If you'd like to help with the development of this project, please read [Contributing.md](Contributing.md)

@@ -2,6 +2,7 @@ Contributing
 ============
 
 If you're new to writing GUI programs using Java, you can check out [this web page.](https://www.ntu.edu.sg/home/ehchua/programming/java/J4a_GUI.html)
+You can also check out (Oracle's reference page on AWT.](https://docs.oracle.com/javase/7/docs/api/java/awt/package-summary.html)
 It'll help you get an idea of what's going on in the code.
 If you do write code for this project, try to make it well documented and readable so that others can understand it easily.
 
