@@ -51,7 +51,7 @@ public class Game {
 
   /** This function is called when the user either lets go or presses a button.
    * @param controller The ID of the controller whose button was pressed or released.
-   * @param buttonID The ID of the button that was pressed or release.
+   * @param button The button that was pressed or release.
    * @param state The new state of the button. A value of true means that
    * the button was pressed, a value of false means the button was released.
    * */

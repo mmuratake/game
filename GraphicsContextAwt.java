@@ -61,9 +61,8 @@ public class GraphicsContextAwt implements GraphicsContext {
   }
 
   /** Sets the color currently being drawn.
-   * @param r The red channel value to assign.
-   * @param g The green channel value to assign.
-   * @param b The blue channel value to assign.
+   * @param color The color to give the
+   * next draw operation.
    * */
   @Override
   public void setColor(Color color) {
