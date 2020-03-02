@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"App"},{"p":"<Unnamed>","l":"WallGenerator"},{"p":"<Unnamed>","l":"WallGeneratorPreviewGrid"},{"p":"<Unnamed>","l":"WallGeneratorSettings"},{"p":"<Unnamed>","l":"WallGeneratorView"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"Game"},{"p":"<Unnamed>","l":"GameApp"},{"p":"<Unnamed>","l":"GameView"},{"p":"<Unnamed>","l":"KeyboardController"}]
