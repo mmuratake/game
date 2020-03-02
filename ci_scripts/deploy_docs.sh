@@ -15,15 +15,33 @@ if [ "$TRAVIS_BRANCH" != "master" ]; then
   exit 0
 fi
 
-javadoc *.java
+src_dir=$PWD
+out_dir=$(mktemp -d)
 
+# Create a standing area in docs
+test -d $out_dir || mkdir $out_dir
+
+# Build documentation in docs/ directory
+cd $out_dir && javadoc $src_dir/*.java && cd $src_dir
+
+# Go to the branch where the documentation is at.
 git checkout gh-pages
 
+# Remove old docs
+rm -Rf docs
+
+# Add new docs
+cp -R $tmp_dir docs
+
+# Setup Travis CI credentials
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "travis-ci"
 
-git add .
+# Stage the changes
+git add docs
 
+# Commit the changes
 git commit -m "Latest documentation from Travis build $TRAVIS_BUILD_NUMBER"
 
-git push -f https://${GH_TOKEN}@github.com/tay10r/tile_utilities gh-pages
+# And boom!
+git push -f https://${GH_TOKEN}@github.com/tay10r/game gh-pages

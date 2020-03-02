@@ -1,7 +1,10 @@
 #!/bin/bash
 
+set -e
+set -u
+
 # Compile sources
-make
+make GameApp.jar
 
 # The code below is for when the game
 # gets a web interface with TeaVM

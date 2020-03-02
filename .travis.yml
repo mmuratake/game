@@ -4,5 +4,5 @@ git:
   depth: false
 os: linux
 language: java
-script: scripts/ci-build.sh
-after_success: scripts/deploy_docs.sh
+script: ci_scripts/build.sh
+after_success: ci_scripts/deploy_docs.sh
