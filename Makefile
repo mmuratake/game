@@ -28,4 +28,5 @@ clean:
 
 .PHONY: docs
 docs:
-	javadoc *.java
+	test -d docs || mkdir docs
+	cd docs && javadoc ../*.java
