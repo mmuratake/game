@@ -52,6 +52,6 @@ public class Game {
    * @return The name of the game, as a title.
    * */
   public String getTitle() {
-    return "Colors of Me";
+    return "Pending Title";
   }
 }
