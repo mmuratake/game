@@ -67,7 +67,7 @@ public class GraphicsContextAwt implements GraphicsContext {
    * */
   @Override
   public void setColor(Color color) {
-    this.graphics.setColor(color.toAwtColor());
+    this.graphics.setColor(color);
   }
 
   /** Scales an X value to the window width.
