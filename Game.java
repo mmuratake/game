@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 /** This class implements all of the game logic.
  * It is meant to be separate from the method in
  * which the game is presented to the user.
@@ -64,5 +66,14 @@ public class Game {
    * */
   public String getTitle() {
     return "Pending Title";
+  }
+
+  /** Renders the game.
+   * @param gc The graphics context to render the game with.
+   * */
+  public void render(GraphicsContext gc) {
+
+    gc.setColor(new Color(1, 0, 0));
+    gc.fillRect(0.25, 0.25, 0.5, 0.5);
   }
 }

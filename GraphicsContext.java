@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 /** This class allows graphics to be drawn for
  * the game without having to know whether we're using
  * AWT or a different UI or graphics implementation.
@@ -21,9 +23,7 @@ public interface GraphicsContext {
 
   /** Sets the color to be displayed by
    * the next draw operation.
-   * @param r The red channel to assign.
-   * @param g The green channel to assign.
-   * @param b The blue channel to assign.
+   * @param color The color to assign the next draw operation.
    * */
-  void setColor(double r, double g, double b);
+  void setColor(Color color);
 }

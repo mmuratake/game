@@ -1,4 +1,5 @@
 import java.awt.Frame;
+import java.awt.Graphics;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -51,5 +52,18 @@ public class GameUi extends Frame {
     setTitle(this.game.getTitle());
 
     setVisible(true);
+  }
+  /** Overrides the paint function
+   * in order to pass control to the game.
+   * @param graphics The graphics context
+   * to be passed to the game.
+   * @see GraphicsContext
+   * @see Game
+   * */
+  @Override
+  public void paint(Graphics graphics) {
+    int w = getWidth();
+    int h = getHeight();
+    this.game.render(new GraphicsContextAwt(graphics, w, h));
   }
 }
