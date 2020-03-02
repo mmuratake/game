@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -u
+
 if [ "$TRAVIS_REPO_SLUG" != "tay10r/tile_utilities" ]; then
   echo "Skipping documentation, invalid repo slug"
   exit 0
