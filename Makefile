@@ -13,9 +13,11 @@ GameApp.class: GameApp.java \
 
 Game.class: Game.java
 
-GameUi.class: GameUi.java KeyboardController.class
+GameUi.class: GameUi.java KeyboardController.class MouseController.class
 
 KeyboardController.class: KeyboardController.java
+
+MouseController.class: MouseController.java
 
 %.class: %.java
 	javac $<

@@ -1,9 +1,19 @@
 /** This class implements all of the game logic.
  * It is meant to be separate from the method in
  * which the game is presented to the user.
- * @see GameView
+ * @see GameUi
  * */
 public class Game {
+
+  /** Enumerates the buttons available to the game.
+   * The way this buttons get pressed or released
+   * depends on the origin of the user interface.
+   * Usually, it's a mixture of mouse and keyboard events.
+   * */
+  enum Button {
+    BUTTON_A,
+    BUTTON_B
+  }
 
   /** Constructs a new instance of the game.
    * Currently, this is just a placeholder
@@ -43,7 +53,8 @@ public class Game {
    * @param state The new state of the button. A value of true means that
    * the button was pressed, a value of false means the button was released.
    * */
-  public void buttonUpdate(int controller, int buttonID, boolean state) {
+  public void buttonUpdate(int controller, Button button, boolean state) {
+    System.out.println("Button state updated: " + button + " = " + state);
   }
 
   /** Gets the title of the game.

@@ -24,7 +24,7 @@ public class KeyboardController implements KeyListener {
    * This class should be created from the window that
    * the game is being displayed in.
    * @param game The game to pass the controls to.
-   * @see GameView
+   * @see GameUi
    * */
   public KeyboardController(Game game) {
     this.game = game;

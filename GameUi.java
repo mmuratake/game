@@ -44,6 +44,7 @@ public class GameUi extends Frame {
     });
 
     addKeyListener(new KeyboardController(this.game));
+    addMouseListener(new MouseController(this.game));
 
     setSize(startupWidth, startupHeight);
 
