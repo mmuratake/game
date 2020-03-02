@@ -2,7 +2,12 @@
 # to automatically compile certain source files from the command line.
 
 .PHONY: all
-all: WallGeneratorApp.class
+all: GameApp.class WallGeneratorApp.class
+
+GameApp.class: GameApp.java \
+               Game.class \
+               GameView.class \
+               KeyboardController.class
 
 WallGeneratorApp.class: WallGeneratorApp.java WallGeneratorView.class
 
