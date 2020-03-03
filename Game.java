@@ -7,6 +7,13 @@ import java.awt.Color;
  * */
 public class Game {
 
+  /** The number of ellapsed milliseconds
+   * that have gone by since the game was started.
+   * This was put here for testing purposes. If it's
+   * still here when the class is fully functional,
+   * consider removing it. */
+  private int ellapsedMilliseconds;
+
   /** Enumerates the buttons available to the game.
    * The way this buttons get pressed or released
    * depends on the origin of the user interface.
@@ -22,6 +29,7 @@ public class Game {
    * until the game resources have to be loaded.
    * */
   public Game() {
+    this.ellapsedMilliseconds = 0;
   }
 
   /** This function is called to move the game forward
@@ -30,7 +38,7 @@ public class Game {
    * which to move the game forward.
    * */
   public void advance(int milliseconds) {
-    System.out.println("here");
+    this.ellapsedMilliseconds += milliseconds;
   }
 
   /** This function is called when the user moves the analog stick.
@@ -74,7 +82,20 @@ public class Game {
    * */
   public void render(GraphicsContext gc) {
 
-    gc.setColor(new Color(1, 0, 0));
-    gc.fillRect(0.25, 0.25, 0.5, 0.5);
+    /* This is just a test animation */
+
+    int phasePeriod = ellapsedMilliseconds % 1000;
+
+    double percentDone = ((double) ellapsedMilliseconds) / 1000.0;
+
+    double delta = Math.sin(percentDone * 2 * Math.PI);
+
+    System.out.println("sin: " + delta);
+
+    double x = 0.25 + (0.25 * Math.sin(percentDone * 2 * Math.PI));
+
+    gc.setColor(new Color(0, 0, 0));
+
+    gc.fillRect(0.25, x, 0.5, 0.5);
   }
 }

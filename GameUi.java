@@ -42,6 +42,13 @@ class GameTimerTask extends TimerTask {
    * */
   @Override
   public void run() {
+
+    if (System.currentTimeMillis() - scheduledExecutionTime() > frameDelay) {
+      // We're late by a whole frame, so let's just skip this one.
+      System.out.println("Warning: frame dropped");
+      return;
+    }
+
     gameUi.advance(frameDelay);
   }
 }
@@ -71,7 +78,7 @@ public class GameUi extends Frame {
   private ReentrantLock gameLock;
 
   /** This is the target frame rate for the game. */
-  final int frameRate = 3;
+  final int frameRate = 30;
 
   /** The width of the window on startup.
    * This is considered HD resolution and
@@ -128,7 +135,7 @@ public class GameUi extends Frame {
     this.gameLock.lock();
     this.game.advance(milliseconds);
     this.gameLock.unlock();
-    repaint();
+    repaint(milliseconds);
   }
 
   /** Overrides the paint function
