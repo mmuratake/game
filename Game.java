@@ -76,26 +76,4 @@ public class Game {
   public String getTitle() {
     return "Pending Title";
   }
-
-  /** Renders the game.
-   * @param gc The graphics context to render the game with.
-   * */
-  public void render(GraphicsContext gc) {
-
-    /* This is just a test animation */
-
-    int phasePeriod = ellapsedMilliseconds % 1000;
-
-    double percentDone = ((double) ellapsedMilliseconds) / 1000.0;
-
-    double delta = Math.sin(percentDone * 2 * Math.PI);
-
-    System.out.println("sin: " + delta);
-
-    double x = 0.25 + (0.25 * Math.sin(percentDone * 2 * Math.PI));
-
-    gc.setColor(new Color(0, 0, 0));
-
-    gc.fillRect(0.25, x, 0.5, 0.5);
-  }
 }

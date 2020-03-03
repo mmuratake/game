@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
 
@@ -53,6 +54,32 @@ class GameTimerTask extends TimerTask {
   }
 }
 
+/** This class is used for listening for
+ * import window events for the game UI,
+ * such as when the window is opened and
+ * when the close button is clicked.
+ * */
+class GameUiListener extends WindowAdapter {
+
+  /** A reference to the game UI. */
+  private GameUi ui;
+
+  /** Constructs a new UI listener.
+   * @param ui A reference to the game UI.
+   * */
+  public GameUiListener(GameUi ui) {
+    this.ui = ui;
+  }
+
+  /** Called when the user hits the close button.
+   * @param e A reference to the window event.
+   * This parameter is unused by this function.
+   * */
+  public void windowClosing(WindowEvent e) {
+    ui.onWindowClosed();
+  }
+}
+
 /** This is a user interface of the game using
  * Java's builtin AWT framework. The
  * AWT is quite old and very basic, but
@@ -63,6 +90,9 @@ public class GameUi extends Frame {
 
   /** An instance of the game being played. */
   private Game game;
+
+  /** The canvas on which the game is rendered. */
+  private GameView view;
 
   /** The timer controlling the frame rate. */
   private Timer timer;
@@ -99,56 +129,54 @@ public class GameUi extends Frame {
    * */
   public GameUi(Game game) {
 
+    setSize(startupWidth, startupHeight);
+
     this.game = game;
     this.gameLock = new ReentrantLock();
+    this.timer = new Timer();
+    this.view = new GameView();
 
-    // This ugly tid bit of code is just to close
-    // the window when the user hits the close button.
-    addWindowListener(new WindowAdapter() {
-      public void windowClosing(WindowEvent e) {
-        dispose();
-        timer.cancel();
-      }
-    });
-
+    add(view);
+    addWindowListener(new GameUiListener(this));
     addKeyListener(new KeyboardController(this.game, this.gameLock));
     addMouseListener(new MouseController(this.game, this.gameLock));
 
-    setSize(startupWidth, startupHeight);
-
-    setTitle(this.game.getTitle());
-
     setVisible(true);
+    setTitle(this.game.getTitle());
+    setLayout(new BorderLayout());
 
-    int frameDelay = 1000 / frameRate;
-
-    this.timer = new Timer();
-
-    this.timer.scheduleAtFixedRate(new GameTimerTask(this, frameDelay), 0, frameDelay);
+    this.timer.scheduleAtFixedRate(new GameTimerTask(this, getFrameDelay()), 500, getFrameDelay());
   }
 
   /** Advances the game forward in time.
    * This function may be called from multiple threads.
    * @param milliseconds The number of milliseconds to advance the game.
    * */
-  void advance(int milliseconds) {
+  public void advance(int milliseconds) {
+
     this.gameLock.lock();
+
     this.game.advance(milliseconds);
+
+    this.view.render(this.game);
+
     this.gameLock.unlock();
-    repaint(milliseconds);
   }
 
-  /** Overrides the paint function
-   * in order to pass control to the game.
-   * @param graphics The graphics context
-   * to be passed to the game.
-   * @see GraphicsContext
-   * @see Game
+  /** Closes the user interface.
+   * This destroys the window and
+   * stops the frame timer for the game.
    * */
-  @Override
-  public void paint(Graphics graphics) {
-    int w = getWidth();
-    int h = getHeight();
-    this.game.render(new GraphicsContextAwt(graphics, w, h));
+  public void onWindowClosed() {
+    timer.cancel();
+    timer.purge();
+    dispose();
+  }
+
+  /** Gets the number of milliseconds in a single frame.
+   * @return The number of milliseconds in one frame.
+   * */
+  private int getFrameDelay() {
+    return 1000 / frameRate;
   }
 }
