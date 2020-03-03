@@ -30,6 +30,7 @@ public class Game {
    * which to move the game forward.
    * */
   public void advance(int milliseconds) {
+    System.out.println("here");
   }
 
   /** This function is called when the user moves the analog stick.

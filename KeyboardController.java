@@ -1,6 +1,8 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 /** This class is used to implement game controls
  * using a standard keyboard from the main window's key listener.
  * Only the buttons that are hit while the main window is
@@ -11,6 +13,9 @@ public class KeyboardController implements KeyListener {
 
   /** The game instance to pass the keyboard controls to. */
   private Game game;
+
+  /** The lock for the game to control thread access. */
+  private ReentrantLock gameLock;
 
   /** Contains the current X axis value.
    * This should be within the range of -1 and 1. */
@@ -26,8 +31,9 @@ public class KeyboardController implements KeyListener {
    * @param game The game to pass the controls to.
    * @see GameUi
    * */
-  public KeyboardController(Game game) {
+  public KeyboardController(Game game, ReentrantLock gameLock) {
     this.game = game;
+    this.gameLock = gameLock;
   }
 
   /** Detects if one of the game buttons was hit
@@ -103,7 +109,9 @@ public class KeyboardController implements KeyListener {
   private void updateX(double value) {
     if (this.xAxis != value) {
       this.xAxis = value;
+      this.gameLock.lock();
       this.game.axisUpdate(0, this.xAxis, this.yAxis);
+      this.gameLock.unlock();
     }
   }
 
@@ -114,7 +122,9 @@ public class KeyboardController implements KeyListener {
   private void updateY(double value) {
     if (this.yAxis != value) {
       this.yAxis = value;
+      this.gameLock.lock();
       this.game.axisUpdate(0, this.xAxis, this.yAxis);
+      this.gameLock.unlock();
     }
   }
 }
