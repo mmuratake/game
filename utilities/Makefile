@@ -2,7 +2,15 @@
 # to automatically compile certain source files from the command line.
 
 .PHONY: all
-all: WallGeneratorApp.class
+all: TileSetImporterApp.class WallGeneratorApp.class
+
+TileSetImporterApp.class: TileSetImporterApp.java TileSet.class TileSetReader.class
+
+Tile.class: Tile.java
+
+TileSet.class: TileSet.java Tile.class
+
+TileSetReader.class: TileSetReader.java TileSet.class Tile.class
 
 WallGeneratorApp.jar: WallGeneratorApp.class
 	jar cf $@ *.class
