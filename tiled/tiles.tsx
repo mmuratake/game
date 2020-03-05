@@ -3,6 +3,11 @@
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="100" height="100" source="../textures/house_interior/corner.png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="77.75" y="81.5">
+    <polygon points="0,0 22.25,0 22.25,-81.5 -77.75,-81.5 -77.75,18.5 -0.25,18.25"/>
+   </object>
+  </objectgroup>
  </tile>
  <tile id="1">
   <image width="100" height="100" source="../textures/house_interior/floor.png"/>
@@ -15,6 +20,9 @@
  </tile>
  <tile id="4">
   <image width="100" height="100" source="../textures/house_interior/wall.png"/>
+  <objectgroup draworder="index" id="3">
+   <object id="2" x="0.25" y="0.25" width="99.5" height="81.5"/>
+  </objectgroup>
  </tile>
  <tile id="5">
   <image width="100" height="100" source="../textures/outdoors/grass.png"/>
