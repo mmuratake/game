@@ -26,9 +26,7 @@ public class TileSetImporterApp {
 
     String tileSetPath = scanner.next();
 
-    System.out.print("Enter Java source file to generate: ");
-
-    String sourcePath = scanner.next();
+    String sourcePath = "GeneratedTileSet.java";
 
     processTileSet(tileSetPath, sourcePath);
   }
@@ -47,7 +45,13 @@ public class TileSetImporterApp {
     TileSetReader tileSetReader = new TileSetReader(tileSet);
 
     try {
+
       tileSetReader.readFromFile(tileSetPath);
+
+      TileSetWriter writer = new TileSetWriter(sourcePath);
+
+      writer.write(tileSet);
+
     } catch (FileNotFoundException e) {
       System.err.println(e);
     } catch (Exception e) {

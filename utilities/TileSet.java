@@ -14,6 +14,7 @@ public class TileSet {
   /** Constructs a new instance of a tile set.
    * */
   public TileSet() {
+    tileList = new ArrayList<Tile>();
   }
 
   /** Adds a tile to the tile set.
@@ -21,5 +22,20 @@ public class TileSet {
    * */
   public void add(Tile tile) {
     tileList.add(tile);
+  }
+
+  /** Gets a tile from the tile set.
+   * @param i The index of the tile to get.
+   * @return The specified tile.
+   * */
+  public Tile getTile(int i) {
+    return tileList.get(i);
+  }
+
+  /** Gets the number of tiles in the tile set.
+   * @return The number of tiles in the tile set.
+   * */
+  public int getTileCount() {
+    return tileList.size();
   }
 }

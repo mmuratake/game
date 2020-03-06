@@ -4,13 +4,19 @@
 .PHONY: all
 all: TileSetImporterApp.class WallGeneratorApp.class
 
-TileSetImporterApp.class: TileSetImporterApp.java TileSet.class TileSetReader.class
+Polygon2D.class: Polygon2D.java Vector2D.class
 
-Tile.class: Tile.java
+TileSetImporterApp.class: TileSetImporterApp.java TileSet.class TileSetReader.class TileSetWriter.class
+
+Tile.class: Tile.java Polygon2D.class Vector2D.class
 
 TileSet.class: TileSet.java Tile.class
 
-TileSetReader.class: TileSetReader.java TileSet.class Tile.class
+TileSetReader.class: TileSetReader.java Polygon2D.class TileSet.class Tile.class Vector2D.class
+
+TileSetWriter.class: TileSetWriter.java Polygon2D.class TileSet.class Tile.class Vector2D.class
+
+Vector2D.class: Vector2D.java
 
 WallGeneratorApp.jar: WallGeneratorApp.class
 	jar cf $@ *.class
