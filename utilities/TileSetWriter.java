@@ -128,8 +128,13 @@ public class TileSetWriter {
     /* Feel free to add to this list,
      * but keep it alphabetized. */
     String[] ingredients = new String[] {
+      "Apple",
+      "Awesomeness",
+      "Chewbacca",
       "Chocolate",
       "Coffee",
+      "Darth Vader",
+      "Ewok",
       "H2O",
       "Hapiness",
       "Literally Pure Caffeine",
@@ -137,6 +142,7 @@ public class TileSetWriter {
       "Magic",
       "Mexican Food",
       "Red Wine",
+      "Sparkles",
       "The Smell of Aged Books",
       "Yoda in Spirit Form"
     };
