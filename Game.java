@@ -14,6 +14,12 @@ public class Game {
    * consider removing it. */
   private int ellapsedMilliseconds;
 
+  /** The game's tile set. This contains information
+   * such as the physical characteristics of the tiles,
+   * which can be used to detect collision.
+   * */
+  private TileSet tileSet;
+
   /** Enumerates the buttons available to the game.
    * The way this buttons get pressed or released
    * depends on the origin of the user interface.
@@ -25,11 +31,11 @@ public class Game {
   }
 
   /** Constructs a new instance of the game.
-   * Currently, this is just a placeholder
-   * until the game resources have to be loaded.
+   * @param tileSet The game's tile data.
    * */
-  public Game() {
+  public Game(TileSet tileSet) {
     this.ellapsedMilliseconds = 0;
+    this.tileSet = tileSet;
   }
 
   /** This function is called to move the game forward

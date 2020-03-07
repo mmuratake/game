@@ -163,6 +163,15 @@ public class GameUi extends Frame {
     this.gameLock.unlock();
   }
 
+  /** This function loads an image for a certain tile.
+   * The tile image is used by the game view during the rendering process.
+   * @param id The ID to assign the image.
+   * @param imagePath The path to the image to load.
+   * */
+  public void loadTileImage(int id, String imagePath) {
+    this.view.loadTileImage(id, imagePath);
+  }
+
   /** Closes the user interface.
    * This destroys the window and
    * stops the frame timer for the game.

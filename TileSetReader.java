@@ -12,10 +12,6 @@ import org.w3c.dom.NodeList;
 import java.io.File;
 import java.io.IOException;
 
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-
 /** This class is used for reading tile sets
  * from the XML file created by Tiled.
  * */
@@ -37,13 +33,20 @@ public class TileSetReader {
    * if there is an error in reading the file.
    * @param path The path of the tile to open.
    * */
-  public void readFromFile(String path) throws ParserConfigurationException, SAXException, IOException {
+  public void readFromPath(String path) throws ParserConfigurationException, SAXException, IOException {
+    readFromFile(new File(path));
+  }
+
+  /** Reads from an opened file.
+   * @param file The file to read the tile set data from.
+   * */
+  public void readFromFile(File file) throws ParserConfigurationException, SAXException, IOException {
 
     DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 
     DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
-    Document doc = docBuilder.parse(new File(path));
+    Document doc = docBuilder.parse(file);
 
     readFromDocument(doc);
   }
@@ -78,9 +81,7 @@ public class TileSetReader {
 
     String imagePath = imageElement.getAttribute("source");
 
-    BufferedImage image = ImageIO.read(new File(imagePath));
-
-    Tile tile = new Tile(Integer.parseInt(id), image);
+    Tile tile = new Tile(Integer.parseInt(id), imagePath);
 
     for (int i = 0; i < objectGroupNodes.getLength(); i++) {
 
@@ -157,7 +158,7 @@ public class TileSetReader {
    * */
   private void readTilePolygonPointData(Tile tile, String pointData) {
 
-    Polygon2D polygon = new Polygon2D();
+    Polygon polygon = new Polygon();
 
     String[] points = pointData.split(" ");
 
@@ -168,7 +169,7 @@ public class TileSetReader {
       double x = Double.parseDouble(values[0]);
       double y = Double.parseDouble(values[1]);
 
-      polygon.add(new Vector2D(x, y));
+      polygon.add(new Vector(x, y));
     }
 
     tile.addPolygon(polygon);

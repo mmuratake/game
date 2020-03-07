@@ -9,11 +9,17 @@ GameApp.jar: GameApp.class
 
 GameApp.class: GameApp.java \
                Game.class \
-               GameUi.class
+               GameUi.class \
+               TileSet.class \
+               TileSetReader.class
 
 Game.class: Game.java
 
-GameUi.class: GameUi.java Game.class GameView.class KeyboardController.class MouseController.class
+GameUi.class: GameUi.java \
+              Game.class \
+              GameView.class \
+              KeyboardController.class \
+              MouseController.class
 
 GameRenderer.class: GameRenderer.java Game.java
 
