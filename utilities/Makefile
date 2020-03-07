@@ -4,7 +4,11 @@
 .PHONY: all
 all: TileSetImporterApp.class WallGeneratorApp.class
 
+CodeGenerator.class: CodeGenerator.java ScopedCodeGenerator.class
+
 Polygon2D.class: Polygon2D.java Vector2D.class
+
+ScopedCodeGenerator.class: ScopedCodeGenerator.java
 
 TileSetImporterApp.class: TileSetImporterApp.java TileSet.class TileSetReader.class TileSetWriter.class
 
@@ -14,7 +18,13 @@ TileSet.class: TileSet.java Tile.class
 
 TileSetReader.class: TileSetReader.java Polygon2D.class TileSet.class Tile.class Vector2D.class
 
-TileSetWriter.class: TileSetWriter.java Polygon2D.class TileSet.class Tile.class Vector2D.class
+TileSetWriter.class: TileSetWriter.java        \
+                     CodeGenerator.class       \
+                     Polygon2D.class           \
+                     ScopedCodeGenerator.class \
+                     TileSet.class             \
+                     Tile.class                \
+                     Vector2D.class
 
 Vector2D.class: Vector2D.java
 

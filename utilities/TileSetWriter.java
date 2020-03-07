@@ -29,8 +29,11 @@ public class TileSetWriter {
    * */
   public void write(TileSet tileSet) {
 
-    outputStream.println("/* This is a generated file.");
-    outputStream.println(" * All changes made to this file will probably be lost.");
+    CodeGenerator codeGenerator = new CodeGenerator(outputStream);
+
+    codeGenerator.generateComment("This is a generated file");
+
+    outputStream.println("/* All changes made to this file will probably be lost.");
     outputStream.println(" *");
     outputStream.println(" * Generated on " + new Date());
     outputStream.println(" *");
