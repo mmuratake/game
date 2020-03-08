@@ -10,6 +10,38 @@ class Vector {
 
   private double y;
 
+  /** Calculates the difference between two vectors.
+   * @return The difference between the two vector parameters.
+   * */
+  public static Vector diff(Vector a, Vector b) {
+    return new Vector(a.x - b.x, a.y - b.y);
+  }
+
+  /** Calculates the max of two vectors.
+   * @return The max between the two vectors.
+   * */
+  public static Vector max(Vector a, Vector b) {
+    double x = Math.max(a.x, b.x);
+    double y = Math.max(a.y, b.y);
+    return new Vector(x, y);
+  }
+
+  /** Calculates the min of two vectors.
+   * @return The min between the two vectors.
+   * */
+  public static Vector min(Vector a, Vector b) {
+    double x = Math.min(a.x, b.x);
+    double y = Math.min(a.y, b.y);
+    return new Vector(x, y);
+  }
+
+  /** Calculates the sum of two vectors.
+   * @return The sum of the first and second vectors.
+   * */
+  public static Vector sum(Vector a, Vector b) {
+    return new Vector(a.x + b.x, a.y + b.y);
+  }
+
   public Vector(double x, double y) {
     this.x = x;
     this.y = y;

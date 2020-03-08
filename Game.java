@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import java.util.ArrayList;
+
 /** This class implements all of the game logic.
  * It is meant to be separate from the method in
  * which the game is presented to the user.
@@ -20,6 +22,11 @@ public class Game {
    * */
   private TileSet tileSet;
 
+  /** The tile maps for the game.
+   * These have to be loaded from the calling environment.
+   * */
+  private ArrayList<TileMap> tileMaps;
+
   /** Enumerates the buttons available to the game.
    * The way this buttons get pressed or released
    * depends on the origin of the user interface.
@@ -36,6 +43,14 @@ public class Game {
   public Game(TileSet tileSet) {
     this.ellapsedMilliseconds = 0;
     this.tileSet = tileSet;
+    this.tileMaps = new ArrayList<TileMap>();
+  }
+
+  /** Adds a tile map to the game.
+   * @param tileMap The tile map to add to the game.
+   * */
+  public void addTileMap(TileMap tileMap) {
+    tileMaps.add(tileMap);
   }
 
   /** This function is called to move the game forward
@@ -81,5 +96,20 @@ public class Game {
    * */
   public String getTitle() {
     return "Pending Title";
+  }
+
+  /** This function gets a list of file names
+   * of all the maps for the game. This is used
+   * by the calling environment (desktop or browser)
+   * to determine which files to open as maps.
+   * @return An alphabetical list of map file names.
+   * */
+  public ArrayList<String> getMapFileNames() {
+    /* Keep this alphabetized */
+    ArrayList<String> fileNames = new ArrayList<String>();
+    fileNames.add("grassy_plains.tmx");
+    fileNames.add("house_interior.tmx");
+    fileNames.add("village.tmx");
+    return fileNames;
   }
 }
