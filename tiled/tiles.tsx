@@ -2,7 +2,7 @@
 <tileset version="1.2" tiledversion="1.3.1" name="house_interior" tilewidth="400" tileheight="400" tilecount="15" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
-  <image width="100" height="100" source="../textures/house_interior/corner.png"/>
+  <image width="100" height="100" source="../textures/house_interior/concave_corner.png"/>
   <objectgroup draworder="index" id="2">
    <object id="1" x="77.75" y="81.5">
     <polygon points="0,0 22.25,0 22.25,-81.5 -77.75,-81.5 -77.75,18.5 -0.25,18.25"/>
@@ -11,12 +11,6 @@
  </tile>
  <tile id="1">
   <image width="100" height="100" source="../textures/house_interior/floor.png"/>
- </tile>
- <tile id="2">
-  <image width="100" height="100" source="../textures/house_interior/top_corner.png"/>
- </tile>
- <tile id="3">
-  <image width="100" height="100" source="../textures/house_interior/top_wall.png"/>
  </tile>
  <tile id="4">
   <image width="100" height="100" source="../textures/house_interior/wall.png"/>
@@ -53,5 +47,11 @@
  </tile>
  <tile id="17">
   <image width="100" height="100" source="../textures/house_interior/bed.png"/>
+ </tile>
+ <tile id="18">
+  <image width="100" height="100" source="../textures/house_interior/convex_corner.png"/>
+ </tile>
+ <tile id="19">
+  <image width="100" height="100" source="../textures/house_interior/wall_2.png"/>
  </tile>
 </tileset>
