@@ -4,7 +4,7 @@ set -e
 set -u
 
 # Compile sources
-make GameApp.jar
+make
 
 # The code below is for when the game
 # gets a web interface with TeaVM
