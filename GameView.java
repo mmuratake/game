@@ -22,6 +22,9 @@ public class GameView extends Canvas {
   /** Used to render the game. */
   private GameRenderer renderer;
 
+  /** Contains the tile images for the game. */
+  private TileImageSet tileImageSet;
+
   /** The tile image to tile ID map. */
   private TreeMap<Long, BufferedImage> tileImageMap;
 
@@ -36,6 +39,8 @@ public class GameView extends Canvas {
     setVisible(true);
 
     renderer = new GameRenderer();
+
+    tileImageSet = new TileImageSet();
 
     tileImageMap = new TreeMap<Long, BufferedImage>();
   }
@@ -84,6 +89,8 @@ public class GameView extends Canvas {
    * @param imagePath The path to the image to load.
    * */
   public void loadTileImage(long id, String imagePath) {
+
+    tileImageSet.load(id, imagePath);
 
     BufferedImage image = null;
 

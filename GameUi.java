@@ -136,10 +136,12 @@ public class GameUi extends Frame {
     this.timer = new Timer();
 
     this.view = new GameView();
+
+    add(view);
+
     view.addKeyListener(new KeyboardController(this.game, this.gameLock));
     view.addMouseListener(new MouseController(this.game, this.gameLock));
 
-    add(view);
     addWindowListener(new GameUiListener(this));
 
     setVisible(true);

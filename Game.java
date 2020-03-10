@@ -40,7 +40,7 @@ public class Game {
    * @param tileSet The game's tile data.
    * */
   public Game(TileSet tileSet) {
-    this.playerPosition = new Vector(7, 13);
+    this.playerPosition = new Vector(7, 18);
     this.playerVelocity = new Vector(0, 0);
     this.tileSet = tileSet;
     this.tileMaps = new ArrayList<TileMap>();
@@ -60,7 +60,7 @@ public class Game {
    * */
   public void advance(int milliseconds) {
 
-    Vector delta = Vector.mul(this.playerVelocity, (double) milliseconds);
+    Vector delta = Vector.mul(this.playerVelocity, ((double) milliseconds) / 1000.0);
 
     this.playerPosition = Vector.sum(this.playerPosition, delta);
   }
@@ -79,7 +79,9 @@ public class Game {
    * For analog controls, this will be anywhere within the range of -1 and 1.
    * */
   public void axisUpdate(int controller, double x, double y) {
+
     System.out.println("Axis updated: " + x + ", " + y);
+
     playerVelocity.setX(x);
     playerVelocity.setY(y);
   }

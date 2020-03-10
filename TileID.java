@@ -24,13 +24,20 @@ public class TileID {
    * it from there. */
   final static long firstGID = 1L;
 
-  /** Converts the tile ID to an index
-   * that refers to a tile in the tile set.
-   * @param tileID The tile ID to convert.
-   * @return An index pointing to a tile in the tile set.
+  /** Indicates whether or not a tile is flipped horizontally.
+   * @param tileID The ID of the tile to check for horizontal flipping.
+   * @return True if the tile is horizontally flipped, false otherwise.
    * */
-  public static long toIndex(long tileID) {
-    return (tileID - firstGID) & (~flipMask);
+  public static boolean isFlippedHorizontally(long tileID) {
+    return (tileID & hFlipFlag) != 0;
+  }
+
+  /** Indicates whether or not a tile is flipped vertically.
+   * @param tileID The ID of the tile to check for vertical flipping.
+   * @return True if the tile is vertically flipped, false otherwise.
+   * */
+  public static boolean isFlippedVertically(long tileID) {
+    return (tileID & vFlipFlag) != 0;
   }
 
   /** Indicates if a tile ID is valid or not.
@@ -39,5 +46,14 @@ public class TileID {
    * */
   public static boolean isValid(long tileID) {
     return tileID >= firstGID;
+  }
+
+  /** Converts the tile ID to an index
+   * that refers to a tile in the tile set.
+   * @param tileID The tile ID to convert.
+   * @return An index pointing to a tile in the tile set.
+   * */
+  public static long toIndex(long tileID) {
+    return (tileID - firstGID) & (~flipMask);
   }
 }
