@@ -2,8 +2,6 @@ import java.awt.Graphics;
 
 import java.awt.image.BufferedImage;
 
-import java.util.TreeMap;
-
 /** Used for drawing the game with
  * described by the rendering commands,
  * using the AWT graphics context.
@@ -11,17 +9,17 @@ import java.util.TreeMap;
 public class AwtRenderer implements RenderCommandVisitor {
 
   /** The tile images to be referenced. */
-  private TreeMap<Long, BufferedImage> tileImageMap;
+  private TileImageSet tileImageSet;
 
   /** The graphics context to implement the render commands with. */
   private Graphics graphics;
 
   /** Constructs a new instance of the AWT renderer.
-   * @param tileImageMap The tile images to be rendered.
+   * @param tileImageSet The tile images to be rendered.
    * @param graphics The graphics context to draw the contents with.
    * */
-  public AwtRenderer(TreeMap<Long, BufferedImage> tileImageMap, Graphics graphics) {
-    this.tileImageMap = tileImageMap;
+  public AwtRenderer(TileImageSet tileImageSet, Graphics graphics) {
+    this.tileImageSet = tileImageSet;
     this.graphics = graphics;
   }
 
@@ -32,11 +30,15 @@ public class AwtRenderer implements RenderCommandVisitor {
 
     long tileIndex = TileID.toIndex(tileID);
 
-    if (!tileImageMap.containsKey(tileIndex)) {
+    if (!tileImageSet.contains(tileIndex)) {
       return;
     }
 
-    BufferedImage img = tileImageMap.get(tileIndex);
+    boolean hFlip = TileID.isFlippedHorizontally(tileID);
+    boolean vFlip = TileID.isFlippedVertically(tileID);
+    boolean dFlip = TileID.isFlippedDiagonally(tileID);
+
+    BufferedImage img = tileImageSet.get(tileIndex, hFlip, vFlip, dFlip);
 
     Rect<Integer> rect = drawTileCommand.getRect();
 

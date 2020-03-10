@@ -4,12 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferStrategy;
 
-import javax.imageio.ImageIO;
-
-import java.io.File;
-
-import java.util.TreeMap;
-
 /** This class contains the window in which
  * the game is rendered. It sits inside the
  * main window and is called to render the
@@ -25,9 +19,6 @@ public class GameView extends Canvas {
   /** Contains the tile images for the game. */
   private TileImageSet tileImageSet;
 
-  /** The tile image to tile ID map. */
-  private TreeMap<Long, BufferedImage> tileImageMap;
-
   /** This constructs a new instance of the game view.
    * Internally, this just makes sure that the window
    * is visible and 'repaint' events from the OS are
@@ -41,8 +32,6 @@ public class GameView extends Canvas {
     renderer = new GameRenderer();
 
     tileImageSet = new TileImageSet();
-
-    tileImageMap = new TreeMap<Long, BufferedImage>();
   }
 
   /** Renders the game onto the window.
@@ -89,16 +78,7 @@ public class GameView extends Canvas {
    * @param imagePath The path to the image to load.
    * */
   public void loadTileImage(long id, String imagePath) {
-
     tileImageSet.load(id, imagePath);
-
-    BufferedImage image = null;
-
-    try {
-      image = ImageIO.read(new File(imagePath));
-    } catch (Exception e) { }
-
-    tileImageMap.put(id, image);
   }
 
   /** Processes the command queue.
@@ -107,7 +87,7 @@ public class GameView extends Canvas {
    * */
   private void processQueue(RenderCommandQueue cmdQueue, Graphics graphics) {
 
-    AwtRenderer renderer = new AwtRenderer(tileImageMap, graphics);
+    AwtRenderer renderer = new AwtRenderer(tileImageSet, graphics);
 
     cmdQueue.visitAll(renderer);
   }

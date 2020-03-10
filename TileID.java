@@ -24,12 +24,20 @@ public class TileID {
    * it from there. */
   final static long firstGID = 1L;
 
+  /** Indicates whether or not a tile is flipped diagonally.
+   * @param tileID The ID of the tile to check for horizontal flipping.
+   * @return True if the tile is diagonally flipped, false otherwise.
+   * */
+  public static boolean isFlippedDiagonally(long tileID) {
+    return (tileID & dFlipFlag) != 0L;
+  }
+
   /** Indicates whether or not a tile is flipped horizontally.
    * @param tileID The ID of the tile to check for horizontal flipping.
    * @return True if the tile is horizontally flipped, false otherwise.
    * */
   public static boolean isFlippedHorizontally(long tileID) {
-    return (tileID & hFlipFlag) != 0;
+    return (tileID & hFlipFlag) != 0L;
   }
 
   /** Indicates whether or not a tile is flipped vertically.
@@ -37,7 +45,7 @@ public class TileID {
    * @return True if the tile is vertically flipped, false otherwise.
    * */
   public static boolean isFlippedVertically(long tileID) {
-    return (tileID & vFlipFlag) != 0;
+    return (tileID & vFlipFlag) != 0L;
   }
 
   /** Indicates if a tile ID is valid or not.
