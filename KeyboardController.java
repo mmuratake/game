@@ -48,22 +48,22 @@ public class KeyboardController implements KeyListener {
     if (event.getKeyCode() == KeyEvent.VK_LEFT) {
       updateX(-1);
     } else if (event.getKeyCode() == KeyEvent.VK_UP) {
-      updateY(1);
+      updateY(-1);
     } else if (event.getKeyCode() == KeyEvent.VK_RIGHT) {
       updateX(1);
     } else if (event.getKeyCode() == KeyEvent.VK_DOWN) {
-      updateY(-1);
+      updateY(1);
     }
 
     /* WASD keys */
     if (event.getKeyChar() == 'a') {
       updateX(-1);
     } else if (event.getKeyChar() == 'w') {
-      updateY(1);
+      updateY(-1);
     } else if (event.getKeyChar() == 'd') {
       updateX(1);
     } else if (event.getKeyChar() == 's') {
-      updateY(-1);
+      updateY(1);
     }
   }
 
