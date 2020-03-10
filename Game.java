@@ -9,12 +9,11 @@ import java.util.ArrayList;
  * */
 public class Game {
 
-  /** The number of ellapsed milliseconds
-   * that have gone by since the game was started.
-   * This was put here for testing purposes. If it's
-   * still here when the class is fully functional,
-   * consider removing it. */
-  private int ellapsedMilliseconds;
+  /** The position of the player. */
+  private Vector playerPosition;
+
+  /** The velocity of the player. */
+  private Vector playerVelocity;
 
   /** The game's tile set. This contains information
    * such as the physical characteristics of the tiles,
@@ -41,7 +40,8 @@ public class Game {
    * @param tileSet The game's tile data.
    * */
   public Game(TileSet tileSet) {
-    this.ellapsedMilliseconds = 0;
+    this.playerPosition = new Vector(0, 0);
+    this.playerVelocity = new Vector(0, 0);
     this.tileSet = tileSet;
     this.tileMaps = new ArrayList<TileMap>();
   }
@@ -59,7 +59,10 @@ public class Game {
    * which to move the game forward.
    * */
   public void advance(int milliseconds) {
-    this.ellapsedMilliseconds += milliseconds;
+
+    Vector delta = Vector.mul(this.playerVelocity, (double) milliseconds);
+
+    this.playerPosition = Vector.sum(this.playerPosition, delta);
   }
 
   /** This function is called when the user moves the analog stick.
@@ -77,6 +80,8 @@ public class Game {
    * */
   public void axisUpdate(int controller, double x, double y) {
     System.out.println("Axis updated: " + x + ", " + y);
+    playerVelocity.setX(x);
+    playerVelocity.setY(y);
   }
 
   /** This function is called when the user either lets go or presses a button.
@@ -96,6 +101,20 @@ public class Game {
    * */
   public String getTitle() {
     return "Pending Title";
+  }
+
+  /** Accesses the current map being played. */
+  public TileMap getCurrentMap() {
+    return tileMaps.get(0);
+  }
+
+  /** Gets the position of the player.
+   * The game renderer uses this information
+   * to render the active part of the current map.
+   * @return The player position, in terms of tile coordinates.
+   * */
+  public Vector getPlayerPosition() {
+    return playerPosition;
   }
 
   /** This function gets a list of file names

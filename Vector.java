@@ -35,6 +35,15 @@ class Vector {
     return new Vector(x, y);
   }
 
+  /** Multiplies the vector by a scalar value.
+   * @param in The vector to multiply.
+   * @param factor The factor to multiply each component by.
+   * @return The resultant vector.
+   * */
+  public static Vector mul(Vector in, double factor) {
+    return new Vector(in.x * factor, in.y * factor);
+  }
+
   /** Calculates the sum of two vectors.
    * @return The sum of the first and second vectors.
    * */
@@ -47,13 +56,17 @@ class Vector {
     this.y = y;
   }
 
-  public double getX() {
-    return this.x;
-  }
+  /** Gets the X component of the vector. */
+  public double getX() { return this.x; }
 
-  public double getY() {
-    return this.y;
-  }
+  /** Gets the Y component of the vector. */
+  public double getY() { return this.y; }
+
+  /** Sets the X component of the vector. */
+  public void setX(double x) { this.x = x; }
+
+  /** Sets the Y component of the vector. */
+  public void setY(double y) { this.y = y; }
 
   public boolean isMostlyUp() {
     if (y > 0 && y > Math.abs(x)) {

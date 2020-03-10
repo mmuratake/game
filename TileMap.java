@@ -22,4 +22,15 @@ public class TileMap {
   void addLayer(Matrix layer) {
     layers.add(layer);
   }
+
+  /** Accesses a layer at a specified index.
+   * @param index The index of the layer to get.
+   * @return The tile matrix at the specified index.
+   * */
+  Matrix getLayer(int index) {
+    return layers.get(index);
+  }
+
+  /** Indicates the total number of layers in the map. */
+  int getLayerCount() { return layers.size(); }
 }

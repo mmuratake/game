@@ -81,7 +81,7 @@ public class TileSetReader {
 
     String imagePath = imageElement.getAttribute("source");
 
-    Tile tile = new Tile(Integer.parseInt(id), imagePath);
+    Tile tile = new Tile(Long.parseLong(id), imagePath);
 
     for (int i = 0; i < objectGroupNodes.getLength(); i++) {
 

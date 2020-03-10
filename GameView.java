@@ -23,7 +23,7 @@ public class GameView extends Canvas {
   private GameRenderer renderer;
 
   /** The tile image to tile ID map. */
-  private TreeMap<Integer, BufferedImage> tileImageMap;
+  private TreeMap<Long, BufferedImage> tileImageMap;
 
   /** This constructs a new instance of the game view.
    * Internally, this just makes sure that the window
@@ -31,10 +31,13 @@ public class GameView extends Canvas {
    * set to be ignored.
    * */
   public GameView() {
+
     setIgnoreRepaint(true);
     setVisible(true);
+
     renderer = new GameRenderer();
-    tileImageMap = new TreeMap<Integer, BufferedImage>();
+
+    tileImageMap = new TreeMap<Long, BufferedImage>();
   }
 
   /** Renders the game onto the window.
@@ -42,7 +45,11 @@ public class GameView extends Canvas {
    * */
   public void render(Game game) {
 
+    RenderCommandQueue cmdQueue = new RenderCommandQueue();
+
     BufferStrategy strategy = lazyInitBufferStrategy();
+
+    renderer.setResolution(getWidth(), getHeight());
 
     // This loop is suggested in the Oracle docs,
     // although the exact reason for it is slightly unclear (to me.)
@@ -57,12 +64,11 @@ public class GameView extends Canvas {
 
         Graphics graphics = strategy.getDrawGraphics();
 
-        int w = getWidth();
-        int h = getHeight();
+        cmdQueue.clear();
 
-        GraphicsContextAwt gc = new GraphicsContextAwt(graphics, w, h);
+        renderer.render(cmdQueue, game);
 
-        renderer.render(gc, game);
+        processQueue(cmdQueue, graphics);
 
         graphics.dispose();
 
@@ -77,7 +83,7 @@ public class GameView extends Canvas {
    * @param id The ID to assign the tile image.
    * @param imagePath The path to the image to load.
    * */
-  public void loadTileImage(int id, String imagePath) {
+  public void loadTileImage(long id, String imagePath) {
 
     BufferedImage image = null;
 
@@ -86,6 +92,17 @@ public class GameView extends Canvas {
     } catch (Exception e) { }
 
     tileImageMap.put(id, image);
+  }
+
+  /** Processes the command queue.
+   * @param cmdQueue The command queue to process.
+   * @param graphics The graphics context to process the command queue with.
+   * */
+  private void processQueue(RenderCommandQueue cmdQueue, Graphics graphics) {
+
+    AwtRenderer renderer = new AwtRenderer(tileImageMap, graphics);
+
+    cmdQueue.visitAll(renderer);
   }
 
   /** This initializes the swap buffer when it is needed.

@@ -134,12 +134,13 @@ public class GameUi extends Frame {
     this.game = game;
     this.gameLock = new ReentrantLock();
     this.timer = new Timer();
+
     this.view = new GameView();
+    view.addKeyListener(new KeyboardController(this.game, this.gameLock));
+    view.addMouseListener(new MouseController(this.game, this.gameLock));
 
     add(view);
     addWindowListener(new GameUiListener(this));
-    addKeyListener(new KeyboardController(this.game, this.gameLock));
-    addMouseListener(new MouseController(this.game, this.gameLock));
 
     setVisible(true);
     setTitle(this.game.getTitle());
@@ -168,7 +169,7 @@ public class GameUi extends Frame {
    * @param id The ID to assign the image.
    * @param imagePath The path to the image to load.
    * */
-  public void loadTileImage(int id, String imagePath) {
+  public void loadTileImage(long id, String imagePath) {
     this.view.loadTileImage(id, imagePath);
   }
 

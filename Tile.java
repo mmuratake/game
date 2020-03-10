@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Tile {
 
   /** The numerical ID used to reference the tile in a tile map. */
-  private int id;
+  private long id;
 
   /** The path to the image used for this tile. */
   private String imagePath;
@@ -20,7 +20,7 @@ public class Tile {
    * @param id The ID to assign the tile.
    * @param imagePath The path to the image for this tile.
    * */
-  public Tile(int id, String imagePath) {
+  public Tile(long id, String imagePath) {
     this.id = id;
     this.imagePath = imagePath;
     this.polygons = new ArrayList<Polygon>();
@@ -36,7 +36,7 @@ public class Tile {
   /** Gets the ID of the tile.
    * @return The ID of the tile.
    * */
-  public int getID() {
+  public long getID() {
     return id;
   }
 
