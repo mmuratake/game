@@ -14,15 +14,7 @@ public class GameApp {
 
   public static void main(String[] args) {
 
-    String prefixPath = System.getenv("GAME_ROOT");
-
-    if (prefixPath == null) {
-      prefixPath = ".";
-    }
-
-    prefixPath += File.separator;
-
-    String tileSetPath = prefixPath + "tiled/tiles.tsx";
+    String tileSetPath = "tiled/tiles.tsx";
 
     File tileSetFile = null;
 
@@ -50,7 +42,7 @@ public class GameApp {
 
     Game game = new Game(tileSet);
 
-    loadMaps(game, prefixPath);
+    loadMaps(game);
 
     GameUi gameUi = new GameUi(game);
 
@@ -66,14 +58,13 @@ public class GameApp {
 
   /** Loads the tile maps for the game.
    * @param game The game instance to put the tile maps into.
-   * @param prefixPath The path to the directory containing the game resources.
    * */
-  private static void loadMaps(Game game, String prefixPath) {
+  private static void loadMaps(Game game) {
 
     ArrayList<String> mapFileNames = game.getMapFileNames();
 
     for (String mapFileName : mapFileNames) {
-      loadMap(game, prefixPath + "tiled" + File.separator + mapFileName);
+      loadMap(game, "tiled" + File.separator + mapFileName);
     }
   }
 

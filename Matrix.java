@@ -66,7 +66,7 @@ public class Matrix {
    * @return True if the coordinates are in bounds, false otherwise
    * */
   boolean inBounds(int x, int y) {
-    return (x < width) || (y < height);
+    return (x < width) && (y < height);
   }
 
   /** Copies the values from another matrix onto this one.

@@ -30,11 +30,13 @@ public class AwtRenderer implements RenderCommandVisitor {
 
     long tileID = drawTileCommand.getTileID();
 
-    if (!tileImageMap.containsKey(tileID)) {
+    long tileIndex = TileID.toIndex(tileID);
+
+    if (!tileImageMap.containsKey(tileIndex)) {
       return;
     }
 
-    BufferedImage img = tileImageMap.get(tileID);
+    BufferedImage img = tileImageMap.get(tileIndex);
 
     Rect<Integer> rect = drawTileCommand.getRect();
 
@@ -42,8 +44,6 @@ public class AwtRenderer implements RenderCommandVisitor {
     int y = rect.getY();
     int w = rect.getWidth();
     int h = rect.getHeight();
-
-    System.out.println(tileID);
 
     graphics.drawImage(img, x, y, w, h, null);
   }

@@ -28,7 +28,7 @@ public class GameRenderer {
     this.xRes = 100;
     this.yRes = 100;
     this.xRoomRes = 10;
-    this.yRoomRes = 10;
+    this.yRoomRes = 5;
   }
 
   /** Renders the room.
@@ -43,10 +43,7 @@ public class GameRenderer {
     TileMap tileMap = game.getCurrentMap();
 
     for (int i = 0; i < tileMap.getLayerCount(); i++) {
-
-      Matrix layer = tileMap.getLayer(i);
-
-      renderLayer(cmdQueue, layer, center);
+      renderLayer(cmdQueue, tileMap.getLayer(i), center);
     }
   }
 
@@ -81,11 +78,18 @@ public class GameRenderer {
     int wTile = xTileRes();
     int hTile = yTileRes();
 
-    for (int y = 0; y < layer.getHeight(); y++) {
+    int xCenter = (int) center.getX();
+    int yCenter = (int) center.getY();
 
-      for (int x = 0; x < layer.getWidth(); x++) {
+    for (int y = 0; y < yRoomRes; y++) {
 
-        long tileID = layer.getValue(x, y);
+      for (int x = 0; x < xRoomRes; x++) {
+
+        long tileID = layer.getValue(x + xCenter, y + yCenter);
+
+        if (!TileID.isValid(tileID)) {
+          continue;
+        }
 
         Rect<Integer> tileRect = new Rect<Integer>(wTile * x, hTile * y, wTile, hTile);
 

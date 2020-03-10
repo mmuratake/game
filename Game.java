@@ -40,7 +40,7 @@ public class Game {
    * @param tileSet The game's tile data.
    * */
   public Game(TileSet tileSet) {
-    this.playerPosition = new Vector(0, 0);
+    this.playerPosition = new Vector(7, 13);
     this.playerVelocity = new Vector(0, 0);
     this.tileSet = tileSet;
     this.tileMaps = new ArrayList<TileMap>();
@@ -105,7 +105,7 @@ public class Game {
 
   /** Accesses the current map being played. */
   public TileMap getCurrentMap() {
-    return tileMaps.get(0);
+    return tileMaps.get(1);
   }
 
   /** Gets the position of the player.

@@ -88,7 +88,7 @@ public class GameView extends Canvas {
     BufferedImage image = null;
 
     try {
-      ImageIO.read(new File(imagePath));
+      image = ImageIO.read(new File(imagePath));
     } catch (Exception e) { }
 
     tileImageMap.put(id, image);
