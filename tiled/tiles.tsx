@@ -4,9 +4,7 @@
  <tile id="0">
   <image width="100" height="100" source="../textures/house_interior/concave_corner.png"/>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="77.75" y="81.5">
-    <polygon points="0,0 22.25,0 22.25,-81.5 -77.75,-81.5 -77.75,18.5 -0.25,18.25"/>
-   </object>
+   <object id="1" x="0" y="0" width="100" height="100"/>
   </objectgroup>
  </tile>
  <tile id="1">
@@ -14,8 +12,8 @@
  </tile>
  <tile id="4">
   <image width="100" height="100" source="../textures/house_interior/wall.png"/>
-  <objectgroup draworder="index" id="3">
-   <object id="2" x="0.25" y="0.25" width="99.5" height="81.5"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="100" height="100"/>
   </objectgroup>
  </tile>
  <tile id="5">
@@ -50,14 +48,23 @@
  </tile>
  <tile id="18">
   <image width="100" height="100" source="../textures/house_interior/convex_corner.png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="100" height="100"/>
+  </objectgroup>
  </tile>
  <tile id="19">
   <image width="100" height="100" source="../textures/house_interior/wall_2.png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="100" height="82"/>
+  </objectgroup>
  </tile>
  <tile id="20">
   <image width="100" height="100" source="../textures/house_interior/fireplace.png"/>
  </tile>
  <tile id="21">
   <image width="100" height="100" source="../textures/house_interior/wall_fireplace.png"/>
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="100" height="82"/>
+  </objectgroup>
  </tile>
 </tileset>
