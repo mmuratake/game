@@ -78,11 +78,11 @@ public class GameRenderer {
    * */
   private void renderLayer(RenderCommandQueue cmdQueue, Matrix layer, Vector center) {
 
-    int wTile = xTileRes();
-    int hTile = yTileRes();
-
     int xCenter = (int) center.getX();
     int yCenter = (int) center.getY();
+
+    int xPixelCenter = (int) (xTileRes() * center.getX());
+    int yPixelCenter = (int) (yTileRes() * center.getY());
 
     for (int y = 0; y < yRoomRes; y++) {
 
@@ -94,7 +94,13 @@ public class GameRenderer {
           continue;
         }
 
-        Rect<Integer> tileRect = new Rect<Integer>(wTile * x, hTile * y, wTile, hTile);
+        int xTilePos = (xTileRes() * x) - (xPixelCenter % xTileRes());
+        int yTilePos = (yTileRes() * y) - (yPixelCenter % yTileRes());
+
+        int wTile = xTileRes();
+        int hTile = yTileRes();
+
+        Rect<Integer> tileRect = new Rect<Integer>(xTilePos, yTilePos, wTile, hTile);
 
         cmdQueue.add(new DrawTileCommand(tileID, tileRect));
       }
