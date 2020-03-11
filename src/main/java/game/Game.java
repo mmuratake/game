@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /** This class implements all of the game logic.
  * It is meant to be separate from the method in
  * which the game is presented to the user.
- * @see GameUi
+ * @see game.platform.awt.GameUi
  * */
 public class Game {
 

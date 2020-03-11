@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /** This command is used to fill an area with color.
  * @see RenderCommand
- * @see RendercommandVisitor
+ * @see RenderCommandVisitor
  * */
 public class FillRectCommand implements RenderCommand {
   /** The color to fill the area with. */

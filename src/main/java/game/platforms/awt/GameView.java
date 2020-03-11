@@ -92,7 +92,7 @@ public class GameView extends Canvas {
 
   /** Loads a tile image.
    * @param id The ID to assign the tile image.
-   * @param inputStream The stream containing the image data.
+   * @param imageStream The stream containing the image data.
    * */
   public void loadTileImage(long id, InputStream imageStream) {
     tileImageSet.load(id, imageStream);
