@@ -12,7 +12,7 @@ all: $(all_sources)
 
 .INTERMEDIATE: $(all_sources)
 $(all_sources):
-	$(FIND) . -maxdepth 1 -name '*.java' >$@
+	$(FIND) . platforms/awt -maxdepth 1 -name '*.java' >$@
 
 .PHONY: clean
 clean:
