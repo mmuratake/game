@@ -1,6 +1,6 @@
-import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -9,50 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import java.util.concurrent.locks.ReentrantLock;
-
-/** This class is responsible for moving
- * the game forward in time whenever a timer
- * expires for a frame.
- * @see Game
- * */
-class GameTimerTask extends TimerTask {
-
-  /** The window that the game is being shown in.
-   * This is here so that we can tell the window it
-   * needs to get repainted whenever the game advances
-   * in time. */
-  private GameUi gameUi;
-
-  /** The number of milliseconds in one frame. */
-  private int frameDelay;
-
-  /** Constructs a new instance of the game timer task.
-   * @param gameUi The UI in which the game is shown in
-   * This gets repainted whenever the timer expires.
-   * @param frameDelay The expected duration of one frame, in milliseconds.
-   * This can be taken by dividing one thousand by the target frames per second.
-   * */
-  public GameTimerTask(GameUi gameUi, int frameDelay) {
-    this.gameUi = gameUi;
-    this.frameDelay = frameDelay;
-  }
-
-  /** Moves the game forward by one frame
-   * and tells the main window that it should
-   * repaint itself.
-   * */
-  @Override
-  public void run() {
-
-    if (System.currentTimeMillis() - scheduledExecutionTime() > frameDelay) {
-      // We're late by a whole frame, so let's just skip this one.
-      System.out.println("Warning: frame dropped");
-      return;
-    }
-
-    gameUi.advance(frameDelay);
-  }
-}
 
 /** This class is used for listening for
  * import window events for the game UI,
@@ -94,8 +50,8 @@ public class GameUi extends Frame {
   /** The canvas on which the game is rendered. */
   private GameView view;
 
-  /** The timer controlling the frame rate. */
-  private Timer timer;
+  /** Whether or not the game has exited. */
+  private boolean exited;
 
   /** This is a lock that is used to control access
    * to the game from multiple threads. Since the thread
@@ -106,9 +62,6 @@ public class GameUi extends Frame {
    * to block the thread until the game instance becomes available again.
    * */
   private ReentrantLock gameLock;
-
-  /** This is the target frame rate for the game. */
-  final int frameRate = 30;
 
   /** The width of the window on startup.
    * This is considered HD resolution and
@@ -129,11 +82,12 @@ public class GameUi extends Frame {
    * */
   public GameUi(Game game) {
 
+    this.exited = false;
+
     setSize(startupWidth, startupHeight);
 
     this.game = game;
     this.gameLock = new ReentrantLock();
-    this.timer = new Timer();
 
     this.view = new GameView();
 
@@ -146,9 +100,7 @@ public class GameUi extends Frame {
 
     setVisible(true);
     setTitle(this.game.getTitle());
-    setLayout(new BorderLayout());
-
-    this.timer.scheduleAtFixedRate(new GameTimerTask(this, getFrameDelay()), 500, getFrameDelay());
+    setLayout(new GridLayout(1, 1));
   }
 
   /** Advances the game forward in time.
@@ -166,6 +118,9 @@ public class GameUi extends Frame {
     this.gameLock.unlock();
   }
 
+  /** Indicates whether or not the program has exited. */
+  public boolean isExited() { return exited; }
+
   /** This function loads an image for a certain tile.
    * The tile image is used by the game view during the rendering process.
    * @param id The ID to assign the image.
@@ -177,18 +132,10 @@ public class GameUi extends Frame {
 
   /** Closes the user interface.
    * This destroys the window and
-   * stops the frame timer for the game.
+   * sets the "exited" flag to true.
    * */
   public void onWindowClosed() {
-    timer.cancel();
-    timer.purge();
     dispose();
-  }
-
-  /** Gets the number of milliseconds in a single frame.
-   * @return The number of milliseconds in one frame.
-   * */
-  private int getFrameDelay() {
-    return 1000 / frameRate;
+    exited = true;
   }
 }

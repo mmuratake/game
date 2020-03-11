@@ -1,5 +1,8 @@
 import java.awt.Color;
 
+class Viewport {
+
+}
 /** This class is used to describe how the game
  * should currently be renderer. It uses a command
  * queue which accumulates the instructions required
@@ -15,20 +18,12 @@ public class GameRenderer {
   /** The vertical resolution of the window. */
   private int yRes;
 
-  /** The number of tiles that appear in one row. */
-  private int xRoomRes;
-
-  /** The number of tiles that appear in one column. */
-  private int yRoomRes;
-
   /** Constructs a new game renderer instance,
    * using default resolution values.
    * */
   public GameRenderer() {
     this.xRes = 100;
     this.yRes = 100;
-    this.xRoomRes = 10;
-    this.yRoomRes = 5;
   }
 
   /** Renders the room.
@@ -60,17 +55,6 @@ public class GameRenderer {
     this.yRes = y;
   }
 
-  /** Sets the room resolution.
-   * In other words, sets the number of tiles
-   * that appear at once in a room.
-   * @param x The number of tiles to appear in one row.
-   * @param y The number of tiles to appear in one column.
-   * */
-  void setRoomResolution(int x, int y) {
-    this.xRoomRes = x;
-    this.yRoomRes = y;
-  }
-
   /** Renders a single layer of a tile map.
    * @param cmdQueue The command queue to fill with instructions to render the layer.
    * @param layer The tile matrix for the layer.
@@ -83,6 +67,9 @@ public class GameRenderer {
 
     int xPixelCenter = (int) (xTileRes() * center.getX());
     int yPixelCenter = (int) (yTileRes() * center.getY());
+
+    int xRoomRes = ((xRes + (xTileRes() - 1)) / xTileRes()) + 1;
+    int yRoomRes = ((yRes + (yTileRes() - 1)) / yTileRes()) + 1;
 
     for (int y = 0; y < yRoomRes; y++) {
 

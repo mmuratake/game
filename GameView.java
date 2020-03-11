@@ -39,11 +39,20 @@ public class GameView extends Canvas {
    * */
   public void render(Game game) {
 
+    int xRes = getWidth();
+    int yRes = getHeight();
+
+    /* Make sure that the window has an area
+     * that can be rendered to. */
+    if ((xRes <= 0) || (yRes <= 0)) {
+      return;
+    }
+
     RenderCommandQueue cmdQueue = new RenderCommandQueue();
 
     BufferStrategy strategy = lazyInitBufferStrategy();
 
-    renderer.setResolution(getWidth(), getHeight());
+    renderer.setResolution(xRes, yRes);
 
     // This loop is suggested in the Oracle docs,
     // although the exact reason for it is slightly unclear (to me.)

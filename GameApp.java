@@ -12,7 +12,14 @@ import java.util.ArrayList;
  * */
 public class GameApp {
 
+  /** The entry point of the program.
+   * Loads the tile set, all the maps,
+   * and opens the window that the game is displayed in.
+   *  */
   public static void main(String[] args) {
+
+    /* Indicate to Java that we want GPU accelerated graphics. */
+    System.setProperty("sun.java2d.opengl", "true");
 
     String tileSetPath = "tiled/tiles.tsx";
 
@@ -53,6 +60,49 @@ public class GameApp {
       String imagePath = tileSetDirectoryPath + File.separator + tile.getImagePath();
 
       gameUi.loadTileImage(tile.getID(), imagePath);
+    }
+
+    timerLoop(gameUi);
+  }
+
+  /** Advances the game in time until the
+   * user closes the window.
+   * @param gameUi The user interface of the game.
+   * This will indicate an exited state when the user closes the window.
+   * */
+  private static void timerLoop(GameUi gameUi) {
+
+    long timeStampLast = System.nanoTime();
+
+    final long targetFps = 30;
+
+    final long targetDelay = 1_000 / targetFps;
+
+    while (!gameUi.isExited()) {
+
+      long timeStampNow = System.nanoTime();
+
+      /* Time difference in milliseconds */
+      long timeDelta = (timeStampNow - timeStampLast) / 1_000_000;
+
+      gameUi.advance((int) timeDelta);
+
+      /* Note time difference again, in case it
+       * takes a while to render the scene. */
+      long timeDelta2 = (System.nanoTime() - timeStampLast) / 1_000_000;
+
+      /* If we made the time window,
+       * let's put the game to sleep until
+       * it's time to render the next frame. */
+      if (targetDelay > timeDelta) {
+        try {
+          Thread.sleep(targetDelay - timeDelta2);
+        } catch (Exception e) {
+          /* TODO : What to do on interrupts? */
+        }
+      }
+
+      timeStampLast = timeStampNow;
     }
   }
 

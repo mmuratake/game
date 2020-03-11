@@ -60,7 +60,11 @@ public class Game {
    * */
   public void advance(int milliseconds) {
 
-    Vector delta = Vector.mul(this.playerVelocity, ((double) milliseconds) / 1000.0);
+    /* Can be thought of as the number of tiles
+     * per second that the player moves. */
+    double speedFactor = 1.5;
+
+    Vector delta = Vector.mul(this.playerVelocity, speedFactor * (((double) milliseconds) / 1000.0));
 
     this.playerPosition = Vector.sum(this.playerPosition, delta);
   }
