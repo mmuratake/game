@@ -18,35 +18,29 @@ if [ "$TRAVIS_BRANCH" != "master" ]; then
   exit 0
 fi
 
-src_dir=$PWD
-out_dir=$(mktemp -d)
+src_dir=$PWD/build/docs/javadoc
+git_dir=$(mktemp -d)
+dst_dir=$git_dir/game/javadoc
+git_url="https://${GH_TOKEN}@github.com/tay10r/game"
 
-# Create a standing area in docs
-test -d $out_dir || mkdir $out_dir
-
-# Build documentation in docs/ directory
-cd $out_dir
-javadoc $src_dir/*.java
-cd $src_dir
-
-# Go to the branch where the documentation is at.
-git checkout gh-pages
+# Clone a copy of the project, checking out the 'gh-pages' branch.
+git clone $git_url $dst_dir/game -b gh-pages
 
 # Remove old docs
-rm -Rf docs
+rm -Rf $dst_dir/*
 
-# Add new docs
-cp -R $out_dir docs
+# Copy over the newly generated documentation
+rsync --info=progress2 -r $src_dir $dst_dir
 
 # Setup Travis CI credentials
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "travis-ci"
+git -C $git_dir config --global user.email "travis@travis-ci.org"
+git -C $git_dir config --global user.name "travis-ci"
 
 # Stage the changes
-git add docs
+git -C $git_dir add javadoc
 
 # Commit the changes
-git commit -m "Latest documentation from Travis build $TRAVIS_BUILD_NUMBER"
+git -C $git_dir commit -m "Latest documentation from Travis build $TRAVIS_BUILD_NUMBER"
 
 # And boom!
-git push -f https://${GH_TOKEN}@github.com/tay10r/game gh-pages
+git -C $git_dir push $git_url gh-pages
