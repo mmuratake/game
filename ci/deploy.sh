@@ -39,10 +39,10 @@ git -C $git_dir checkout gh-pages
 rm -Rf $doc_dst_dir/*
 
 # Copy over the newly generated documentation
-rsync --info=progress2 -r $doc_src_dir $doc_dst_dir
+rsync --info=progress2 -r $doc_src_dir/ $doc_dst_dir
 
 # Copy over the newly generated releases
-rsync --info=progress2 -r $dist_src_dir $dist_dst_dir
+rsync --info=progress2 -r $dist_src_dir/ $dist_dst_dir
 
 # Setup Travis CI credentials
 git -C $git_dir config --global user.email "travis@travis-ci.org"
