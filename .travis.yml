@@ -1,8 +1,6 @@
 dist: bionic
 sudo: false
-git:
-  depth: false
 os: linux
 language: java
 script: ci/build.sh
-after_success: ci/deploy_docs.sh
+after_success: ci/deploy.sh

@@ -18,29 +18,47 @@ if [ "$TRAVIS_BRANCH" != "master" ]; then
   exit 0
 fi
 
-src_dir=$PWD/build/docs/javadoc
-git_dir=$(mktemp -d)
-dst_dir=$git_dir/game/javadoc
+tmp_dir=$(mktemp -d)
+
 git_url="https://${GH_TOKEN}@github.com/tay10r/game"
+git_dir=$tmp_dir/game
+
+doc_src_dir=$PWD/build/docs/javadoc
+doc_dst_dir=$git_dir/javadoc
+
+dist_src_dir=$PWD/build/distributions
+dist_dst_dir=$git_dir/distributions
 
 # Clone a copy of the project, checking out the 'gh-pages' branch.
-git clone $git_url $dst_dir/game -b gh-pages
+git clone $git_url $git_dir
+
+# Checkout the GitHub pages branch
+git -C $git_dir checkout gh-pages
 
 # Remove old docs
-rm -Rf $dst_dir/*
+rm -Rf $doc_dst_dir/*
 
 # Copy over the newly generated documentation
-rsync --info=progress2 -r $src_dir $dst_dir
+rsync --info=progress2 -r $doc_src_dir $doc_dst_dir
+
+# Copy over the newly generated releases
+rsync --info=progress2 -r $dst_src_dir $dist_dst_dir
 
 # Setup Travis CI credentials
 git -C $git_dir config --global user.email "travis@travis-ci.org"
 git -C $git_dir config --global user.name "travis-ci"
 
-# Stage the changes
+# Stage the documentation changes
 git -C $git_dir add javadoc
 
-# Commit the changes
+# Commit the documentation changes
 git -C $git_dir commit -m "Latest documentation from Travis build $TRAVIS_BUILD_NUMBER"
+
+# Stage the new distributions
+git -C $git_dir add distributions
+
+# Commit the new distributions
+git -C $git_dir commit -m "Latest distributions from Travis build $TRAVIS_BUILD_NUMBER"
 
 # And boom!
 git -C $git_dir push $git_url gh-pages
