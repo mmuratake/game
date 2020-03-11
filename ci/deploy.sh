@@ -29,6 +29,9 @@ doc_dst_dir=$git_dir/javadoc
 dist_src_dir=$PWD/build/distributions
 dist_dst_dir=$git_dir/distributions
 
+webapp_src_dir=$PWD/target/game-1.0-SNAPSHOT
+webapp_dst_dir=$git_dir/webapp
+
 # Clone a copy of the project, checking out the 'gh-pages' branch.
 git clone $git_url $git_dir
 
@@ -43,6 +46,9 @@ rsync --info=progress2 -r $doc_src_dir/ $doc_dst_dir
 
 # Copy over the newly generated releases
 rsync --info=progress2 -r $dist_src_dir/ $dist_dst_dir
+
+# Copy over the TeaVM release
+rysnc --info=progress2 -r $webapp_src_dir/ $webapp_dst_dir
 
 # Setup Travis CI credentials
 git -C $git_dir config --global user.email "travis@travis-ci.org"
