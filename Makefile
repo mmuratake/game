@@ -23,4 +23,4 @@ test:
 
 .PHONY: run
 run: all
-	java GameApp
+	java -cp .:platforms/awt GameApp
