@@ -2,13 +2,26 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
 
-
 mainClassName = 'game.GameApp'
 
 repositories {
-    jcenter()
+  jcenter()
+}
+
+sourceSets {
+  main {
+    java {
+      srcDirs = [ 'src/main/java' ]
+    }
+    resources {
+      srcDirs = [
+        'tiled',
+        'textures'
+      ]
+    }
+  }
 }
 
 dependencies {
-    testImplementation     'junit:junit:4.13'
+  testImplementation 'junit:junit:4.13'
 }

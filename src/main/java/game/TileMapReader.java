@@ -11,8 +11,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /** This class is used to load a tile map
  * from the tile map editors data file.
@@ -30,15 +30,15 @@ public class TileMapReader {
   }
 
   /** Reads the tile map data from a file.
-   * @param file The file to read the data from.
+   * @param inputStream The input stream to read the map data from.
    * */
-  public void readFromFile(File file) throws ParserConfigurationException, SAXException, IOException {
+  public void readFromStream(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
 
     DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 
     DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
-    Document doc = docBuilder.parse(file);
+    Document doc = docBuilder.parse(inputStream);
 
     readFromDocument(doc);
   }

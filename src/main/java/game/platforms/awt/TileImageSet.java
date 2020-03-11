@@ -9,7 +9,7 @@ import java.awt.geom.AffineTransform;
 
 import java.util.TreeMap;
 
-import java.io.File;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -126,15 +126,17 @@ public class TileImageSet {
 
   /** Loads an image into the image tile set.
    * @param id The ID to assign the image.
-   * @param imagePath The path of the image to load.
+   * @param imageStream The stream containing the image data.
    * */
-  public void load(long id, String imagePath) {
+  public void load(long id, InputStream imageStream) {
 
     BufferedImage image = null;
 
     try {
-      image = ImageIO.read(new File(imagePath));
-    } catch (Exception e) {}
+      image = ImageIO.read(imageStream);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
     if (image != null) {
       transformedTiles.put(id, new TransformedTile(image));

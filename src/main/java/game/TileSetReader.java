@@ -11,8 +11,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /** This class is used for reading tile sets
  * from the XML file created by Tiled.
@@ -30,25 +30,16 @@ public class TileSetReader {
     this.tileSet = tileSet;
   }
 
-  /** Opens a file containing a tile set.
-   * This function will throw an exception
-   * if there is an error in reading the file.
-   * @param path The path of the tile to open.
+  /** Reads from an input stream.
+   * @param inputStream The input stream to read the tile set data from.
    * */
-  public void readFromPath(String path) throws ParserConfigurationException, SAXException, IOException {
-    readFromFile(new File(path));
-  }
-
-  /** Reads from an opened file.
-   * @param file The file to read the tile set data from.
-   * */
-  public void readFromFile(File file) throws ParserConfigurationException, SAXException, IOException {
+  public void readFromStream(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
 
     DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 
     DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
-    Document doc = docBuilder.parse(file);
+    Document doc = docBuilder.parse(inputStream);
 
     readFromDocument(doc);
   }

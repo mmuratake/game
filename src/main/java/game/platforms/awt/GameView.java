@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferStrategy;
 
+import java.io.InputStream;
+
 /** This class contains the window in which
  * the game is rendered. It sits inside the
  * main window and is called to render the
@@ -90,10 +92,10 @@ public class GameView extends Canvas {
 
   /** Loads a tile image.
    * @param id The ID to assign the tile image.
-   * @param imagePath The path to the image to load.
+   * @param inputStream The stream containing the image data.
    * */
-  public void loadTileImage(long id, String imagePath) {
-    tileImageSet.load(id, imagePath);
+  public void loadTileImage(long id, InputStream imageStream) {
+    tileImageSet.load(id, imageStream);
   }
 
   /** Processes the command queue.

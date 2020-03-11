@@ -2,7 +2,7 @@ package game;
 
 import game.platforms.awt.GameUi;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 
@@ -27,31 +27,17 @@ public class GameApp {
     /* Indicate to Java that we want GPU accelerated graphics. */
     System.setProperty("sun.java2d.opengl", "true");
 
-    String tileSetPath = "tiled/tiles.tsx";
-
-    File tileSetFile = null;
-
-    try {
-      tileSetFile = new File(tileSetPath);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    if (tileSetFile == null) {
-      return;
-    }
+    InputStream tileSetStream = ClassLoader.getSystemClassLoader().getResourceAsStream("tiles.tsx");
 
     TileSet tileSet = new TileSet();
 
     TileSetReader tileSetReader = new TileSetReader(tileSet);
 
     try {
-      tileSetReader.readFromFile(tileSetFile);
+      tileSetReader.readFromStream(tileSetStream);
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    String tileSetDirectoryPath = tileSetFile.getParent();
 
     Game game = new Game(tileSet);
 
@@ -63,9 +49,15 @@ public class GameApp {
 
       Tile tile = tileSet.getTile(i);
 
-      String imagePath = tileSetDirectoryPath + File.separator + tile.getImagePath();
+      /* We get the image path here while also
+       * removing the '../textures/' file prefix. */
+      String imagePath = tile.getImagePath().split("../textures/")[1];
 
-      gameUi.loadTileImage(tile.getID(), imagePath);
+      System.out.println("loading: " + imagePath);
+
+      InputStream imageStream = ClassLoader.getSystemClassLoader().getResourceAsStream(imagePath);
+
+      gameUi.loadTileImage(tile.getID(), imageStream);
     }
 
     timerLoop(gameUi);
@@ -120,22 +112,25 @@ public class GameApp {
     ArrayList<String> mapFileNames = game.getMapFileNames();
 
     for (String mapFileName : mapFileNames) {
-      loadMap(game, "tiled" + File.separator + mapFileName);
+
+      InputStream mapStream = ClassLoader.getSystemClassLoader().getResourceAsStream(mapFileName);
+
+      loadMap(game, mapStream);
     }
   }
 
   /** Loads a single map into the game.
    * @param game The game to put the map data into.
-   * @param mapPath The path of the map to load.
+   * @param mapStream The stream containing the map data.
    * */
-  private static void loadMap(Game game, String mapPath) {
+  private static void loadMap(Game game, InputStream mapStream) {
 
     TileMap tileMap = new TileMap();
 
     TileMapReader tileMapReader = new TileMapReader(tileMap);
 
     try {
-      tileMapReader.readFromFile(new File(mapPath));
+      tileMapReader.readFromStream(mapStream);
     } catch (Exception e) {
       e.printStackTrace();
     }

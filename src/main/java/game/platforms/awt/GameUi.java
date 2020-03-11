@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import java.io.InputStream;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 /** This class is used for listening for
@@ -125,10 +127,10 @@ public class GameUi extends Frame {
   /** This function loads an image for a certain tile.
    * The tile image is used by the game view during the rendering process.
    * @param id The ID to assign the image.
-   * @param imagePath The path to the image to load.
+   * @param imageStream The stream containing the image data.
    * */
-  public void loadTileImage(long id, String imagePath) {
-    this.view.loadTileImage(id, imagePath);
+  public void loadTileImage(long id, InputStream imageStream) {
+    this.view.loadTileImage(id, imageStream);
   }
 
   /** Closes the user interface.
