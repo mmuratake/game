@@ -19,6 +19,8 @@ public class GameApp {
   /** The entry point of the program.
    * Loads the tile set, all the maps,
    * and opens the window that the game is displayed in.
+   * @param args The arguments passed to the program.
+   * Currently, this parameter is unused.
    *  */
   public static void main(String[] args) {
 
