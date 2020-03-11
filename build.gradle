@@ -4,37 +4,15 @@ apply plugin: 'application'
 
 mainClassName = 'game.GameApp'
 
-buildscript {
-  repositories {
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-    jcenter()
-  }
-  dependencies {
-    classpath 'com.github.renatoathaydes:teavm-gradle-plugin:master-SNAPSHOT'
-  }
-}
-
-apply plugin: 'com.edibleday.teavm'
-
-teavmc {
-  mainClass = 'game.platforms.teavm.GameApp'
-  //mainPageIncluded true
-  //copySources false
-  //generateSourceMap false
-  //minified true
-  //runtime org.teavm.tooling.RuntimeCopyOperation.MERGED
-}
-
 repositories {
   jcenter()
-  mavenCentral()
 }
 
 sourceSets {
   main {
     java {
       srcDirs = [ 'src/main/java' ]
+      exclude 'game/platforms/teavm'
     }
     resources {
       srcDirs = [
