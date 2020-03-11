@@ -16,7 +16,7 @@ $(all_sources):
 
 .PHONY: clean
 clean:
-	$(RM) *.class
+	$(RM) *.class platforms/awt/*.class
 
 .PHONY: test
 test:
