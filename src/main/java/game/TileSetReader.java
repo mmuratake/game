@@ -2,19 +2,9 @@ package game;
 
 import game.math.Polygon;
 import game.math.Vector;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.io.IOException;
-import java.io.InputStream;
+import game.xml.Element;
+import game.xml.ElementList;
 
 /** This class is used for reading tile sets
  * from the XML file created by Tiled.
@@ -32,60 +22,38 @@ public class TileSetReader {
     this.tileSet = tileSet;
   }
 
-  /** Reads from an input stream.
-   * @param inputStream The input stream to read the tile set data from.
-   * */
-  public void readFromStream(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
-
-    DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-
-    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-
-    Document doc = docBuilder.parse(inputStream);
-
-    readFromDocument(doc);
-  }
-
   /** Reads the tile set data from an open document.
    * @param doc The document to get the tile set data from.
    * */
-  public void readFromDocument(Document doc) throws IOException {
+  public void readFromElement(Element root) {
 
-    Element root = doc.getDocumentElement();
+    ElementList tileElements = root.getElementsByTag("tile");
 
-    NodeList tileNodes = root.getElementsByTagName("tile");
-
-    for (int i = 0; i < tileNodes.getLength(); i++) {
-      Node tileNode = tileNodes.item(i);
-      if (tileNode.getNodeType() == Node.ELEMENT_NODE) {
-        readTileElement((Element) tileNode);
-      }
+    for (int i = 0; i < tileElements.getCount(); i++) {
+      readTileElement(tileElements.getElement(i));
     }
   }
 
   /** Reads tile data from a tile element.
    * @param tileElement The element from the XML file containing the tile data.
    * */
-  private void readTileElement(Element tileElement) throws IOException {
+  private void readTileElement(Element tileElement) {
 
-    Element imageElement = (Element) tileElement.getElementsByTagName("image").item(0);
+    String imagePath = "";
 
-    NodeList objectGroupNodes = tileElement.getElementsByTagName("objectgroup");
+    ElementList imageElementList = tileElement.getElementsByTag("image");
+    if (imageElementList.getCount() > 0) {
+      imagePath = imageElementList.getElement(0).getAttribute("source");
+    }
+
+    ElementList objectGroupElementList = tileElement.getElementsByTag("objectgroup");
 
     String id = tileElement.getAttribute("id");
 
-    String imagePath = imageElement.getAttribute("source");
-
     Tile tile = new Tile(Long.parseLong(id), imagePath);
 
-    for (int i = 0; i < objectGroupNodes.getLength(); i++) {
-
-      Node objectNode = objectGroupNodes.item(i);
-      if (objectNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      }
-
-      readTileObjectGroup(tile, (Element) objectNode);
+    for (int i = 0; i < objectGroupElementList.getCount(); i++) {
+      readTileObjectGroup(tile, objectGroupElementList.getElement(i));
     }
 
     tileSet.add(tile);
@@ -98,17 +66,10 @@ public class TileSetReader {
    * */
   private void readTileObjectGroup(Tile tile, Element objectGroup) {
 
-    NodeList objectNodes = objectGroup.getElementsByTagName("object");
+    ElementList objectElements = objectGroup.getElementsByTag("object");
 
-    for (int i = 0; i < objectNodes.getLength(); i++) {
-
-      Node objectNode = objectNodes.item(i);
-
-      if (objectNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      }
-
-      readTileObject(tile, (Element) objectNode);
+    for (int i = 0; i < objectElements.getCount(); i++) {
+      readTileObject(tile, objectElements.getElement(i));
     }
   }
 
@@ -117,23 +78,16 @@ public class TileSetReader {
    * @param object The XML object node containing the data points.
    * */
   private void readTileObject(Tile tile, Element objectElement) {
-    readTilePolygons(tile, objectElement.getElementsByTagName("polygon"));
+    readTilePolygons(tile, objectElement.getElementsByTag("polygon"));
   }
 
   /** Reads the list of polygons found in an object element.
    * @param tile The tile to put the polygon data into.
-   * @param polygonNodes The list of polygon nodes from the XML file.
+   * @param polygonElements The list of polygon nodes from the XML file.
    * */
-  private void readTilePolygons(Tile tile, NodeList polygonNodes) {
-
-    for (int i = 0; i < polygonNodes.getLength(); i++) {
-
-      Node polygonNode = polygonNodes.item(i);
-      if (polygonNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      }
-
-      readTilePolygon(tile, (Element) polygonNode);
+  private void readTilePolygons(Tile tile, ElementList polygonElements) {
+    for (int i = 0; i < polygonElements.getCount(); i++) {
+      readTilePolygon(tile, polygonElements.getElement(i));
     }
   }
 

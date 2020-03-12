@@ -5,7 +5,6 @@ import game.Tile;
 import game.TileMap;
 import game.TileMapReader;
 import game.TileSet;
-import game.TileSetReader;
 
 import java.io.InputStream;
 
