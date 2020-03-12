@@ -1,4 +1,4 @@
-package game.platforms.awt;
+package game.platforms.desktop;
 
 import game.xml.Element;
 import game.xml.ElementList;

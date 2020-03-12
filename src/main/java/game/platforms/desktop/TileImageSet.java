@@ -1,4 +1,4 @@
-package game.platforms.awt;
+package game.platforms.desktop;
 
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;

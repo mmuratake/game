@@ -1,6 +1,11 @@
-package game;
+package game.platforms.desktop;
 
-import game.platforms.awt.GameUi;
+import game.Game;
+import game.Tile;
+import game.TileMap;
+import game.TileMapReader;
+import game.TileSet;
+import game.TileSetReader;
 
 import java.io.InputStream;
 

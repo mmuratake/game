@@ -1,4 +1,4 @@
-package game.platforms.awt;
+package game.platforms.desktop;
 
 import game.Game;
 import game.GameRenderer;

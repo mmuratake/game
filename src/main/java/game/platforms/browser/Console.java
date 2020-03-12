@@ -1,4 +1,4 @@
-package game.platforms.teavm;
+package game.platforms.browser;
 
 import org.teavm.jso.JSBody;
 

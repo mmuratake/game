@@ -1,3 +1,5 @@
+package game.platforms.browser;
+
 import org.teavm.jso.JSObject;
 
 /** The interface for the XML reader.

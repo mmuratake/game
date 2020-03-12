@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
 
-mainClassName = 'game.GameApp'
+mainClassName = 'game.platforms.desktop.GameApp'
 
 repositories {
   jcenter()
@@ -12,7 +12,7 @@ sourceSets {
   main {
     java {
       srcDirs = [ 'src/main/java' ]
-      exclude 'game/platforms/teavm'
+      exclude 'game/platforms/browser'
     }
     resources {
       srcDirs = [
