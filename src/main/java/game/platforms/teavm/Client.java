@@ -24,8 +24,23 @@ public class Client {
 
     TileSet tileSet = new TileSet();
 
+    TileSetReader tileSetReader = new TileSetReader(tileSet);
+
     GameView gameView = new GameView(document);
 
     Game game = new Game(tileSet);
+
+    try {
+      System.out.println("avail: " + tileSetStream.available());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    /*
+    try {
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    */
   }
 }
