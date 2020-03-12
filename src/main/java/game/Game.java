@@ -28,6 +28,12 @@ public class Game {
    * */
   private ArrayList<TileMap> tileMaps;
 
+  /** The object templates that are available for creation in the game. */
+  private ArrayList<ObjectTemplate> objectTemplates;
+
+  /** The instantiated game objects. */
+  private ArrayList<Object> objects;
+
   /** Enumerates the buttons available to the game.
    * The way this buttons get pressed or released
    * depends on the origin of the user interface.
@@ -42,6 +48,8 @@ public class Game {
    * @param tileSet The game's tile data.
    * */
   public Game(TileSet tileSet) {
+    this.objectTemplates = new ArrayList<ObjectTemplate>();
+    this.objects = new ArrayList<Object>();
     this.playerPosition = new Vector(7, 18);
     this.playerVelocity = new Vector(0, 0);
     this.tileSet = tileSet;
