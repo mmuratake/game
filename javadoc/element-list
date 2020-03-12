@@ -1,2 +1,4 @@
 game
-game.platforms.awt
+game.math
+game.platforms.desktop
+game.xml
