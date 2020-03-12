@@ -1,5 +1,11 @@
 package game.platforms.teavm;
 
+import game.Game;
+import game.TileSet;
+import game.TileSetReader;
+
+import java.io.InputStream;
+
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 
@@ -12,10 +18,14 @@ public class Client {
    * */
   public static void main(String[] args) {
 
-    Console.log("Starting game");
-
     HTMLDocument document = HTMLDocument.current();
 
+    InputStream tileSetStream = ClassLoader.getSystemClassLoader().getResourceAsStream("tiles.tsx");
+
+    TileSet tileSet = new TileSet();
+
     GameView gameView = new GameView(document);
+
+    Game game = new Game(tileSet);
   }
 }
