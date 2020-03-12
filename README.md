@@ -3,7 +3,7 @@ About
 
 This project is for a 2D game.
 
-### Download
+## Download
 
 You can download the latest releases here:
 
@@ -13,12 +13,14 @@ You can download the latest releases here:
 Download [game.zip](distributions/game.zip) if you're not sure which one you want.
 
 Run the game by running the file "bin/game.bat" (or "bin/game") if you're not on Windows.
+You'll need to have Java installed to run the game.
 
-### Developer Source Code Documentation
+
+## Play on the Browser
+
+You can [play the game online](play/index.html), but it's still a work in progress.
+Visit the page again to watch for updates.
+
+## Developer Source Code Documentation
 
 If you're a game developer and interested in contributing, you can check out the [source code documentation](javadoc/index.html).
-
-### Play on the Browser
-
-This is a future that is still a work in progress.
-Visit the page again in the future to see if it's been added.
