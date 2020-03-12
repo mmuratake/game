@@ -1,5 +1,6 @@
 package game;
 
+import game.math.Matrix;
 import java.util.ArrayList;
 
 /** A tile map can be thought of as one "room" in the game.

@@ -1,6 +1,6 @@
 package game.platforms.desktop;
 
-import game.Rect;
+import game.math.Rect;
 import game.RenderCommandVisitor;
 import game.DrawTileCommand;
 import game.TileID;

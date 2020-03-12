@@ -1,12 +1,10 @@
-package game;
+package game.math;
 
 /** A two dimensional vector.
  * Used in various locations to indicate
- * either direction or position. Most of
- * the functions in this class are not documented
- * simply because they're self-documenting.
+ * either direction or position.
  * */
-class Vector {
+public class Vector {
 
   private double x;
 
@@ -70,6 +68,8 @@ class Vector {
   /** Sets the Y component of the vector. */
   public void setY(double y) { this.y = y; }
 
+  /** Indicates if the net direction is upwards.
+   * @return True if the direction is mostly upwards, false otherwise. */
   public boolean isMostlyUp() {
     if (y > 0 && y > Math.abs(x)) {
       return true;

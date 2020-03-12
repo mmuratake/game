@@ -1,5 +1,7 @@
 package game;
 
+import game.math.Vector;
+import game.math.Matrix;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

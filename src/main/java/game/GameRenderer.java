@@ -1,5 +1,8 @@
 package game;
 
+import game.math.Rect;
+import game.math.Vector;
+import game.math.Matrix;
 import java.awt.Color;
 
 /** This class is used to describe how the game

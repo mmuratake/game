@@ -1,5 +1,7 @@
 package game;
 
+import game.math.Rect;
+
 /** This is a command to the graphics processor to draw a tile.
  * @see RenderCommand
  * @see RenderCommandVisitor

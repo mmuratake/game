@@ -1,5 +1,7 @@
 package game;
 
+import game.math.Vector;
+
 /** This class contains object data that
  * changes throughout game play. It tracks
  * current object velocity, position, and

@@ -1,5 +1,6 @@
 package game;
 
+import game.math.Vector;
 import java.awt.Color;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package game;
+package game.math;
 
 /** Represents a simple 2D rectangle.
  * Can either be used as an integer rectangle

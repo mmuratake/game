@@ -1,5 +1,6 @@
 package game;
 
+import game.math.Rect;
 import java.awt.Color;
 
 /** This command is used to fill an area with color.

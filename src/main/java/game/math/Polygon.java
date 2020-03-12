@@ -1,4 +1,4 @@
-package game;
+package game.math;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class Polygon {
   /** Adds a point to the polygon.
    * @param point The point to be added.
    * */
-  void add(Vector point) {
+  public void add(Vector point) {
     points.add(point);
   }
 }

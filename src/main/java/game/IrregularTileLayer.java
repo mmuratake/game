@@ -1,5 +1,7 @@
 package game;
 
+import game.math.Vector;
+import game.math.Matrix;
 import java.util.ArrayList;
 
 /** This class is a tile layer, part of a tile map,

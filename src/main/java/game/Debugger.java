@@ -1,5 +1,8 @@
 package game;
 
+import game.math.Rect;
+import game.math.Matrix;
+
 /** This class is used to print information
  * within the classes in this project. It is
  * used primarily for debugging purposes.

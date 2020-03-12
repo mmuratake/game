@@ -1,4 +1,4 @@
-package game;
+package game.math;
 
 /** A simple integer matrix, used for referencing tiles.
  * */
@@ -17,7 +17,7 @@ public class Matrix {
    * @param w The width of the matrix.
    * @param h The height of the matrix.
    * */
-  Matrix(int w, int h) {
+  public Matrix(int w, int h) {
     this.width = w;
     this.height = h;
     this.values = new long[w * h];
@@ -26,7 +26,7 @@ public class Matrix {
   /** Gets the height of the matrix.
    * @return The height of the matrix.
    * */
-  int getHeight() {
+  public int getHeight() {
     return height;
   }
 
@@ -36,14 +36,14 @@ public class Matrix {
    * @return The value at the specified location.
    * If the coordinates are out of bounds, zero is returned instead.
    * */
-  long getValue(int x, int y) {
+  public long getValue(int x, int y) {
     return inBounds(x, y) ? values[indexOf(x, y)] : 0;
   }
 
   /** Gets the width of the matrix.
    * @return The width of the matrix.
    * */
-  int getWidth() {
+  public int getWidth() {
     return width;
   }
 
@@ -54,7 +54,7 @@ public class Matrix {
    * @param y The Y coordinate of the value to assign.
    * @param value The value to assign to the matrix.
    * */
-  void setValue(int x, int y, long value) {
+  public void setValue(int x, int y, long value) {
     if (inBounds(x, y)) {
       values[indexOf(x, y)] = value;
     }
@@ -67,7 +67,7 @@ public class Matrix {
    * @param y The Y coordinate to check.
    * @return True if the coordinates are in bounds, false otherwise
    * */
-  boolean inBounds(int x, int y) {
+  public boolean inBounds(int x, int y) {
     return (x < width) && (y < height);
   }
 

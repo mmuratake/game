@@ -1,5 +1,6 @@
 package game;
 
+import game.math.Polygon;
 import java.util.ArrayList;
 
 /** Represents a single tile within a tile set.
