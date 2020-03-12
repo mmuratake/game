@@ -8,4 +8,4 @@ gradle build
 gradle javadoc
 
 # Run TeaVM build
-mvn package
+mvn --quiet package
