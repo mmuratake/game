@@ -29,8 +29,8 @@ doc_dst_dir=$git_dir/javadoc
 dist_src_dir=$PWD/build/distributions
 dist_dst_dir=$git_dir/distributions
 
-webapp_src_dir=$PWD/target/game-1.0-SNAPSHOT
-webapp_dst_dir=$git_dir/webapp
+play_src_dir=$PWD/target/game-1.0-SNAPSHOT
+play_dst_dir=$git_dir/play
 
 # Clone a copy of the project, checking out the 'gh-pages' branch.
 git clone $git_url $git_dir
@@ -41,6 +41,12 @@ git -C $git_dir checkout gh-pages
 # Remove old docs
 rm -Rf $doc_dst_dir/*
 
+# Remove the old distributions
+rm -Rf $dist_dst_dir/*
+
+# Remove the old web app
+rm -Rf $play_dst_dir/*
+
 # Copy over the newly generated documentation
 rsync --info=progress2 -r $doc_src_dir/ $doc_dst_dir
 
@@ -48,7 +54,7 @@ rsync --info=progress2 -r $doc_src_dir/ $doc_dst_dir
 rsync --info=progress2 -r $dist_src_dir/ $dist_dst_dir
 
 # Copy over the TeaVM release
-rsync --info=progress2 -r $webapp_src_dir/ $webapp_dst_dir
+rsync --info=progress2 -r $play_src_dir/ $play_dst_dir
 
 # Setup Travis CI credentials
 git -C $git_dir config --global user.email "travis@travis-ci.org"
@@ -65,6 +71,12 @@ git -C $git_dir add distributions
 
 # Commit the new distributions
 git -C $git_dir commit -m "Latest distributions from Travis build $TRAVIS_BUILD_NUMBER"
+
+# Stage the new web app
+git -C $git_dir add play
+
+# Commit the new web app
+git -C $git_dir commit -m "Latest browser release from Travis build $TRAVIS_BUILD_NUMBER"
 
 # And boom!
 git -C $git_dir push $git_url gh-pages
