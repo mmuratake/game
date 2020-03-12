@@ -40,6 +40,24 @@
   </dependencies>
 
   <build>
+
+    <resources>
+      <resource>
+        <directory>textures</directory>
+        <includes>
+          <include>**/*.png</include>
+          <include>**/*.gif</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>tiled</directory>
+        <includes>
+          <include>**/*.tsx</include>
+          <include>**/*.tmx</include>
+        </includes>
+      </resource>
+    </resources>
+
     <plugins>
       <!-- Configure Java compiler to use Java 8 syntax  -->
       <plugin>
