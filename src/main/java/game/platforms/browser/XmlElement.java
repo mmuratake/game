@@ -3,6 +3,8 @@ package game.platforms.browser;
 import game.xml.ElementList;
 
 import org.teavm.jso.dom.xml.Element;
+import org.teavm.jso.dom.xml.Node;
+import org.teavm.jso.dom.xml.NodeList;
 
 /** This is an implementation of the XML element interface
  * so that XML documents can be unmarshalled into tile set
@@ -29,6 +31,12 @@ public class XmlElement implements game.xml.Element {
 
     ElementList elements = new ElementList();
 
+    NodeList nodes = element.getElementsByTagName(name);
+
+    for (int i = 0; i < nodes.getLength(); i++) {
+      elements.add(new XmlElement((Element) nodes.item(i)));
+    }
+
     return elements;
   }
 
@@ -41,8 +49,23 @@ public class XmlElement implements game.xml.Element {
     return element.getAttribute(name);
   }
 
+  /** Gets the text inside of the XML node.
+   * @return The text inside of the element.
+   * */
   @Override
   public String getInnerText() {
-    return element.getNodeValue();
+
+    String innerText = "";
+
+    NodeList childNodes = element.getChildNodes();
+
+    for (int i = 0; i < childNodes.getLength(); i++) {
+      Node node = childNodes.item(i);
+      if (node.getNodeType() == Node.TEXT_NODE) {
+        innerText += node.getNodeValue();
+      }
+    }
+
+    return innerText;
   }
 }
