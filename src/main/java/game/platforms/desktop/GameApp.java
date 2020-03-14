@@ -3,7 +3,6 @@ package game.platforms.desktop;
 import game.Game;
 import game.Tile;
 import game.TileMap;
-import game.TileMapReader;
 import game.TileSet;
 
 import java.io.InputStream;

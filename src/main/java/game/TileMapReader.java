@@ -2,19 +2,9 @@ package game;
 
 import game.math.Vector;
 import game.math.Matrix;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
-import org.xml.sax.SAXException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.io.IOException;
-import java.io.InputStream;
+import game.xml.Element;
+import game.xml.ElementList;
 
 /** This class is used to load a tile map
  * from the tile map editors data file.
@@ -31,36 +21,15 @@ public class TileMapReader {
     this.tileMap = tileMap;
   }
 
-  /** Reads the tile map data from a file.
-   * @param inputStream The input stream to read the map data from.
+  /** Reads the tile map data from an XML element.
+   * @param root The root XML element to read the tile map from.
    * */
-  public void readFromStream(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
+  public void readFromElement(Element root) {
 
-    DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+    ElementList layerElements = root.getElementsByTag("layer");
 
-    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-
-    Document doc = docBuilder.parse(inputStream);
-
-    readFromDocument(doc);
-  }
-
-  /** Reads the tile map data from the DOM.
-   * @param doc The DOM instance to read the data from.
-   * */
-  private void readFromDocument(Document doc) throws IOException {
-
-    Element root = doc.getDocumentElement();
-
-    NodeList layerNodes = root.getElementsByTagName("layer");
-
-    for (int i = 0; i < layerNodes.getLength(); i++) {
-      Node layerNode = layerNodes.item(i);
-      if (layerNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      } else {
-        readLayer((Element) layerNode);
-      }
+    for (int i = 0; i < layerElements.getCount(); i++) {
+      readLayer(layerElements.getElement(i));
     }
   }
 
@@ -71,15 +40,10 @@ public class TileMapReader {
 
     IrregularTileLayer layer = new IrregularTileLayer();
 
-    NodeList dataNodeList = layerElement.getElementsByTagName("data");
+    ElementList dataElementList = layerElement.getElementsByTag("data");
 
-    for (int i = 0; i < dataNodeList.getLength(); i++) {
-      Node dataNode = dataNodeList.item(i);
-      if (dataNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      } else {
-        readLayerData(layer, (Element) dataNode);
-      }
+    for (int i = 0; i < dataElementList.getCount(); i++) {
+      readLayerData(layer, dataElementList.getElement(i));
     }
 
     tileMap.addLayer(layer.combine());
@@ -95,15 +59,10 @@ public class TileMapReader {
       throw new IllegalArgumentException("Unsupported layer encoding");
     }
 
-    NodeList chunkNodeList = layerData.getElementsByTagName("chunk");
+    ElementList chunkElementList = layerData.getElementsByTag("chunk");
 
-    for (int i = 0; i < chunkNodeList.getLength(); i++) {
-      Node chunkNode = chunkNodeList.item(i);
-      if (chunkNode.getNodeType() != Node.ELEMENT_NODE) {
-        continue;
-      } else {
-        readChunk(tileLayer, (Element) chunkNode);
-      }
+    for (int i = 0; i < chunkElementList.getCount(); i++) {
+      readChunk(tileLayer, chunkElementList.getElement(i));
     }
   }
 
@@ -127,7 +86,7 @@ public class TileMapReader {
 
     Matrix tiles = new Matrix(w, h);
 
-    readChunkValues(tiles, chunkElement.getTextContent());
+    readChunkValues(tiles, chunkElement.getInnerText());
 
     tileLayer.addChunk(position, tiles);
   }
