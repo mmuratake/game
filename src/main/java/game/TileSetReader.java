@@ -22,8 +22,8 @@ public class TileSetReader {
     this.tileSet = tileSet;
   }
 
-  /** Reads the tile set data from an open document.
-   * @param doc The document to get the tile set data from.
+  /** Reads a tile set from an XML node.
+   * @param root The root XML node to read the tile set from.
    * */
   public void readFromElement(Element root) {
 
