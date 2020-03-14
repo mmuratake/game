@@ -1,33 +1,35 @@
 package game.platforms.browser;
 
-import game.TileSet;
+import game.TileMap;
+import game.TileMapReader;
 
 import org.teavm.jso.dom.xml.Document;
 
 import org.teavm.jso.ajax.XMLHttpRequest;
 import org.teavm.jso.ajax.ReadyStateChangeHandler;
 
-/** This class is used for loading the tile set using an AJAX request.
- * This class was created because TeaVM doesn't support reading resources.
- * @see game.TileSet
+/** This class is for loading tile maps into the game.
+ * It requests the browser to download the tile maps
+ * so that the game instance can use them.
+ * @see TileMap
  * */
-public class TileSetLoader implements ReadyStateChangeHandler {
+public class TileMapLoader implements ReadyStateChangeHandler {
 
-  /** The tile set instance to put the data into. */
-  private TileSet tileSet;
+  /** The tile map instance to put the data into. */
+  private TileMap tileMap;
 
-  /** The AJAX request that was made for the tile set. */
+  /** The AJAX request that was made for the tile map. */
   private XMLHttpRequest request;
 
-  /** Constructs a new tile set loader.
-   * @param tileSet The tile set to put the data into.
+  /** Constructs a new tile map loader.
+   * @param tileMap The tile map to put the data into.
    * */
-  public TileSetLoader(TileSet tileSet) {
-    this.tileSet = tileSet;
+  public TileMapLoader(TileMap tileMap) {
+    this.tileMap = tileMap;
   }
 
-  /** Loads the tile set from a URL.
-   * @param url The URL to load the tile set from.
+  /** Loads the tile map from a URL.
+   * @param url The URL to load the tile map from.
    * */
   public void load(String url) {
     request = XMLHttpRequest.create();
@@ -53,7 +55,7 @@ public class TileSetLoader implements ReadyStateChangeHandler {
   private void onComplete() {
 
     if (request.getStatus() != 200) {
-      System.err.println("Failed to load tile set");
+      System.err.println("Failed to load tile map");
       return;
     }
 
@@ -63,13 +65,13 @@ public class TileSetLoader implements ReadyStateChangeHandler {
     }
   }
 
-  /** Reads the tile set from an XML document.
+  /** Reads the tile map from an XML document.
    * @param doc The XML document to read from.
    * */
   private void readFromDocument(Document doc) {
 
-    game.TileSetReader tileSetReader = new game.TileSetReader(tileSet);
+    TileMapReader tileMapReader = new TileMapReader(tileMap);
 
-    tileSetReader.readFromElement(new XmlElement(doc.getDocumentElement()));
+    tileMapReader.readFromElement(new XmlElement(doc.getDocumentElement()));
   }
 }

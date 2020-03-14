@@ -1,7 +1,10 @@
 package game.platforms.browser;
 
 import game.Game;
+import game.TileMap;
 import game.TileSet;
+
+import java.util.ArrayList;
 
 import java.io.InputStream;
 
@@ -26,9 +29,36 @@ public class Client {
 
     loadTiles(tileSet);
 
-    GameView gameView = new GameView(document);
-
     Game game = new Game(tileSet);
+
+    loadMaps(game);
+
+    GameView gameView = new GameView(document);
+  }
+
+  /** Loads the maps required by the game.
+   * @param game The game instance to load the maps for.
+   * */
+  private static void loadMaps(Game game) {
+
+    ArrayList<String> mapFileNames = game.getMapFileNames();
+
+    for (String mapFileName : mapFileNames) {
+      loadMap(game, "WEB-INF/classes/" + mapFileName);
+    }
+  }
+
+  /** Loads a map to be used by the game.
+   * @param game The game instance to put the map into.
+   * @param url The url of the map to load.
+   * */
+  private static void loadMap(Game game, String url) {
+
+    TileMap tileMap = new TileMap();
+
+    TileMapLoader tileMapLoader = new TileMapLoader(tileMap);
+
+    tileMapLoader.load(url);
   }
 
   /** Loads the tile set.
