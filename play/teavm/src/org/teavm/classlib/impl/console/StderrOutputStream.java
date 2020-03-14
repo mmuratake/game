@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 Alexey Andreev.
+ *  Copyright 2019 Alexey Andreev.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -13,9 +13,19 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.teavm.classlib.java.lang;
+package org.teavm.classlib.impl.console;
 
-class TSystemClassLoader extends TClassLoader {
-    TSystemClassLoader() {
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class StderrOutputStream extends OutputStream {
+    public static final StderrOutputStream INSTANCE = new StderrOutputStream();
+
+    private StderrOutputStream() {
+    }
+
+    @Override
+    public void write(int b) throws IOException {
+        Console.writeStderr(b);
     }
 }

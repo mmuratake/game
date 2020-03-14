@@ -103,9 +103,7 @@ public class TThrowable extends RuntimeException {
     @Override
     public Throwable fillInStackTrace() {
         if (PlatformDetector.isLowLevel()) {
-            int stackSize = ExceptionHandling.callStackSize() - 1;
-            stackTrace = new TStackTraceElement[stackSize];
-            ExceptionHandling.fillStackTrace((StackTraceElement[]) (Object) stackTrace);
+            stackTrace = (TStackTraceElement[]) (Object) ExceptionHandling.fillStackTrace();
         }
         return this;
     }
@@ -162,7 +160,7 @@ public class TThrowable extends RuntimeException {
         stream.println();
         if (stackTrace != null) {
             for (TStackTraceElement element : stackTrace) {
-                stream.print("    at ");
+                stream.print("\tat ");
                 stream.println(element);
             }
         }
@@ -181,7 +179,7 @@ public class TThrowable extends RuntimeException {
         stream.println();
         if (stackTrace != null) {
             for (TStackTraceElement element : stackTrace) {
-                stream.print("  at ");
+                stream.print("\tat ");
                 stream.println(element);
             }
         }

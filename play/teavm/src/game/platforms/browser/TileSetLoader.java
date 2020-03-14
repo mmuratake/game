@@ -19,11 +19,15 @@ public class TileSetLoader implements ReadyStateChangeHandler {
   /** The AJAX request that was made for the tile set. */
   private XMLHttpRequest request;
 
+  /** The download observer to notify on success. */
+  private DownloadObserver observer;
+
   /** Constructs a new tile set loader.
    * @param tileSet The tile set to put the data into.
    * */
-  public TileSetLoader(TileSet tileSet) {
+  public TileSetLoader(TileSet tileSet, DownloadObserver observer) {
     this.tileSet = tileSet;
+    this.observer = observer;
   }
 
   /** Loads the tile set from a URL.
@@ -53,12 +57,14 @@ public class TileSetLoader implements ReadyStateChangeHandler {
   private void onComplete() {
 
     if (request.getStatus() != 200) {
-      System.err.println("Failed to load tile set");
+      observer.failed(DownloadObserver.Item.TILE_SET, request.getStatusText());
       return;
     }
 
     Document doc = request.getResponseXML();
-    if (doc != null) {
+    if (doc == null) {
+      observer.failed(DownloadObserver.Item.TILE_SET, "Failed to get resposne XML");
+    } else {
       readFromDocument(doc);
     }
   }
@@ -71,5 +77,7 @@ public class TileSetLoader implements ReadyStateChangeHandler {
     game.TileSetReader tileSetReader = new game.TileSetReader(tileSet);
 
     tileSetReader.readFromElement(new XmlElement(doc.getDocumentElement()));
+
+    observer.loaded(DownloadObserver.Item.TILE_SET);
   }
 }
