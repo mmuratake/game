@@ -49,4 +49,11 @@ public class Tile {
   public String getImagePath() {
     return imagePath;
   }
+
+  /** Assigns the image path for the tile.
+   * @param imagePath The image path to assign the tile.
+   * */
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
+  }
 }

@@ -21,11 +21,15 @@ public class TileMapLoader implements ReadyStateChangeHandler {
   /** The AJAX request that was made for the tile map. */
   private XMLHttpRequest request;
 
+  /** The observer of the tile map download. */
+  private DownloadObserver observer;
+
   /** Constructs a new tile map loader.
    * @param tileMap The tile map to put the data into.
    * */
-  public TileMapLoader(TileMap tileMap) {
+  public TileMapLoader(TileMap tileMap, DownloadObserver observer) {
     this.tileMap = tileMap;
+    this.observer = observer;
   }
 
   /** Loads the tile map from a URL.
@@ -55,12 +59,14 @@ public class TileMapLoader implements ReadyStateChangeHandler {
   private void onComplete() {
 
     if (request.getStatus() != 200) {
-      System.err.println("Failed to load tile map");
+      this.observer.failed(DownloadObserver.Item.TILE_MAP, request.getStatusText());
       return;
     }
 
     Document doc = request.getResponseXML();
-    if (doc != null) {
+    if (doc == null) {
+      this.observer.failed(DownloadObserver.Item.TILE_MAP, "Failed to get XML response");
+    } else {
       readFromDocument(doc);
     }
   }
@@ -73,5 +79,7 @@ public class TileMapLoader implements ReadyStateChangeHandler {
     TileMapReader tileMapReader = new TileMapReader(tileMap);
 
     tileMapReader.readFromElement(new XmlElement(doc.getDocumentElement()));
+
+    this.observer.loaded(DownloadObserver.Item.TILE_MAP);
   }
 }

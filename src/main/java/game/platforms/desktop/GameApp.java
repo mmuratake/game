@@ -30,9 +30,11 @@ public class GameApp {
     /* Indicate to Java that we want GPU accelerated graphics. */
     System.setProperty("sun.java2d.opengl", "true");
 
+    Game game = new Game();
+
     InputStream tileSetStream = ClassLoader.getSystemClassLoader().getResourceAsStream("tiles.tsx");
 
-    TileSet tileSet = new TileSet();
+    TileSet tileSet = game.getTileSet();
 
     TileSetReader tileSetReader = new TileSetReader(tileSet);
 
@@ -41,8 +43,6 @@ public class GameApp {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    Game game = new Game(tileSet);
 
     loadMaps(game);
 

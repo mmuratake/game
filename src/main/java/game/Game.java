@@ -44,15 +44,13 @@ public class Game {
     BUTTON_B
   }
 
-  /** Constructs a new instance of the game.
-   * @param tileSet The game's tile data.
-   * */
-  public Game(TileSet tileSet) {
+  /** Constructs a new instance of the game. */
+  public Game() {
     this.objectTemplates = new ArrayList<ObjectTemplate>();
     this.objects = new ArrayList<Object>();
     this.playerPosition = new Vector(7, 18);
     this.playerVelocity = new Vector(0, 0);
-    this.tileSet = tileSet;
+    this.tileSet = new TileSet();
     this.tileMaps = new ArrayList<TileMap>();
   }
 
@@ -122,6 +120,16 @@ public class Game {
   /** Accesses the current map being played. */
   public TileMap getCurrentMap() {
     return tileMaps.get(1);
+  }
+
+  /** Access the tile set used by the game.
+   * This function is used to load the data
+   * into the tile set from either the file system
+   * or from a HTTP request.
+   * @return The tile set instance created by the game.
+   * */
+  public TileSet getTileSet() {
+    return tileSet;
   }
 
   /** Gets the position of the player.
