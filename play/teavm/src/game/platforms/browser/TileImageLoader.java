@@ -1,6 +1,8 @@
 package game.platforms.browser;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLImageElement;
@@ -14,11 +16,11 @@ public class TileImageLoader implements EventListener {
   /** Used for listening for the tile image to be loaded. */
   public interface Observer {
     /** Called when all images are loaded. */
-    public void tileImagesLoaded(ArrayList<HTMLImageElement> elements);
+    public void tileImagesLoaded(TreeMap<Integer, HTMLImageElement> elements);
   }
 
   /** The image element being loaded. */
-  private ArrayList<HTMLImageElement> elements;
+  private TreeMap<Integer, HTMLImageElement> elements;
 
   /** The number of images currently loaded. */
   private int loadedCount;
@@ -33,7 +35,7 @@ public class TileImageLoader implements EventListener {
    * @param urlList The list of image URLs to load.
    * @param observer The observer to notify when all images have been loaded.
    * */
-  public TileImageLoader(ArrayList<String> urlList, Observer observer) {
+  public TileImageLoader(TreeMap<Integer, String> urlList, Observer observer) {
 
     HTMLDocument document = HTMLDocument.current();
 
@@ -42,13 +44,15 @@ public class TileImageLoader implements EventListener {
     this.loadedCount = 0;
     this.required = urlList.size();
 
-    this.elements = new ArrayList<HTMLImageElement>();
+    this.elements = new TreeMap<Integer, HTMLImageElement>();
 
-    for (String url : urlList) {
+    for (Map.Entry<Integer, String> url : urlList.entrySet()) {
+
       HTMLImageElement element = (HTMLImageElement) document.createElement("img");
       element.listenLoad(this);
-      element.setSrc(url);
-      elements.add(element);
+      element.setSrc(url.getValue());
+
+      this.elements.put(url.getKey(), element);
     }
   }
 

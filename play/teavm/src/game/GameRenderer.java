@@ -40,7 +40,7 @@ public class GameRenderer {
     TileMap tileMap = game.getCurrentMap();
 
     /* Set the background color */
-    cmdQueue.add(new FillRectCommand(Color.black, new Rect<Integer>(0, 0, xRes, yRes)));
+    cmdQueue.add(new FillRectCommand(new Color(0, 0, 0, 0), new Rect<Integer>(0, 0, xRes, yRes)));
 
     for (int i = 0; i < tileMap.getLayerCount(); i++) {
       renderLayer(cmdQueue, tileMap.getLayer(i), center);

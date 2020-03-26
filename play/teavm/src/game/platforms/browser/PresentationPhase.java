@@ -3,6 +3,7 @@ package game.platforms.browser;
 import game.Game;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
@@ -28,7 +29,7 @@ public class PresentationPhase implements GameLoader.Observer {
    * @param images The loaded tile images.
    * */
   @Override
-  public void onSuccess(ArrayList<HTMLImageElement> images) {
+  public void onSuccess(TreeMap<Integer, HTMLImageElement> images) {
 
     HTMLDocument document = HTMLDocument.current();
 

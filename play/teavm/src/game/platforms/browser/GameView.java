@@ -1,12 +1,19 @@
 package game.platforms.browser;
 
+import game.DrawTileCommand;
+import game.FillRectCommand;
 import game.Game;
 import game.GameRenderer;
 import game.RenderCommandQueue;
+import game.RenderCommandVisitor;
 import game.Tile;
+import game.TileID;
 import game.TileSet;
 
+import game.math.Rect;
+
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
@@ -19,7 +26,7 @@ import org.teavm.jso.canvas.CanvasImageSource;
  * Internally, it creates a 'canvas' HTML element
  * for the game to be drawn with.
  * */
-public class GameView {
+public class GameView implements RenderCommandVisitor {
 
   /** The game being viewed. */
   private Game game;
@@ -31,7 +38,7 @@ public class GameView {
   private CanvasRenderingContext2D context;
 
   /** The tile images to be rendered. */
-  private ArrayList<HTMLImageElement> images;
+  private TreeMap<Integer, HTMLImageElement> images;
 
   /** Used for creating the render command queue. */
   private GameRenderer gameRenderer;
@@ -43,7 +50,7 @@ public class GameView {
    * @param game The game to be viewed.
    * @param document The document to add the game view to.
    * */
-  public GameView(Game game, ArrayList<HTMLImageElement> images, HTMLDocument document) {
+  public GameView(Game game, TreeMap<Integer, HTMLImageElement> images, HTMLDocument document) {
 
     this.game = game;
 
@@ -74,6 +81,32 @@ public class GameView {
 
     this.gameRenderer.render(this.renderCmdQueue, this.game);
 
-    this.context.drawImage(images.get(0), 0, 0, 100, 100);
+    this.renderCmdQueue.visitAll(this);
+  }
+
+  /** Draws a tile image onto the canvas.
+   * @param drawTileCommand The command instance
+   * containing the data required to draw the tile.
+   * */
+  @Override
+  public void visit(DrawTileCommand drawTileCommand) {
+
+    Rect<Integer> targetArea = drawTileCommand.getRect();
+
+    long tileID = drawTileCommand.getTileID();
+
+    this.context.drawImage(images.get((int) TileID.toIndex(tileID)),
+                           targetArea.getX(),
+                           targetArea.getY(),
+                           targetArea.getWidth(),
+                           targetArea.getHeight());
+  }
+
+  /** Fills a rectangle on the canvas with a specified color.
+   * @param fillRectCommand The command instance containing the
+   * information required to fill the rectangle with color.
+   * */
+  @Override
+  public void visit(FillRectCommand fillRectCommand) {
   }
 }
