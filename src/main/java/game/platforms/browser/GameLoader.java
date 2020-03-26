@@ -6,6 +6,7 @@ import game.TileMap;
 import game.TileSet;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.teavm.jso.dom.html.HTMLImageElement;
 
@@ -23,7 +24,7 @@ public class GameLoader implements DownloadObserver, TileImageLoader.Observer {
     /** Called when all the resources download successfully.
      * @param images The loaded tile images.
      * */
-    public void onSuccess(ArrayList<HTMLImageElement> images);
+    public void onSuccess(TreeMap<Integer, HTMLImageElement> images);
     /** Called when one of the resources fail to download. */
     public void onFailure(String message);
   }
@@ -41,7 +42,7 @@ public class GameLoader implements DownloadObserver, TileImageLoader.Observer {
   private int tileSetsLoaded;
 
   /** The loaded tile images. */
-  private ArrayList<HTMLImageElement> tileImages;
+  private TreeMap<Integer, HTMLImageElement> tileImages;
 
   /** Constructs a new game loader instance.
    * @param game The game to put the contents into.
@@ -76,7 +77,7 @@ public class GameLoader implements DownloadObserver, TileImageLoader.Observer {
 
     TileSet tileSet = game.getTileSet();
 
-    ArrayList<String> urlList = new ArrayList<String>();
+    TreeMap<Integer, String> urlList = new TreeMap<Integer, String>();
 
     for (int i = 0; i < tileSet.getTileCount(); i++) {
 
@@ -86,7 +87,7 @@ public class GameLoader implements DownloadObserver, TileImageLoader.Observer {
 
       String url = "WEB-INF/classes/" + filename;
 
-      urlList.add(url);
+      urlList.put((int) tile.getID(), url);
     }
 
     new TileImageLoader(urlList, this);
@@ -96,7 +97,7 @@ public class GameLoader implements DownloadObserver, TileImageLoader.Observer {
    * @param images The loaded iamges.
    * */
   @Override
-  public void tileImagesLoaded(ArrayList<HTMLImageElement> images) {
+  public void tileImagesLoaded(TreeMap<Integer, HTMLImageElement> images) {
     this.tileImages = images;
     checkCompletion();
   }
