@@ -765,12 +765,6 @@ var $java = Object.create(null);
 function jl_Object() {
     this.$id$ = 0;
 }
-function jl_Object__init_() {
-    var var_0 = new jl_Object();
-    jl_Object__init_0(var_0);
-    return var_0;
-}
-function jl_Object__init_0($this) {}
 function jl_Object_getClass($this) {
     return jl_Class_getClass($this.constructor);
 }
@@ -825,7 +819,7 @@ function jl_Object_clone($this) {
 }
 var gpb_Client = $rt_classWithoutFields();
 function gpb_Client_main($args) {
-    var $game, $presentationPhase, $gameLoader, var$5, var$6, var$7, var$8;
+    var $game, $document, $presentationPhase, $gameLoader, $body, var$7, var$8;
     jl_String__clinit_();
     jl_Integer__clinit_();
     jl_Character__clinit_();
@@ -841,14 +835,16 @@ function gpb_Client_main($args) {
     jur_FSet__clinit_();
     jur_AbstractCharClass$PredefinedCharacterClasses__clinit_();
     jur_AbstractCharClass__clinit_();
+    otcic_StdoutOutputStream__clinit_();
+    (otjdh_HTMLDocument_current()).body.setAttribute("style", "margin: 0px; overflow: hidden");
     $game = new g_Game;
     $game.$objectTemplates = ju_ArrayList__init_();
     $game.$objects = ju_ArrayList__init_();
     $game.$playerPosition = gm_Vector__init_(7.0, 18.0);
     $game.$playerVelocity = gm_Vector__init_(0.0, 0.0);
-    $presentationPhase = new g_TileSet;
-    $presentationPhase.$tileList = ju_ArrayList__init_();
-    $game.$tileSet = $presentationPhase;
+    $document = new g_TileSet;
+    $document.$tileList = ju_ArrayList__init_();
+    $game.$tileSet = $document;
     $game.$tileMaps = ju_ArrayList__init_();
     $presentationPhase = new gpb_PresentationPhase;
     $presentationPhase.$game = $game;
@@ -858,37 +854,37 @@ function gpb_Client_main($args) {
     $gameLoader.$tileImages = null;
     $gameLoader.$game0 = $game;
     $gameLoader.$observer = $presentationPhase;
-    $presentationPhase = new gpb_TileSetLoader;
-    $presentationPhase.$tileSet0 = $game.$tileSet;
-    $presentationPhase.$observer0 = $gameLoader;
-    var$5 = new XMLHttpRequest();
-    $presentationPhase.$request = var$5;
-    var$5.overrideMimeType("text/xml");
-    var$6 = $presentationPhase.$request;
-    var$5 = otji_JS_function($presentationPhase, "stateChanged");
-    var$6.onreadystatechange = var$5;
-    $presentationPhase.$request.open("GET", "WEB-INF/classes/tiles.tsx", !!1);
-    $presentationPhase.$request.send();
-    $presentationPhase = ju_AbstractList_iterator(g_Game_getMapFileNames($gameLoader.$game0));
-    while (ju_AbstractList$1_hasNext($presentationPhase)) {
-        var$6 = ju_AbstractList$1_next($presentationPhase);
-        $game = new jl_StringBuilder;
-        jl_AbstractStringBuilder__init_($game);
-        var$7 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($game, $rt_s(2)), var$6));
-        $game = new g_TileMap;
-        $game.$layers = ju_ArrayList__init_();
-        var$6 = new gpb_TileMapLoader;
-        var$6.$tileMap = $game;
-        var$6.$observer1 = $gameLoader;
+    $document = new gpb_TileSetLoader;
+    $document.$tileSet0 = $game.$tileSet;
+    $document.$observer0 = $gameLoader;
+    $presentationPhase = new XMLHttpRequest();
+    $document.$request = $presentationPhase;
+    $presentationPhase.overrideMimeType("text/xml");
+    $body = $document.$request;
+    $presentationPhase = otji_JS_function($document, "stateChanged");
+    $body.onreadystatechange = $presentationPhase;
+    $document.$request.open("GET", "WEB-INF/classes/tiles.tsx", !!1);
+    $document.$request.send();
+    $game = ju_AbstractList_iterator(g_Game_getMapFileNames($gameLoader.$game0));
+    while (ju_AbstractList$1_hasNext($game)) {
+        $body = ju_AbstractList$1_next($game);
+        $document = new jl_StringBuilder;
+        jl_AbstractStringBuilder__init_($document);
+        var$7 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($document, $rt_s(2)), $body));
+        $document = new g_TileMap;
+        $document.$layers = ju_ArrayList__init_();
+        $body = new gpb_TileMapLoader;
+        $body.$tileMap = $document;
+        $body.$observer1 = $gameLoader;
         var$8 = new XMLHttpRequest();
-        var$6.$request0 = var$8;
+        $body.$request0 = var$8;
         var$8.overrideMimeType("text/xml");
-        var$5 = var$6.$request0;
-        var$8 = otji_JS_function(var$6, "stateChanged");
-        var$5.onreadystatechange = var$8;
-        var$6.$request0.open("GET", $rt_ustr(var$7), !!1);
-        var$6.$request0.send();
-        ju_ArrayList_add($gameLoader.$game0.$tileMaps, $game);
+        $presentationPhase = $body.$request0;
+        var$8 = otji_JS_function($body, "stateChanged");
+        $presentationPhase.onreadystatechange = var$8;
+        $body.$request0.open("GET", $rt_ustr(var$7), !!1);
+        $body.$request0.send();
+        ju_ArrayList_add($gameLoader.$game0.$tileMaps, $document);
     }
 }
 var jlr_AnnotatedElement = $rt_classWithoutFields(0);
@@ -1483,35 +1479,8 @@ function jl_StringBuilder__init_0($this) {
     jl_AbstractStringBuilder__init_($this);
 }
 function jl_StringBuilder_append($this, $string) {
-    var var$2, var$3, var$4, var$5;
-    var$2 = $this.$length0;
-    if (var$2 >= 0 && var$2 <= var$2) {
-        a: {
-            if ($string === null)
-                $string = $rt_s(5);
-            else if (jl_String_isEmpty($string))
-                break a;
-            jl_AbstractStringBuilder_ensureCapacity($this, $this.$length0 + jl_String_length($string) | 0);
-            var$3 = $this.$length0 - 1 | 0;
-            while (var$3 >= var$2) {
-                $this.$buffer.data[var$3 + jl_String_length($string) | 0] = $this.$buffer.data[var$3];
-                var$3 = var$3 + (-1) | 0;
-            }
-            $this.$length0 = $this.$length0 + jl_String_length($string) | 0;
-            var$3 = 0;
-            while (var$3 < jl_String_length($string)) {
-                var$4 = $this.$buffer.data;
-                var$5 = var$2 + 1 | 0;
-                var$4[var$2] = jl_String_charAt($string, var$3);
-                var$3 = var$3 + 1 | 0;
-                var$2 = var$5;
-            }
-        }
-        return $this;
-    }
-    $string = new jl_StringIndexOutOfBoundsException;
-    jl_Exception__init_($string);
-    $rt_throw($string);
+    jl_StringBuilder_insert($this, $this.$length0, $string);
+    return $this;
 }
 function jl_StringBuilder_append0($this, $value) {
     jl_AbstractStringBuilder_append($this, $value, 10);
@@ -1564,7 +1533,10 @@ function jl_StringBuilder_deleteCharAt($this, $index) {
     jl_Exception__init_(var$5);
     $rt_throw(var$5);
 }
-function jl_StringBuilder_insert($this, var$1, var$2, var$3, var$4) {
+function jl_StringBuilder_setLength($this, var$1) {
+    $this.$length0 = var$1;
+}
+function jl_StringBuilder_insert0($this, var$1, var$2, var$3, var$4) {
     jl_AbstractStringBuilder_insert1($this, var$1, var$2, var$3, var$4);
     return $this;
 }
@@ -1581,9 +1553,39 @@ function jl_StringBuilder_toString($this) {
 function jl_StringBuilder_ensureCapacity($this, var$1) {
     jl_AbstractStringBuilder_ensureCapacity($this, var$1);
 }
-function jl_StringBuilder_insert0($this, var$1, var$2) {
+function jl_StringBuilder_insert1($this, var$1, var$2) {
     jl_AbstractStringBuilder_insert0($this, var$1, var$2);
     return $this;
+}
+function jl_StringBuilder_insert($this, var$1, var$2) {
+    var var$3, var$4, var$5;
+    if (var$1 >= 0 && var$1 <= $this.$length0) {
+        a: {
+            if (var$2 === null)
+                var$2 = $rt_s(5);
+            else if (jl_String_isEmpty(var$2))
+                break a;
+            jl_AbstractStringBuilder_ensureCapacity($this, $this.$length0 + jl_String_length(var$2) | 0);
+            var$3 = $this.$length0 - 1 | 0;
+            while (var$3 >= var$1) {
+                $this.$buffer.data[var$3 + jl_String_length(var$2) | 0] = $this.$buffer.data[var$3];
+                var$3 = var$3 + (-1) | 0;
+            }
+            $this.$length0 = $this.$length0 + jl_String_length(var$2) | 0;
+            var$3 = 0;
+            while (var$3 < jl_String_length(var$2)) {
+                var$4 = $this.$buffer.data;
+                var$5 = var$1 + 1 | 0;
+                var$4[var$1] = jl_String_charAt(var$2, var$3);
+                var$3 = var$3 + 1 | 0;
+                var$1 = var$5;
+            }
+        }
+        return $this;
+    }
+    var$2 = new jl_StringIndexOutOfBoundsException;
+    jl_Exception__init_(var$2);
+    $rt_throw(var$2);
 }
 var jl_Number = $rt_classWithoutFields();
 function jl_Integer() {
@@ -1806,6 +1808,14 @@ function jl_RuntimeException__init_(var_0) {
 function jl_RuntimeException__init_0($this, $message) {
     jl_Throwable__init_($this, $message);
 }
+var otj_JSObject = $rt_classWithoutFields(0);
+var otjdx_Node = $rt_classWithoutFields(0);
+var otjdx_Document = $rt_classWithoutFields(0);
+var otjde_EventTarget = $rt_classWithoutFields(0);
+var otjdh_HTMLDocument = $rt_classWithoutFields(0);
+function otjdh_HTMLDocument_current() {
+    return window.document;
+}
 function g_Game() {
     var a = this; jl_Object.call(a);
     a.$playerPosition = null;
@@ -1829,122 +1839,9 @@ function gpb_PresentationPhase() {
     this.$game = null;
 }
 function gpb_PresentationPhase_onFailure($this, $msg) {
-    var var$2, var$3, var$4, var$5, var$6, var$7, var$8, var$9, var$10, var$11, var$12, var$13, var$14;
-    if (jl_System_errCache === null) {
-        var$2 = new ji_PrintStream;
-        var$2.$out = otcic_StderrOutputStream_INSTANCE;
-        var$3 = new jl_StringBuilder;
-        jl_AbstractStringBuilder__init_(var$3);
-        var$2.$sb = var$3;
-        var$2.$buffer0 = $rt_createCharArray(32);
-        var$2.$autoFlush = 0;
-        var$3 = new jnci_UTF8Charset;
-        var$4 = $rt_createArray(jl_String, 0);
-        var$5 = var$4.data;
-        jnc_Charset_checkCanonicalName($rt_s(15));
-        var$6 = var$5.length;
-        var$7 = 0;
-        while (var$7 < var$6) {
-            jnc_Charset_checkCanonicalName(var$5[var$7]);
-            var$7 = var$7 + 1 | 0;
-        }
-        var$3.$canonicalName = $rt_s(15);
-        var$3.$aliases = var$4.$clone();
-        var$2.$charset = var$3;
-        jl_System_errCache = var$2;
-    }
-    var$2 = jl_System_errCache;
-    jl_AbstractStringBuilder_append0(jl_StringBuilder_append(var$2.$sb, $msg), 10);
-    $msg = var$2.$sb;
-    var$8 = $msg.$length0;
-    var$4 = var$2.$buffer0;
-    if (var$8 > var$4.data.length)
-        var$4 = $rt_createCharArray(var$8);
-    var$7 = 0;
-    var$6 = 0;
-    if (var$7 > var$8) {
-        $msg = new jl_IndexOutOfBoundsException;
-        jl_Throwable__init_($msg, $rt_s(16));
-        $rt_throw($msg);
-    }
-    while (var$7 < var$8) {
-        var$5 = var$4.data;
-        var$9 = var$6 + 1 | 0;
-        var$10 = $msg.$buffer.data;
-        var$11 = var$7 + 1 | 0;
-        var$5[var$6] = var$10[var$7];
-        var$6 = var$9;
-        var$7 = var$11;
-    }
-    var$5 = var$4.data;
-    var$7 = var$8 - 0 | 0;
-    var$12 = new jn_CharBufferOverArray;
-    var$8 = var$5.length;
-    var$7 = 0 + var$7 | 0;
-    jn_Buffer__init_(var$12, var$8);
-    var$12.$position = 0;
-    var$12.$limit = var$7;
-    var$12.$start2 = 0;
-    var$12.$readOnly = 0;
-    var$12.$array = var$4;
-    var$4 = $rt_createByteArray(jl_Math_max(16, jl_Math_min(var$8, 1024)));
-    var$7 = var$4.data.length;
-    var$13 = new jn_ByteBufferImpl;
-    var$9 = 0 + var$7 | 0;
-    jn_Buffer__init_(var$13, var$7);
-    var$13.$order = jn_ByteOrder_BIG_ENDIAN;
-    var$13.$start3 = 0;
-    var$13.$array0 = var$4;
-    var$13.$position = 0;
-    var$13.$limit = var$9;
-    var$13.$direct = 0;
-    var$13.$readOnly0 = 0;
-    var$14 = var$2.$charset;
-    var$3 = new jnci_UTF8Encoder;
-    var$5 = $rt_createByteArray(1);
-    var$5.data[0] = 63;
-    jl_Object__init_0(var$3);
-    $msg = jnc_CodingErrorAction_REPORT;
-    var$3.$malformedAction = $msg;
-    var$3.$unmappableAction = $msg;
-    jnc_CharsetEncoder_checkReplacement(var$3, var$5);
-    var$3.$charset0 = var$14;
-    var$3.$replacement = var$5.$clone();
-    var$3.$averageBytesPerChar = 2.0;
-    var$3.$maxBytesPerChar = 4.0;
-    $msg = jnc_CodingErrorAction_REPLACE;
-    if ($msg === null) {
-        var$3 = new jl_IllegalArgumentException;
-        jl_Throwable__init_(var$3, $rt_s(17));
-        $rt_throw(var$3);
-    }
-    var$3.$malformedAction = $msg;
-    var$3.$unmappableAction = $msg;
-    while (true) {
-        var$6 = jnc_CoderResult_isOverflow(jnc_CharsetEncoder_encode(var$3, var$12, var$13, 1));
-        ji_PrintStream_write(var$2, var$4, 0, var$13.$position);
-        jn_ByteBuffer_clear(var$13);
-        if (!var$6)
-            break;
-    }
-    while (true) {
-        var$7 = var$3.$status;
-        if (var$7 != 2 && var$7 != 4)
-            break;
-        $msg = jnc_CoderResult_UNDERFLOW;
-        if ($msg === $msg)
-            var$3.$status = 3;
-        var$6 = jnc_CoderResult_isOverflow($msg);
-        ji_PrintStream_write(var$2, var$4, 0, var$13.$position);
-        jn_ByteBuffer_clear(var$13);
-        if (!var$6) {
-            var$2.$sb.$length0 = 0;
-            return;
-        }
-    }
-    $msg = new jl_IllegalStateException;
-    jl_Exception__init_($msg);
-    $rt_throw($msg);
+    if (jl_System_errCache === null)
+        jl_System_errCache = ji_PrintStream__init_(otcic_StderrOutputStream_INSTANCE, 0);
+    ji_PrintStream_println(jl_System_errCache, $msg);
 }
 var gpb_DownloadObserver = $rt_classWithoutFields(0);
 var gpb_TileImageLoader$Observer = $rt_classWithoutFields(0);
@@ -1957,7 +1854,7 @@ function gpb_GameLoader() {
     a.$tileImages = null;
 }
 function gpb_GameLoader_checkCompletion($this) {
-    var var$1, var$2, var$3, var$4, var$5, var$6, var$7, var$8, var$9, var$10, var$11, var$12, var$13, var$14, var$15, var$16, var$17, var$18, var$19, var$20, var$21, var$22, var$23, var$24, var$25;
+    var var$1, var$2, var$3, var$4, var$5, var$6, var$7, var$8, var$9, var$10, var$11, var$12, var$13, var$14, var$15, var$16, var$17, var$18, var$19, var$20, var$21, var$22, var$23, var$24, var$25, var$26;
     if ($this.$tileSetsLoaded != 1)
         return;
     if ($this.$tileMapsLoaded != (g_Game_getMapFileNames($this.$game0)).$size)
@@ -1969,12 +1866,13 @@ function gpb_GameLoader_checkCompletion($this) {
     var$3 = otjdh_HTMLDocument_current();
     var$4 = new gpb_GameView;
     var$4.$game1 = var$2.$game;
+    var$5 = window;
     var$2 = var$3.createElement("canvas");
     var$4.$canvas = var$2;
-    var$5 = 640;
-    var$2.width = var$5;
+    var$6 = var$5.innerWidth;
+    var$2.width = var$6;
     var$2 = var$4.$canvas;
-    var$5 = 480;
+    var$5 = var$5.innerHeight;
     var$2.height = var$5;
     var$4.$context = var$4.$canvas.getContext("2d");
     var$4.$images = var$1;
@@ -1989,71 +1887,71 @@ function gpb_GameLoader_checkCompletion($this) {
     var$1 = var$4.$canvas;
     var$2.appendChild(var$1);
     var$1 = var$4.$gameRenderer;
-    var$6 = var$4.$canvas.width;
-    var$7 = var$4.$canvas.height;
-    var$1.$xRes = var$6;
-    var$1.$yRes = var$7;
+    var$7 = var$4.$canvas.width;
+    var$8 = var$4.$canvas.height;
+    var$1.$xRes = var$7;
+    var$1.$yRes = var$8;
     var$1 = var$4.$renderCmdQueue;
     var$2 = var$1.$commands;
-    var$8 = var$2.$array1;
-    var$6 = 0;
-    var$7 = var$2.$size;
+    var$9 = var$2.$array;
+    var$7 = 0;
+    var$8 = var$2.$size;
     var$3 = null;
-    if (var$6 > var$7) {
+    if (var$7 > var$8) {
         var$1 = new jl_IllegalArgumentException;
         jl_Exception__init_(var$1);
         $rt_throw(var$1);
     }
-    while (var$6 < var$7) {
-        var$9 = var$8.data;
-        var$10 = var$6 + 1 | 0;
-        var$9[var$6] = var$3;
-        var$6 = var$10;
+    while (var$7 < var$8) {
+        var$10 = var$9.data;
+        var$11 = var$7 + 1 | 0;
+        var$10[var$7] = var$3;
+        var$7 = var$11;
     }
     var$2.$size = 0;
     var$2 = var$4.$gameRenderer;
     var$3 = var$4.$game1;
-    var$11 = var$3.$playerPosition;
-    var$12 = ju_ArrayList_get(var$3.$tileMaps, 1);
+    var$6 = var$3.$playerPosition;
+    var$5 = ju_ArrayList_get(var$3.$tileMaps, 1);
     var$3 = new g_FillRectCommand;
-    var$5 = ja_Color__init_(0, 0, 0, 0);
+    var$12 = ja_Color__init_(0, 0, 0, 0);
     var$13 = gm_Rect__init_(jl_Integer_valueOf(0), jl_Integer_valueOf(0), jl_Integer_valueOf(var$2.$xRes), jl_Integer_valueOf(var$2.$yRes));
-    var$3.$color = var$5;
+    var$3.$color = var$12;
     var$3.$rect = var$13;
     g_RenderCommandQueue_add(var$1, var$3);
     var$14 = 0;
     while (true) {
-        var$3 = var$12.$layers;
+        var$3 = var$5.$layers;
         if (var$14 >= var$3.$size)
             break;
-        var$15 = ju_ArrayList_get(var$3, var$14);
-        var$16 = var$11.$x;
-        var$17 = var$16 | 0;
-        var$18 = var$11.$y;
-        var$19 = var$18 | 0;
-        var$10 = 100.0 * var$16 | 0;
-        var$20 = 100.0 * var$18 | 0;
-        var$21 = ((var$2.$xRes + 99 | 0) / 100 | 0) + 1 | 0;
-        var$22 = ((var$2.$yRes + 99 | 0) / 100 | 0) + 1 | 0;
-        var$23 = 0;
-        var$6 = var$10 % 100 | 0;
-        var$20 = var$20 % 100 | 0;
-        while (var$23 < var$22) {
-            var$24 = 0;
-            while (var$24 < var$21) {
-                var$25 = gm_Matrix_getValue(var$15, var$24 + var$17 | 0, var$23 + var$19 | 0);
-                if (Long_lt(var$25, Long_fromInt(1)) ? 0 : 1) {
-                    var$7 = (100 * var$24 | 0) - var$6 | 0;
-                    var$10 = (100 * var$23 | 0) - var$20 | 0;
-                    var$3 = gm_Rect__init_(jl_Integer_valueOf(var$7), jl_Integer_valueOf(var$10), jl_Integer_valueOf(100), jl_Integer_valueOf(100));
-                    var$5 = new g_DrawTileCommand;
-                    var$5.$tileID = var$25;
-                    var$5.$rect0 = var$3;
-                    g_RenderCommandQueue_add(var$1, var$5);
+        var$3 = ju_ArrayList_get(var$3, var$14);
+        var$15 = var$6.$x;
+        var$16 = var$15 | 0;
+        var$17 = var$6.$y;
+        var$18 = var$17 | 0;
+        var$19 = 100.0 * var$15 | 0;
+        var$20 = 100.0 * var$17 | 0;
+        var$7 = ((var$2.$xRes + 99 | 0) / 100 | 0) + 1 | 0;
+        var$8 = ((var$2.$yRes + 99 | 0) / 100 | 0) + 1 | 0;
+        var$11 = 0;
+        var$21 = var$19 % 100 | 0;
+        var$22 = var$20 % 100 | 0;
+        while (var$11 < var$8) {
+            var$23 = 0;
+            while (var$23 < var$7) {
+                var$24 = gm_Matrix_getValue(var$3, var$23 + var$16 | 0, var$11 + var$18 | 0);
+                if (Long_lt(var$24, Long_fromInt(1)) ? 0 : 1) {
+                    var$25 = (100 * var$23 | 0) - var$21 | 0;
+                    var$26 = (100 * var$11 | 0) - var$22 | 0;
+                    var$13 = gm_Rect__init_(jl_Integer_valueOf(var$25), jl_Integer_valueOf(var$26), jl_Integer_valueOf(100), jl_Integer_valueOf(100));
+                    var$12 = new g_DrawTileCommand;
+                    var$12.$tileID = var$24;
+                    var$12.$rect0 = var$13;
+                    g_RenderCommandQueue_add(var$1, var$12);
                 }
-                var$24 = var$24 + 1 | 0;
+                var$23 = var$23 + 1 | 0;
             }
-            var$23 = var$23 + 1 | 0;
+            var$11 = var$11 + 1 | 0;
         }
         var$14 = var$14 + 1 | 0;
     }
@@ -2079,7 +1977,7 @@ function gpb_GameLoader_loaded($this, $item) {
                     if (var$3 >= var$4.$size)
                         break;
                     var$5 = ju_ArrayList_get(var$4, var$3);
-                    var$4 = (jl_String_split(var$5.$imagePath, $rt_s(18))).data[1];
+                    var$4 = (jl_String_split(var$5.$imagePath, $rt_s(15))).data[1];
                     var$6 = new jl_StringBuilder;
                     jl_AbstractStringBuilder__init_(var$6);
                     var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$6, $rt_s(2)), var$4));
@@ -2179,7 +2077,7 @@ function gpb_GameLoader_failed($this, $item, $message) {
                 $item = $this.$observer;
                 var$3 = new jl_StringBuilder;
                 jl_AbstractStringBuilder__init_(var$3);
-                gpb_PresentationPhase_onFailure($item, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(jl_StringBuilder_append(var$3, $rt_s(19)), $message), $rt_s(20))));
+                gpb_PresentationPhase_onFailure($item, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(jl_StringBuilder_append(var$3, $rt_s(16)), $message), $rt_s(17))));
                 break a;
             default:
                 break a;
@@ -2187,10 +2085,40 @@ function gpb_GameLoader_failed($this, $item, $message) {
         $item = $this.$observer;
         var$3 = new jl_StringBuilder;
         jl_AbstractStringBuilder__init_(var$3);
-        gpb_PresentationPhase_onFailure($item, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(jl_StringBuilder_append(var$3, $rt_s(21)), $message), $rt_s(20))));
+        gpb_PresentationPhase_onFailure($item, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(jl_StringBuilder_append(var$3, $rt_s(18)), $message), $rt_s(17))));
     }
 }
 var otci_IntegerUtil = $rt_classWithoutFields();
+var otjde_FocusEventTarget = $rt_classWithoutFields(0);
+var otjde_MouseEventTarget = $rt_classWithoutFields(0);
+var otjde_KeyboardEventTarget = $rt_classWithoutFields(0);
+var otjde_LoadEventTarget = $rt_classWithoutFields(0);
+var otjde_GamepadEventTarget = $rt_classWithoutFields(0);
+var otjb_WindowEventTarget = $rt_classWithoutFields(0);
+var otjb_StorageProvider = $rt_classWithoutFields(0);
+var otjc_JSArrayReader = $rt_classWithoutFields(0);
+var otjb_Window = $rt_classWithoutFields();
+function otjb_Window_addEventListener$exported$0(var$0, var$1, var$2) {
+    var$0.$addEventListener($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"));
+}
+function otjb_Window_removeEventListener$exported$1(var$0, var$1, var$2) {
+    var$0.$removeEventListener($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"));
+}
+function otjb_Window_get$exported$2(var$0, var$1) {
+    return var$0.$get0(var$1);
+}
+function otjb_Window_removeEventListener$exported$3(var$0, var$1, var$2, var$3) {
+    var$0.$removeEventListener0($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"), var$3 ? 1 : 0);
+}
+function otjb_Window_dispatchEvent$exported$4(var$0, var$1) {
+    return !!var$0.$dispatchEvent(var$1);
+}
+function otjb_Window_getLength$exported$5(var$0) {
+    return var$0.$getLength();
+}
+function otjb_Window_addEventListener$exported$6(var$0, var$1, var$2, var$3) {
+    var$0.$addEventListener0($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"), var$3 ? 1 : 0);
+}
 var jl_Iterable = $rt_classWithoutFields(0);
 var ju_Collection = $rt_classWithoutFields(0);
 var ju_AbstractCollection = $rt_classWithoutFields();
@@ -2234,7 +2162,7 @@ var jl_Cloneable = $rt_classWithoutFields(0);
 var ju_RandomAccess = $rt_classWithoutFields(0);
 function ju_ArrayList() {
     var a = this; ju_AbstractList.call(a);
-    a.$array1 = null;
+    a.$array = null;
     a.$size = 0;
 }
 function ju_ArrayList__init_() {
@@ -2243,24 +2171,24 @@ function ju_ArrayList__init_() {
     return var_0;
 }
 function ju_ArrayList__init_0($this) {
-    $this.$array1 = $rt_createArray(jl_Object, 10);
+    $this.$array = $rt_createArray(jl_Object, 10);
 }
 function ju_ArrayList_ensureCapacity($this, $minCapacity) {
     var var$2, $newLength;
-    var$2 = $this.$array1.data.length;
+    var$2 = $this.$array.data.length;
     if (var$2 < $minCapacity) {
         $newLength = var$2 >= 1073741823 ? 2147483647 : jl_Math_max($minCapacity, jl_Math_max(var$2 * 2 | 0, 5));
-        $this.$array1 = ju_Arrays_copyOf($this.$array1, $newLength);
+        $this.$array = ju_Arrays_copyOf($this.$array, $newLength);
     }
 }
 function ju_ArrayList_get($this, $index) {
     ju_ArrayList_checkIndex($this, $index);
-    return $this.$array1.data[$index];
+    return $this.$array.data[$index];
 }
 function ju_ArrayList_add($this, $element) {
     var var$2, var$3;
     ju_ArrayList_ensureCapacity($this, $this.$size + 1 | 0);
-    var$2 = $this.$array1.data;
+    var$2 = $this.$array.data;
     var$3 = $this.$size;
     $this.$size = var$3 + 1 | 0;
     var$2[var$3] = $element;
@@ -2270,7 +2198,7 @@ function ju_ArrayList_add($this, $element) {
 function ju_ArrayList_remove($this, $i) {
     var var$2, $old, var$4, $i_0;
     ju_ArrayList_checkIndex($this, $i);
-    var$2 = $this.$array1.data;
+    var$2 = $this.$array.data;
     $old = var$2[$i];
     var$4 = $this.$size - 1 | 0;
     $this.$size = var$4;
@@ -2506,7 +2434,7 @@ function jl_Character_getType($codePoint) {
         if ($codePoint >= $range.$end0)
             $l = $i + 1 | 0;
         else {
-            $u = $range.$start4;
+            $u = $range.$start2;
             if ($codePoint >= $u)
                 return $range.$data.data[$codePoint - $u | 0];
             $u = $i - 1 | 0;
@@ -2609,7 +2537,6 @@ function jl_Character_obtainClasses$$create() {
 }
 var jl_IndexOutOfBoundsException = $rt_classWithoutFields(jl_RuntimeException);
 var jl_StringIndexOutOfBoundsException = $rt_classWithoutFields(jl_IndexOutOfBoundsException);
-var otj_JSObject = $rt_classWithoutFields(0);
 var otja_ReadyStateChangeHandler = $rt_classWithoutFields(0);
 function gpb_TileSetLoader() {
     var a = this; jl_Object.call(a);
@@ -2625,30 +2552,30 @@ function gpb_TileSetLoader_stateChanged$exported$0(var$0) {
         else {
             var$1 = var$0.$request.responseXML;
             if (var$1 === null)
-                gpb_GameLoader_failed(var$0.$observer0, gpb_DownloadObserver$Item_TILE_SET, $rt_s(22));
+                gpb_GameLoader_failed(var$0.$observer0, gpb_DownloadObserver$Item_TILE_SET, $rt_s(19));
             else {
                 var$2 = new g_TileSetReader;
                 var$2.$tileSet1 = var$0.$tileSet0;
-                var$1 = gpb_XmlElement_getElementsByTag(gpb_XmlElement__init_(var$1.documentElement), $rt_s(23));
+                var$1 = gpb_XmlElement_getElementsByTag(gpb_XmlElement__init_(var$1.documentElement), $rt_s(20));
                 var$3 = 0;
                 while (var$3 < gx_ElementList_getCount(var$1)) {
                     var$4 = gx_ElementList_getElement(var$1, var$3);
                     var$5 = $rt_s(4);
-                    var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(24));
+                    var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(21));
                     if (gx_ElementList_getCount(var$6) > 0)
-                        var$5 = gpb_XmlElement_getAttribute(gx_ElementList_getElement(var$6, 0), $rt_s(25));
-                    var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(26));
-                    var$7 = gpb_XmlElement_getAttribute(var$4, $rt_s(27));
+                        var$5 = gpb_XmlElement_getAttribute(gx_ElementList_getElement(var$6, 0), $rt_s(22));
+                    var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(23));
+                    var$7 = gpb_XmlElement_getAttribute(var$4, $rt_s(24));
                     var$4 = new g_Tile;
                     var$4.$id = jl_Long_parseLong(var$7);
                     var$4.$imagePath = var$5;
                     var$4.$polygons = ju_ArrayList__init_();
                     var$8 = 0;
                     while (var$8 < gx_ElementList_getCount(var$6)) {
-                        var$7 = gpb_XmlElement_getElementsByTag(gx_ElementList_getElement(var$6, var$8), $rt_s(28));
+                        var$7 = gpb_XmlElement_getElementsByTag(gx_ElementList_getElement(var$6, var$8), $rt_s(25));
                         var$9 = 0;
                         while (var$9 < gx_ElementList_getCount(var$7)) {
-                            var$5 = gpb_XmlElement_getElementsByTag(gx_ElementList_getElement(var$7, var$9), $rt_s(29));
+                            var$5 = gpb_XmlElement_getElementsByTag(gx_ElementList_getElement(var$7, var$9), $rt_s(26));
                             var$10 = 0;
                             while (var$10 < gx_ElementList_getCount(var$5)) {
                                 g_TileSetReader_readTilePolygon(var$2, var$4, gx_ElementList_getElement(var$5, var$10));
@@ -2685,11 +2612,11 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
             a: {
                 var$1 = var$0.$request0.responseXML;
                 if (var$1 === null)
-                    gpb_GameLoader_failed(var$0.$observer1, gpb_DownloadObserver$Item_TILE_MAP, $rt_s(30));
+                    gpb_GameLoader_failed(var$0.$observer1, gpb_DownloadObserver$Item_TILE_MAP, $rt_s(27));
                 else {
                     var$2 = new g_TileMapReader;
                     var$2.$tileMap0 = var$0.$tileMap;
-                    var$1 = gpb_XmlElement_getElementsByTag(gpb_XmlElement__init_(var$1.documentElement), $rt_s(31));
+                    var$1 = gpb_XmlElement_getElementsByTag(gpb_XmlElement__init_(var$1.documentElement), $rt_s(28));
                     var$3 = 0;
                     b: while (true) {
                         if (var$3 >= gx_ElementList_getCount(var$1)) {
@@ -2699,20 +2626,20 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
                         var$4 = gx_ElementList_getElement(var$1, var$3);
                         var$5 = new g_IrregularTileLayer;
                         var$5.$chunks = ju_ArrayList__init_();
-                        var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(32));
+                        var$6 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(29));
                         var$7 = 0;
                         while (var$7 < gx_ElementList_getCount(var$6)) {
                             var$4 = gx_ElementList_getElement(var$6, var$7);
-                            if (!jl_String_equals(gpb_XmlElement_getAttribute(var$4, $rt_s(33)), $rt_s(34)))
+                            if (!jl_String_equals(gpb_XmlElement_getAttribute(var$4, $rt_s(30)), $rt_s(31)))
                                 break b;
-                            var$8 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(35));
+                            var$8 = gpb_XmlElement_getElementsByTag(var$4, $rt_s(32));
                             var$9 = 0;
                             while (var$9 < gx_ElementList_getCount(var$8)) {
                                 var$4 = gx_ElementList_getElement(var$8, var$9);
-                                var$10 = gpb_XmlElement_getAttribute(var$4, $rt_s(36));
-                                var$11 = gpb_XmlElement_getAttribute(var$4, $rt_s(37));
-                                var$12 = gpb_XmlElement_getAttribute(var$4, $rt_s(38));
-                                var$13 = gpb_XmlElement_getAttribute(var$4, $rt_s(39));
+                                var$10 = gpb_XmlElement_getAttribute(var$4, $rt_s(33));
+                                var$11 = gpb_XmlElement_getAttribute(var$4, $rt_s(34));
+                                var$12 = gpb_XmlElement_getAttribute(var$4, $rt_s(35));
+                                var$13 = gpb_XmlElement_getAttribute(var$4, $rt_s(36));
                                 var$14 = jl_Integer_parseInt0(var$10);
                                 var$15 = jl_Integer_parseInt0(var$11);
                                 var$16 = jl_Integer_parseInt0(var$12);
@@ -2738,7 +2665,7 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
                         var$12 = gm_Vector__init_(2.147483647E9, 2.147483647E9);
                         var$4 = ju_AbstractList_iterator(var$5.$chunks);
                         while (ju_AbstractList$1_hasNext(var$4)) {
-                            var$10 = (ju_AbstractList$1_next(var$4)).$position0;
+                            var$10 = (ju_AbstractList$1_next(var$4)).$position;
                             var$12 = gm_Vector__init_(jl_Math_min0(var$10.$x, var$12.$x), jl_Math_min0(var$10.$y, var$12.$y));
                         }
                         var$4 = gm_Vector__init_((-2.147483648E9), (-2.147483648E9));
@@ -2747,7 +2674,7 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
                             var$11 = ju_AbstractList$1_next(var$10);
                             var$14 = gm_Matrix_getWidth(var$11.$tiles);
                             var$7 = gm_Matrix_getHeight(var$11.$tiles);
-                            var$11 = gm_Vector_sum(var$11.$position0, gm_Vector__init_(var$14, var$7));
+                            var$11 = gm_Vector_sum(var$11.$position, gm_Vector__init_(var$14, var$7));
                             var$4 = gm_Vector__init_(jl_Math_max0(var$11.$x, var$4.$x), jl_Math_max0(var$11.$y, var$4.$y));
                         }
                         var$4 = gm_Vector_diff(var$4, var$12);
@@ -2755,7 +2682,7 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
                         var$5 = ju_AbstractList_iterator(var$5.$chunks);
                         while (ju_AbstractList$1_hasNext(var$5)) {
                             var$4 = ju_AbstractList$1_next(var$5);
-                            var$11 = gm_Vector_diff(var$4.$position0, var$12);
+                            var$11 = gm_Vector_diff(var$4.$position, var$12);
                             var$14 = var$11.$x | 0;
                             var$7 = var$11.$y | 0;
                             var$4 = var$4.$tiles;
@@ -2773,7 +2700,7 @@ function gpb_TileMapLoader_stateChanged$exported$0(var$0) {
                         var$3 = var$3 + 1 | 0;
                     }
                     var$1 = new jl_IllegalArgumentException;
-                    jl_Exception__init_2(var$1, $rt_s(40));
+                    jl_Exception__init_2(var$1, $rt_s(37));
                     $rt_throw(var$1);
                 }
             }
@@ -2800,8 +2727,8 @@ function gpb_DownloadObserver$Item__init_0($this, var$1, var$2) {
 }
 function gpb_DownloadObserver$Item__clinit_() {
     var var$1;
-    gpb_DownloadObserver$Item_TILE_MAP = gpb_DownloadObserver$Item__init_($rt_s(41), 0);
-    var$1 = gpb_DownloadObserver$Item__init_($rt_s(42), 1);
+    gpb_DownloadObserver$Item_TILE_MAP = gpb_DownloadObserver$Item__init_($rt_s(38), 0);
+    var$1 = gpb_DownloadObserver$Item__init_($rt_s(39), 1);
     gpb_DownloadObserver$Item_TILE_SET = var$1;
     gpb_DownloadObserver$Item_$VALUES = $rt_createArrayFromData(gpb_DownloadObserver$Item, [gpb_DownloadObserver$Item_TILE_MAP, var$1]);
 }
@@ -2811,16 +2738,16 @@ function g_TileSetReader() {
 }
 function g_TileSetReader_readTilePolygon($this, $tile, $polygon) {
     var var$3, var$4, var$5, var$6, var$7, var$8;
-    $polygon = gpb_XmlElement_getAttribute($polygon, $rt_s(43));
+    $polygon = gpb_XmlElement_getAttribute($polygon, $rt_s(40));
     var$3 = new gm_Polygon;
     var$3.$points = ju_ArrayList__init_();
-    var$4 = jl_String_split($polygon, $rt_s(44));
+    var$4 = jl_String_split($polygon, $rt_s(41));
     var$5 = 0;
     while (true) {
         var$6 = var$4.data;
         if (var$5 >= var$6.length)
             break;
-        var$6 = (jl_String_split(var$6[var$5], $rt_s(45))).data;
+        var$6 = (jl_String_split(var$6[var$5], $rt_s(42))).data;
         var$7 = jl_Double_parseDouble(var$6[0]);
         var$8 = jl_Double_parseDouble(var$6[1]);
         $polygon = gm_Vector__init_(var$7, var$8);
@@ -2864,7 +2791,7 @@ function g_TileMapReader() {
 }
 function g_TileMapReader_readChunkValues($this, $tiles, $valuesString) {
     var $valueStrings, $i, var$5, var$6, $y, var$8, $x;
-    $valueStrings = jl_String_split($valuesString, $rt_s(45));
+    $valueStrings = jl_String_split($valuesString, $rt_s(42));
     $i = 0;
     while (true) {
         var$5 = $valueStrings.data;
@@ -3248,14 +3175,6 @@ function g_IrregularTileLayer() {
     jl_Object.call(this);
     this.$chunks = null;
 }
-var otjdx_Node = $rt_classWithoutFields(0);
-var otjdx_Document = $rt_classWithoutFields(0);
-var otjde_EventTarget = $rt_classWithoutFields(0);
-var otjdh_HTMLDocument = $rt_classWithoutFields(0);
-function otjdh_HTMLDocument_current() {
-    return window.document;
-}
-var otjde_LoadEventTarget = $rt_classWithoutFields(0);
 var jl_IllegalArgumentException = $rt_classWithoutFields(jl_RuntimeException);
 var jl_NumberFormatException = $rt_classWithoutFields(jl_IllegalArgumentException);
 function ju_TreeMap$1() {
@@ -3264,35 +3183,6 @@ function ju_TreeMap$1() {
 }
 function ju_TreeMap$1_compare($this, $o1, $o2) {
     return $o1 === null ? jl_Integer_compareTo($o2, $o1) : jl_Integer_compareTo($o1, $o2);
-}
-var otjde_FocusEventTarget = $rt_classWithoutFields(0);
-var otjde_MouseEventTarget = $rt_classWithoutFields(0);
-var otjde_KeyboardEventTarget = $rt_classWithoutFields(0);
-var otjde_GamepadEventTarget = $rt_classWithoutFields(0);
-var otjb_WindowEventTarget = $rt_classWithoutFields(0);
-var otjb_StorageProvider = $rt_classWithoutFields(0);
-var otjc_JSArrayReader = $rt_classWithoutFields(0);
-var otjb_Window = $rt_classWithoutFields();
-function otjb_Window_addEventListener$exported$0(var$0, var$1, var$2) {
-    var$0.$addEventListener($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"));
-}
-function otjb_Window_removeEventListener$exported$1(var$0, var$1, var$2) {
-    var$0.$removeEventListener($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"));
-}
-function otjb_Window_get$exported$2(var$0, var$1) {
-    return var$0.$get0(var$1);
-}
-function otjb_Window_removeEventListener$exported$3(var$0, var$1, var$2, var$3) {
-    var$0.$removeEventListener0($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"), var$3 ? 1 : 0);
-}
-function otjb_Window_dispatchEvent$exported$4(var$0, var$1) {
-    return !!var$0.$dispatchEvent(var$1);
-}
-function otjb_Window_getLength$exported$5(var$0) {
-    return var$0.$getLength();
-}
-function otjb_Window_addEventListener$exported$6(var$0, var$1, var$2, var$3) {
-    var$0.$addEventListener0($rt_str(var$1), otji_JS_functionAsObject(var$2, "handleEvent"), var$3 ? 1 : 0);
 }
 function gm_Matrix() {
     var a = this; jl_Object.call(a);
@@ -3605,7 +3495,13 @@ function ju_Arrays_fill($a, $val) {
     }
 }
 var jl_System = $rt_classWithoutFields();
+var jl_System_outCache = null;
 var jl_System_errCache = null;
+function jl_System_out() {
+    if (jl_System_outCache === null)
+        jl_System_outCache = ji_PrintStream__init_(otcic_StdoutOutputStream_INSTANCE, 0);
+    return jl_System_outCache;
+}
 function jl_System_arraycopy($src, $srcPos, $dest, $destPos, $length) {
     var $srcType, $targetType, $srcArray, $i, var$10, var$11, var$12, var$13, var$14;
     if ($src !== null && $dest !== null) {
@@ -3663,7 +3559,7 @@ function jl_System_arraycopy($src, $srcPos, $dest, $destPos, $length) {
         $rt_throw($src);
     }
     $dest = new jl_NullPointerException;
-    jl_Throwable__init_($dest, $rt_s(46));
+    jl_Throwable__init_($dest, $rt_s(43));
     $rt_throw($dest);
 }
 function jl_System_doArrayCopy(var$1, var$2, var$3, var$4, var$5) {
@@ -3770,7 +3666,7 @@ function ju_TreeMap$EntrySet() {
 }
 function g_IrregularTileLayer$Chunk() {
     var a = this; jl_Object.call(a);
-    a.$position0 = null;
+    a.$position = null;
     a.$tiles = null;
     a.$this$01 = null;
 }
@@ -3781,7 +3677,7 @@ function g_IrregularTileLayer$Chunk__init_(var_0, var_1, var_2) {
 }
 function g_IrregularTileLayer$Chunk__init_0($this, var$1, $position, $tiles) {
     $this.$this$01 = var$1;
-    $this.$position0 = $position;
+    $this.$position = $position;
     $this.$tiles = $tiles;
 }
 var ju_ConcurrentModificationException = $rt_classWithoutFields(jl_RuntimeException);
@@ -3849,7 +3745,7 @@ function ji_OutputStream_write($this, $b, $off, $len) {
     while ($i < $len) {
         var$5 = $b.data;
         var$6 = $off + 1 | 0;
-        $rt_putStderr(var$5[$off]);
+        $this.$write(var$5[$off]);
         $i = $i + 1 | 0;
         $off = var$6;
     }
@@ -3865,6 +3761,33 @@ function ji_PrintStream() {
     a.$sb = null;
     a.$buffer0 = null;
     a.$charset = null;
+}
+function ji_PrintStream__init_(var_0, var_1) {
+    var var_2 = new ji_PrintStream();
+    ji_PrintStream__init_0(var_2, var_0, var_1);
+    return var_2;
+}
+function ji_PrintStream__init_0($this, $out, $autoFlush) {
+    var var$3, var$4, var$5;
+    $this.$out = $out;
+    $out = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_($out);
+    $this.$sb = $out;
+    $this.$buffer0 = $rt_createCharArray(32);
+    $this.$autoFlush = $autoFlush;
+    $out = new jnci_UTF8Charset;
+    var$3 = $rt_createArray(jl_String, 0);
+    var$4 = var$3.data;
+    jnc_Charset_checkCanonicalName($rt_s(44));
+    $autoFlush = var$4.length;
+    var$5 = 0;
+    while (var$5 < $autoFlush) {
+        jnc_Charset_checkCanonicalName(var$4[var$5]);
+        var$5 = var$5 + 1 | 0;
+    }
+    $out.$canonicalName = $rt_s(44);
+    $out.$aliases = var$3.$clone();
+    $this.$charset = $out;
 }
 function ji_PrintStream_write($this, $b, $off, $len) {
     var var$4, $$je;
@@ -3887,8 +3810,171 @@ function ji_PrintStream_write($this, $b, $off, $len) {
         $this.$errorState = 1;
     }
 }
+function ji_PrintStream_println($this, $s) {
+    jl_AbstractStringBuilder_append0(jl_StringBuilder_append($this.$sb, $s), 10);
+    ji_PrintStream_printSB($this);
+}
+function ji_PrintStream_println0($this, $s) {
+    var var$2;
+    var$2 = $this.$sb;
+    jl_StringBuilder_insert(var$2, var$2.$length0, $s === null ? $rt_s(5) : jl_Integer_toString($s));
+    jl_AbstractStringBuilder_append0(var$2, 10);
+    ji_PrintStream_printSB($this);
+}
+function ji_PrintStream_printSB($this) {
+    var var$1, var$2, $buffer, var$4, var$5, var$6, var$7, var$8, var$9, var$10, var$11, var$12, var$13, var$14, $$je;
+    var$1 = $this.$sb;
+    var$2 = var$1.$length0;
+    $buffer = $this.$buffer0;
+    if (var$2 > $buffer.data.length)
+        $buffer = $rt_createCharArray(var$2);
+    var$4 = 0;
+    var$5 = 0;
+    if (var$4 > var$2) {
+        var$1 = new jl_IndexOutOfBoundsException;
+        jl_Throwable__init_(var$1, $rt_s(45));
+        $rt_throw(var$1);
+    }
+    while (var$4 < var$2) {
+        var$6 = $buffer.data;
+        var$7 = var$5 + 1 | 0;
+        var$8 = var$1.$buffer.data;
+        var$9 = var$4 + 1 | 0;
+        var$6[var$5] = var$8[var$4];
+        var$5 = var$7;
+        var$4 = var$9;
+    }
+    var$6 = $buffer.data;
+    var$4 = var$2 - 0 | 0;
+    var$10 = new jn_CharBufferOverArray;
+    var$2 = var$6.length;
+    var$4 = 0 + var$4 | 0;
+    jn_Buffer__init_(var$10, var$2);
+    var$10.$position0 = 0;
+    var$10.$limit = var$4;
+    var$10.$start3 = 0;
+    var$10.$readOnly = 0;
+    var$10.$array0 = $buffer;
+    $buffer = $rt_createByteArray(jl_Math_max(16, jl_Math_min(var$2, 1024)));
+    var$4 = $buffer.data.length;
+    var$11 = new jn_ByteBufferImpl;
+    var$7 = 0 + var$4 | 0;
+    jn_Buffer__init_(var$11, var$4);
+    var$11.$order = jn_ByteOrder_BIG_ENDIAN;
+    var$11.$start4 = 0;
+    var$11.$array1 = $buffer;
+    var$11.$position0 = 0;
+    var$11.$limit = var$7;
+    var$11.$direct = 0;
+    var$11.$readOnly0 = 0;
+    var$12 = $this.$charset;
+    var$13 = new jnci_UTF8Encoder;
+    var$6 = $rt_createByteArray(1);
+    var$8 = var$6.data;
+    var$8[0] = 63;
+    var$1 = jnc_CodingErrorAction_REPORT;
+    var$13.$malformedAction = var$1;
+    var$13.$unmappableAction = var$1;
+    var$5 = var$8.length;
+    if (var$5 && var$5 >= var$13.$maxBytesPerChar) {
+        var$13.$charset0 = var$12;
+        var$13.$replacement = var$6.$clone();
+        var$13.$averageBytesPerChar = 2.0;
+        var$13.$maxBytesPerChar = 4.0;
+        var$1 = jnc_CodingErrorAction_REPLACE;
+        if (var$1 === null) {
+            var$11 = new jl_IllegalArgumentException;
+            jl_Throwable__init_(var$11, $rt_s(46));
+            $rt_throw(var$11);
+        }
+        var$13.$malformedAction = var$1;
+        var$13.$unmappableAction = var$1;
+        while (var$13.$status != 3) {
+            var$13.$status = 2;
+            a: {
+                while (true) {
+                    try {
+                        var$14 = jnci_BufferedEncoder_encodeLoop(var$13, var$10, var$11);
+                    } catch ($$e) {
+                        $$je = $rt_wrapException($$e);
+                        if ($$je instanceof jl_RuntimeException) {
+                            var$1 = $$je;
+                            $rt_throw(jnc_CoderMalfunctionError__init_(var$1));
+                        } else {
+                            throw $$e;
+                        }
+                    }
+                    if (var$14.$kind ? 0 : 1) {
+                        var$4 = jn_Buffer_remaining(var$10);
+                        if (var$4 <= 0)
+                            break a;
+                        var$14 = jnc_CoderResult_malformedForLength(var$4);
+                    } else if (jnc_CoderResult_isOverflow(var$14))
+                        break;
+                    var$1 = !jnc_CoderResult_isUnmappable(var$14) ? var$13.$malformedAction : var$13.$unmappableAction;
+                    b: {
+                        if (var$1 !== jnc_CodingErrorAction_REPLACE) {
+                            if (var$1 === jnc_CodingErrorAction_IGNORE)
+                                break b;
+                            else
+                                break a;
+                        }
+                        var$4 = jn_Buffer_remaining(var$11);
+                        var$6 = var$13.$replacement;
+                        var$9 = var$6.data.length;
+                        if (var$4 < var$9) {
+                            var$14 = jnc_CoderResult_OVERFLOW;
+                            break a;
+                        }
+                        jn_ByteBuffer_put(var$11, var$6, 0, var$9);
+                    }
+                    var$2 = var$10.$position0;
+                    var$4 = var$14.$kind != 2 ? 0 : 1;
+                    if (!(!var$4 && !jnc_CoderResult_isUnmappable(var$14) ? 0 : 1)) {
+                        var$1 = new jl_UnsupportedOperationException;
+                        jl_Exception__init_(var$1);
+                        $rt_throw(var$1);
+                    }
+                    jn_CharBuffer_position(var$10, var$2 + var$14.$length1 | 0);
+                }
+            }
+            var$4 = jnc_CoderResult_isOverflow(var$14);
+            ji_PrintStream_write($this, $buffer, 0, jn_Buffer_position(var$11));
+            jn_ByteBuffer_clear(var$11);
+            if (!var$4) {
+                while (true) {
+                    var$4 = var$13.$status;
+                    if (var$4 != 2 && var$4 != 4) {
+                        var$1 = new jl_IllegalStateException;
+                        jl_Exception__init_(var$1);
+                        $rt_throw(var$1);
+                    }
+                    var$1 = jnc_CoderResult_UNDERFLOW;
+                    if (var$1 === var$1)
+                        var$13.$status = 3;
+                    var$4 = jnc_CoderResult_isOverflow(var$1);
+                    ji_PrintStream_write($this, $buffer, 0, var$11.$position0);
+                    jn_ByteBuffer_clear(var$11);
+                    if (!var$4)
+                        break;
+                }
+                jl_StringBuilder_setLength($this.$sb, 0);
+                return;
+            }
+        }
+        var$1 = new jl_IllegalStateException;
+        jl_Exception__init_(var$1);
+        $rt_throw(var$1);
+    }
+    var$11 = new jl_IllegalArgumentException;
+    jl_RuntimeException__init_0(var$11, $rt_s(47));
+    $rt_throw(var$11);
+}
 var otcic_StderrOutputStream = $rt_classWithoutFields(ji_OutputStream);
 var otcic_StderrOutputStream_INSTANCE = null;
+function otcic_StderrOutputStream_write($this, $b) {
+    $rt_putStderr($b);
+}
 function otcic_StderrOutputStream__clinit_() {
     otcic_StderrOutputStream_INSTANCE = new otcic_StderrOutputStream;
 }
@@ -3998,7 +4084,7 @@ function ju_TreeMap$EntryIterator__init_0($this, $owner, $path, $to, $reverse) {
 function jn_Buffer() {
     var a = this; jl_Object.call(a);
     a.$capacity = 0;
-    a.$position = 0;
+    a.$position0 = 0;
     a.$limit = 0;
     a.$mark = 0;
 }
@@ -4007,18 +4093,21 @@ function jn_Buffer__init_($this, $capacity) {
     $this.$capacity = $capacity;
     $this.$limit = $capacity;
 }
+function jn_Buffer_position($this) {
+    return $this.$position0;
+}
 function jn_Buffer_remaining($this) {
-    return $this.$limit - $this.$position | 0;
+    return $this.$limit - $this.$position0 | 0;
 }
 function jn_Buffer_hasRemaining($this) {
-    return $this.$position >= $this.$limit ? 0 : 1;
+    return $this.$position0 >= $this.$limit ? 0 : 1;
 }
 var jl_Readable = $rt_classWithoutFields(0);
 var jn_CharBuffer = $rt_classWithoutFields(jn_Buffer);
 function jn_CharBuffer_position($this, $newPosition) {
     var var$2, var$3;
     if ($newPosition >= 0 && $newPosition <= $this.$limit) {
-        $this.$position = $newPosition;
+        $this.$position0 = $newPosition;
         if ($newPosition < $this.$mark)
             $this.$mark = 0;
         return $this;
@@ -4026,13 +4115,13 @@ function jn_CharBuffer_position($this, $newPosition) {
     var$2 = new jl_IllegalArgumentException;
     var$3 = new jl_StringBuilder;
     jl_AbstractStringBuilder__init_(var$3);
-    jl_Throwable__init_(var$2, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$3, $rt_s(47)), $newPosition), $rt_s(48)), $this.$limit), $rt_s(49))));
+    jl_Throwable__init_(var$2, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$3, $rt_s(48)), $newPosition), $rt_s(49)), $this.$limit), $rt_s(50))));
     $rt_throw(var$2);
 }
 function jn_ByteBuffer() {
     var a = this; jn_Buffer.call(a);
-    a.$start3 = 0;
-    a.$array0 = null;
+    a.$start4 = 0;
+    a.$array1 = null;
     a.$order = null;
 }
 function jn_ByteBuffer_put($this, $src, $offset, $length) {
@@ -4058,21 +4147,21 @@ function jn_ByteBuffer_put($this, $src, $offset, $length) {
                 var$8 = new jl_IndexOutOfBoundsException;
                 var$4 = new jl_StringBuilder;
                 jl_AbstractStringBuilder__init_(var$4);
-                jl_Throwable__init_(var$8, jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$4, $rt_s(50)), var$7), $rt_s(51)), var$6)));
+                jl_Throwable__init_(var$8, jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$4, $rt_s(51)), var$7), $rt_s(52)), var$6)));
                 $rt_throw(var$8);
             }
             if ($length < 0) {
                 var$4 = new jl_IndexOutOfBoundsException;
                 var$8 = new jl_StringBuilder;
                 jl_AbstractStringBuilder__init_(var$8);
-                jl_Throwable__init_(var$4, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$8, $rt_s(52)), $length), $rt_s(53))));
+                jl_Throwable__init_(var$4, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$8, $rt_s(53)), $length), $rt_s(54))));
                 $rt_throw(var$4);
             }
-            var$7 = $this.$position;
-            $pos = var$7 + $this.$start3 | 0;
+            var$7 = $this.$position0;
+            $pos = var$7 + $this.$start4 | 0;
             $i = 0;
             while ($i < $length) {
-                $src = $this.$array0.data;
+                $src = $this.$array1.data;
                 var$11 = $pos + 1 | 0;
                 var$6 = $offset + 1 | 0;
                 $src[$pos] = var$5[$offset];
@@ -4080,7 +4169,7 @@ function jn_ByteBuffer_put($this, $src, $offset, $length) {
                 $pos = var$11;
                 $offset = var$6;
             }
-            $this.$position = var$7 + $length | 0;
+            $this.$position0 = var$7 + $length | 0;
             return $this;
         }
     }
@@ -4088,11 +4177,11 @@ function jn_ByteBuffer_put($this, $src, $offset, $length) {
     var$8 = new jl_IndexOutOfBoundsException;
     var$4 = new jl_StringBuilder;
     jl_AbstractStringBuilder__init_(var$4);
-    jl_Throwable__init_(var$8, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$4, $rt_s(54)), $offset), $rt_s(48)), $src.length), $rt_s(20))));
+    jl_Throwable__init_(var$8, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$4, $rt_s(55)), $offset), $rt_s(49)), $src.length), $rt_s(17))));
     $rt_throw(var$8);
 }
 function jn_ByteBuffer_clear($this) {
-    $this.$position = 0;
+    $this.$position0 = 0;
     $this.$limit = $this.$capacity;
     $this.$mark = (-1);
     return $this;
@@ -4113,16 +4202,16 @@ function jnc_CodingErrorAction__init_0($this, $name) {
     $this.$name1 = $name;
 }
 function jnc_CodingErrorAction__clinit_() {
-    jnc_CodingErrorAction_IGNORE = jnc_CodingErrorAction__init_($rt_s(55));
-    jnc_CodingErrorAction_REPLACE = jnc_CodingErrorAction__init_($rt_s(56));
-    jnc_CodingErrorAction_REPORT = jnc_CodingErrorAction__init_($rt_s(57));
+    jnc_CodingErrorAction_IGNORE = jnc_CodingErrorAction__init_($rt_s(56));
+    jnc_CodingErrorAction_REPLACE = jnc_CodingErrorAction__init_($rt_s(57));
+    jnc_CodingErrorAction_REPORT = jnc_CodingErrorAction__init_($rt_s(58));
 }
 var jn_CharBufferImpl = $rt_classWithoutFields(jn_CharBuffer);
 function jn_CharBufferOverArray() {
     var a = this; jn_CharBufferImpl.call(a);
     a.$readOnly = 0;
-    a.$start2 = 0;
-    a.$array = null;
+    a.$start3 = 0;
+    a.$array0 = null;
 }
 function jnc_CharsetEncoder() {
     var a = this; jl_Object.call(a);
@@ -4133,83 +4222,6 @@ function jnc_CharsetEncoder() {
     a.$malformedAction = null;
     a.$unmappableAction = null;
     a.$status = 0;
-}
-function jnc_CharsetEncoder_checkReplacement($this, $replacement) {
-    var var$2, var$3;
-    if ($replacement !== null) {
-        var$2 = $replacement.data.length;
-        if (var$2 && var$2 >= $this.$maxBytesPerChar)
-            return;
-    }
-    var$3 = new jl_IllegalArgumentException;
-    jl_Throwable__init_(var$3, $rt_s(58));
-    $rt_throw(var$3);
-}
-function jnc_CharsetEncoder_encode($this, $in, $out, $endOfInput) {
-    var var$4, $result, $e, $remaining, $action, var$9, var$10, $$je;
-    a: {
-        var$4 = $this.$status;
-        if (var$4 != 3) {
-            if ($endOfInput)
-                break a;
-            if (var$4 != 2)
-                break a;
-        }
-        $in = new jl_IllegalStateException;
-        jl_Exception__init_($in);
-        $rt_throw($in);
-    }
-    $this.$status = !$endOfInput ? 1 : 2;
-    while (true) {
-        try {
-            $result = jnci_BufferedEncoder_encodeLoop($this, $in, $out);
-        } catch ($$e) {
-            $$je = $rt_wrapException($$e);
-            if ($$je instanceof jl_RuntimeException) {
-                $e = $$je;
-                $in = new jnc_CoderMalfunctionError;
-                $in.$suppressionEnabled = 1;
-                $in.$writableStackTrace = 1;
-                $in.$cause = $e;
-                $rt_throw($in);
-            } else {
-                throw $$e;
-            }
-        }
-        if ($result.$kind ? 0 : 1) {
-            if (!$endOfInput)
-                return $result;
-            $remaining = jn_Buffer_remaining($in);
-            if ($remaining <= 0)
-                return $result;
-            $result = jnc_CoderResult_malformedForLength($remaining);
-        } else if (jnc_CoderResult_isOverflow($result))
-            break;
-        $action = !jnc_CoderResult_isUnmappable($result) ? $this.$malformedAction : $this.$unmappableAction;
-        b: {
-            if ($action !== jnc_CodingErrorAction_REPLACE) {
-                if ($action === jnc_CodingErrorAction_IGNORE)
-                    break b;
-                else
-                    return $result;
-            }
-            $remaining = jn_Buffer_remaining($out);
-            var$9 = $this.$replacement;
-            var$4 = var$9.data.length;
-            if ($remaining < var$4)
-                return jnc_CoderResult_OVERFLOW;
-            jn_ByteBuffer_put($out, var$9, 0, var$4);
-        }
-        var$10 = $in.$position;
-        $remaining = $result.$kind != 2 ? 0 : 1;
-        if (!(!$remaining && !jnc_CoderResult_isUnmappable($result) ? 0 : 1)) {
-            $in = new jl_UnsupportedOperationException;
-            jl_Exception__init_($in);
-            $rt_throw($in);
-        }
-        jn_CharBuffer_position($in, var$10 + $result.$length1 | 0);
-    }
-    return $result;
 }
 function jnc_CoderResult() {
     var a = this; jl_Object.call(a);
@@ -4269,7 +4281,44 @@ function g_FillRectCommand() {
     a.$color = null;
     a.$rect = null;
 }
-function g_FillRectCommand_accept($this, $visitor) {}
+function g_FillRectCommand_accept($this, $visitor) {
+    var var$2, var$3, var$4, var$5, var$6, var$7, var$8, var$9;
+    var$2 = $this.$color;
+    var$3 = $this.$rect;
+    var$4 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$4);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(var$4, $rt_s(61)), var$2.$r));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$5, var$4), $rt_s(62)));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(var$5, var$4), var$2.$g));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$5, var$4), $rt_s(62)));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(var$5, var$4), var$2.$b));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$4 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$5, var$4), $rt_s(62)));
+    var$5 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$5);
+    var$5 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(var$5, var$4), var$2.$a));
+    var$2 = new jl_StringBuilder;
+    jl_AbstractStringBuilder__init_(var$2);
+    var$5 = jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$2, var$5), $rt_s(17)));
+    ji_PrintStream_println(jl_System_out(), var$5);
+    ji_PrintStream_println0(jl_System_out(), var$3.$w);
+    ji_PrintStream_println0(jl_System_out(), var$3.$h);
+    $visitor = $visitor.$context;
+    var$6 = var$3.$x0.$value;
+    var$7 = var$3.$y0.$value;
+    var$8 = var$3.$w.$value;
+    var$9 = var$3.$h.$value;
+    $visitor.fillRect(var$6, var$7, var$8, var$9);
+}
 function ja_Color() {
     var a = this; jl_Object.call(a);
     a.$r = 0;
@@ -4352,7 +4401,7 @@ function jnci_BufferedEncoder_encodeLoop($this, $in, $out) {
                         $in = new jl_IndexOutOfBoundsException;
                         $out = new jl_StringBuilder;
                         jl_AbstractStringBuilder__init_($out);
-                        jl_Throwable__init_($in, jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($out, $rt_s(61)), $i), $rt_s(51)), $inPos)));
+                        jl_Throwable__init_($in, jl_AbstractStringBuilder_toString(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($out, $rt_s(63)), $i), $rt_s(52)), $inPos)));
                         $rt_throw($in);
                     }
                     if (jn_Buffer_remaining($in) < var$11)
@@ -4361,21 +4410,21 @@ function jnci_BufferedEncoder_encodeLoop($this, $in, $out) {
                         $in = new jl_IndexOutOfBoundsException;
                         $out = new jl_StringBuilder;
                         jl_AbstractStringBuilder__init_($out);
-                        jl_Throwable__init_($in, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($out, $rt_s(52)), var$11), $rt_s(53))));
+                        jl_Throwable__init_($in, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($out, $rt_s(53)), var$11), $rt_s(54))));
                         $rt_throw($in);
                     }
-                    $inPos = $in.$position;
+                    $inPos = $in.$position0;
                     var$12 = 0;
                     var$13 = $inPos;
                     while (var$12 < var$11) {
                         var$14 = $outSize + 1 | 0;
                         $i = var$13 + 1 | 0;
-                        var$4[$outSize] = $in.$array.data[var$13 + $in.$start2 | 0];
+                        var$4[$outSize] = $in.$array0.data[var$13 + $in.$start3 | 0];
                         var$12 = var$12 + 1 | 0;
                         $outSize = var$14;
                         var$13 = $i;
                     }
-                    $in.$position = $inPos + var$11 | 0;
+                    $in.$position0 = $inPos + var$11 | 0;
                     $inPos = 0;
                 }
                 if (!jn_Buffer_hasRemaining($out)) {
@@ -4385,7 +4434,7 @@ function jnci_BufferedEncoder_encodeLoop($this, $in, $out) {
                 $outSize = jl_Math_min(jn_Buffer_remaining($out), var$8.length);
                 $controller = new jnci_BufferedEncoder$Controller;
                 $controller.$in = $in;
-                $controller.$out0 = $out;
+                $controller.$out1 = $out;
                 var$15 = jnci_UTF8Encoder_arrayEncode($this, $inArray, $inPos, $inSize, $outArray, 0, $outSize, $controller);
                 $inPos = $controller.$inPosition;
                 if (var$15 === null && 0 == $controller.$outPosition)
@@ -4401,10 +4450,10 @@ function jnci_BufferedEncoder_encodeLoop($this, $in, $out) {
         $out = new jl_IndexOutOfBoundsException;
         $in = new jl_StringBuilder;
         jl_AbstractStringBuilder__init_($in);
-        jl_Throwable__init_($out, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($in, $rt_s(54)), $outSize), $rt_s(48)), $inPos), $rt_s(20))));
+        jl_Throwable__init_($out, jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append($in, $rt_s(55)), $outSize), $rt_s(49)), $inPos), $rt_s(17))));
         $rt_throw($out);
     }
-    jn_CharBuffer_position($in, $in.$position - ($inSize - $inPos | 0) | 0);
+    jn_CharBuffer_position($in, $in.$position0 - ($inSize - $inPos | 0) | 0);
     return var$15;
 }
 var jnci_UTF8Encoder = $rt_classWithoutFields(jnci_BufferedEncoder);
@@ -4506,17 +4555,41 @@ function g_DrawTileCommand() {
     a.$rect0 = null;
 }
 function g_DrawTileCommand_accept($this, $visitor) {
-    var var$2, var$3, var$4, var$5, var$6, var$7, var$8;
+    var var$2, var$3, var$4, var$5, var$6, var$7, var$8, var$9, var$10, var$11, var$12, var$13;
     var$2 = $this.$rect0;
-    var$3 = $this.$tileID;
-    var$4 = $visitor.$context;
-    $visitor = ju_TreeMap_findExact($visitor.$images, jl_Integer_valueOf(Long_and(Long_sub(var$3, Long_fromInt(1)), new Long(536870911, 4294967295)).lo));
-    $visitor = $visitor === null ? null : $visitor.$value0;
-    var$5 = var$2.$x0.$value;
-    var$6 = var$2.$y0.$value;
-    var$7 = var$2.$w.$value;
-    var$8 = var$2.$h.$value;
-    var$4.drawImage($visitor, var$5, var$6, var$7, var$8);
+    var$3 = 1.0;
+    var$4 = 1.0;
+    var$5 = 0.0;
+    var$6 = 0;
+    var$7 = 0;
+    var$8 = $this.$tileID;
+    var$9 = Long_and(Long_sub(var$8, Long_fromInt(1)), new Long(536870911, 4294967295)).lo;
+    if (Long_eq(Long_and(var$8, Long_fromInt(536870912)), Long_ZERO) ? 0 : 1) {
+        var$5 = (-1.5707963267948966);
+        var$4 = (-1.0);
+    }
+    if (Long_eq(Long_and(var$8, new Long(2147483648, 0)), Long_ZERO) ? 0 : 1) {
+        var$3 = (-1.0);
+        var$6 =  -var$2.$w.$value;
+    }
+    if (Long_eq(Long_and(var$8, Long_fromInt(1073741824)), Long_ZERO) ? 0 : 1) {
+        var$4 = var$4 * (-1.0);
+        var$7 =  -var$2.$w.$value;
+    }
+    $visitor.$context.save();
+    var$10 = $visitor.$context;
+    var$11 = var$2.$x0.$value;
+    var$12 = var$2.$y0.$value;
+    var$10.translate(var$11, var$12);
+    $visitor.$context.scale(var$3, var$4);
+    $visitor.$context.rotate(var$5);
+    var$13 = $visitor.$context;
+    var$2 = ju_TreeMap_findExact($visitor.$images, jl_Integer_valueOf(var$9));
+    var$2 = var$2 === null ? null : var$2.$value0;
+    var$3 = var$6;
+    var$4 = var$7;
+    var$13.drawImage(var$2, var$3, var$4);
+    $visitor.$context.restore();
 }
 function jur_Pattern() {
     var a = this; jl_Object.call(a);
@@ -5929,7 +6002,7 @@ function jur_Lexer_parseCharClassName($this) {
         if (var$3[$ch] != 123) {
             $sb = new jl_StringBuilder;
             jl_AbstractStringBuilder__init_($sb);
-            return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($sb, $rt_s(62)), jl_String__init_1($this.$pattern, jur_Lexer_nextIndex($this), 1)));
+            return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($sb, $rt_s(64)), jl_String__init_1($this.$pattern, jur_Lexer_nextIndex($this), 1)));
         }
         jur_Lexer_nextIndex($this);
         $ch = 0;
@@ -5954,14 +6027,14 @@ function jur_Lexer_parseCharClassName($this) {
     if (jl_String_length($res) == 1) {
         $sb = new jl_StringBuilder;
         jl_AbstractStringBuilder__init_($sb);
-        return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($sb, $rt_s(62)), $res));
+        return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append($sb, $rt_s(64)), $res));
     }
     b: {
         c: {
             if (jl_String_length($res) > 3) {
-                if (jl_String_startsWith0($res, $rt_s(62)))
+                if (jl_String_startsWith0($res, $rt_s(64)))
                     break c;
-                if (jl_String_startsWith0($res, $rt_s(63)))
+                if (jl_String_startsWith0($res, $rt_s(65)))
                     break c;
             }
             break b;
@@ -6476,11 +6549,11 @@ function jur_JointSet_processSecondPass($this) {
                     var$7 = var$5.$size;
                     var$8 = var$7;
                     while (var$8 > $i) {
-                        var$9 = var$5.$array1.data;
+                        var$9 = var$5.$array.data;
                         var$9[var$8] = var$9[var$8 - 1 | 0];
                         var$8 = var$8 + (-1) | 0;
                     }
-                    var$5.$array1.data[$i] = $set;
+                    var$5.$array.data[$i] = $set;
                     var$5.$size = var$7 + 1 | 0;
                     var$5.$modCount2 = var$5.$modCount2 + 1 | 0;
                 }
@@ -7444,9 +7517,9 @@ function jur_Quantifier_toString($this) {
     var var$1, var$2;
     var$1 = new jl_StringBuilder;
     jl_AbstractStringBuilder__init_(var$1);
-    var$1 = jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$1, $rt_s(64)), $this.$min1), $rt_s(45));
+    var$1 = jl_StringBuilder_append(jl_StringBuilder_append0(jl_StringBuilder_append(var$1, $rt_s(66)), $this.$min1), $rt_s(42));
     var$2 = $this.$max1;
-    return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$1, var$2 == 2147483647 ? $rt_s(4) : jl_Integer_toString(jl_Integer__init_(var$2))), $rt_s(65)));
+    return jl_AbstractStringBuilder_toString(jl_StringBuilder_append(jl_StringBuilder_append(var$1, var$2 == 2147483647 ? $rt_s(4) : jl_Integer_toString(jl_Integer__init_(var$2))), $rt_s(67)));
 }
 var jur_FSet$PossessiveFSet = $rt_classWithoutFields(jur_AbstractSet);
 function jur_FSet$PossessiveFSet_matches($this, $stringIndex, $testString, $matchResult) {
@@ -9213,45 +9286,45 @@ var jur_AbstractCharClass$PredefinedCharacterClasses_contents = null;
 function jur_AbstractCharClass$PredefinedCharacterClasses__clinit_() {
     jur_AbstractCharClass$PredefinedCharacterClasses_space = jur_AbstractCharClass$LazySpace__init_();
     jur_AbstractCharClass$PredefinedCharacterClasses_digit = jur_AbstractCharClass$LazyDigit__init_();
-    jur_AbstractCharClass$PredefinedCharacterClasses_contents = $rt_createArrayFromData($rt_arraycls(jl_Object), [$rt_createArrayFromData(jl_Object, [$rt_s(66), jur_AbstractCharClass$LazyLower__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(67), jur_AbstractCharClass$LazyUpper__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(68), jur_AbstractCharClass$LazyASCII__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(69), jur_AbstractCharClass$LazyAlpha__init_()]), $rt_createArrayFromData(jl_Object,
-    [$rt_s(70), jur_AbstractCharClass$PredefinedCharacterClasses_digit]), $rt_createArrayFromData(jl_Object, [$rt_s(71), jur_AbstractCharClass$LazyAlnum__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(72), jur_AbstractCharClass$LazyPunct__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(73), jur_AbstractCharClass$LazyGraph__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(74), jur_AbstractCharClass$LazyPrint__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(75), jur_AbstractCharClass$LazyBlank__init_()]),
-    $rt_createArrayFromData(jl_Object, [$rt_s(76), jur_AbstractCharClass$LazyCntrl__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(77), jur_AbstractCharClass$LazyXDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(78), jur_AbstractCharClass$LazyJavaLowerCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(79), jur_AbstractCharClass$LazyJavaUpperCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(80), jur_AbstractCharClass$LazyJavaWhitespace__init_()]), $rt_createArrayFromData(jl_Object,
-    [$rt_s(81), jur_AbstractCharClass$LazyJavaMirrored__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(82), jur_AbstractCharClass$LazyJavaDefined__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(83), jur_AbstractCharClass$LazyJavaDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(84), jur_AbstractCharClass$LazyJavaIdentifierIgnorable__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(85), jur_AbstractCharClass$LazyJavaISOControl__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(86),
-    jur_AbstractCharClass$LazyJavaJavaIdentifierPart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(87), jur_AbstractCharClass$LazyJavaJavaIdentifierStart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(88), jur_AbstractCharClass$LazyJavaLetter__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(89), jur_AbstractCharClass$LazyJavaLetterOrDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(90), jur_AbstractCharClass$LazyJavaSpaceChar__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(91),
-    jur_AbstractCharClass$LazyJavaTitleCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(92), jur_AbstractCharClass$LazyJavaUnicodeIdentifierPart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(93), jur_AbstractCharClass$LazyJavaUnicodeIdentifierStart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(94), jur_AbstractCharClass$PredefinedCharacterClasses_space]), $rt_createArrayFromData(jl_Object, [$rt_s(95), jur_AbstractCharClass$LazyWord__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(96),
-    jur_AbstractCharClass$LazyNonWord__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(97), jur_AbstractCharClass$PredefinedCharacterClasses_space]), $rt_createArrayFromData(jl_Object, [$rt_s(98), jur_AbstractCharClass$LazyNonSpace__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(99), jur_AbstractCharClass$PredefinedCharacterClasses_digit]), $rt_createArrayFromData(jl_Object, [$rt_s(100), jur_AbstractCharClass$LazyNonDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(101), jur_AbstractCharClass$LazyRange__init_(0,
-    127)]), $rt_createArrayFromData(jl_Object, [$rt_s(102), jur_AbstractCharClass$LazyRange__init_(128, 255)]), $rt_createArrayFromData(jl_Object, [$rt_s(103), jur_AbstractCharClass$LazyRange__init_(256, 383)]), $rt_createArrayFromData(jl_Object, [$rt_s(104), jur_AbstractCharClass$LazyRange__init_(384, 591)]), $rt_createArrayFromData(jl_Object, [$rt_s(105), jur_AbstractCharClass$LazyRange__init_(592, 687)]), $rt_createArrayFromData(jl_Object, [$rt_s(106), jur_AbstractCharClass$LazyRange__init_(688, 767)]), $rt_createArrayFromData(jl_Object,
-    [$rt_s(107), jur_AbstractCharClass$LazyRange__init_(768, 879)]), $rt_createArrayFromData(jl_Object, [$rt_s(108), jur_AbstractCharClass$LazyRange__init_(880, 1023)]), $rt_createArrayFromData(jl_Object, [$rt_s(109), jur_AbstractCharClass$LazyRange__init_(1024, 1279)]), $rt_createArrayFromData(jl_Object, [$rt_s(110), jur_AbstractCharClass$LazyRange__init_(1280, 1327)]), $rt_createArrayFromData(jl_Object, [$rt_s(111), jur_AbstractCharClass$LazyRange__init_(1328, 1423)]), $rt_createArrayFromData(jl_Object, [$rt_s(112),
-    jur_AbstractCharClass$LazyRange__init_(1424, 1535)]), $rt_createArrayFromData(jl_Object, [$rt_s(113), jur_AbstractCharClass$LazyRange__init_(1536, 1791)]), $rt_createArrayFromData(jl_Object, [$rt_s(114), jur_AbstractCharClass$LazyRange__init_(1792, 1871)]), $rt_createArrayFromData(jl_Object, [$rt_s(115), jur_AbstractCharClass$LazyRange__init_(1872, 1919)]), $rt_createArrayFromData(jl_Object, [$rt_s(116), jur_AbstractCharClass$LazyRange__init_(1920, 1983)]), $rt_createArrayFromData(jl_Object, [$rt_s(117),
-    jur_AbstractCharClass$LazyRange__init_(2304, 2431)]), $rt_createArrayFromData(jl_Object, [$rt_s(118), jur_AbstractCharClass$LazyRange__init_(2432, 2559)]), $rt_createArrayFromData(jl_Object, [$rt_s(119), jur_AbstractCharClass$LazyRange__init_(2560, 2687)]), $rt_createArrayFromData(jl_Object, [$rt_s(120), jur_AbstractCharClass$LazyRange__init_(2688, 2815)]), $rt_createArrayFromData(jl_Object, [$rt_s(121), jur_AbstractCharClass$LazyRange__init_(2816, 2943)]), $rt_createArrayFromData(jl_Object, [$rt_s(122),
-    jur_AbstractCharClass$LazyRange__init_(2944, 3071)]), $rt_createArrayFromData(jl_Object, [$rt_s(123), jur_AbstractCharClass$LazyRange__init_(3072, 3199)]), $rt_createArrayFromData(jl_Object, [$rt_s(124), jur_AbstractCharClass$LazyRange__init_(3200, 3327)]), $rt_createArrayFromData(jl_Object, [$rt_s(125), jur_AbstractCharClass$LazyRange__init_(3328, 3455)]), $rt_createArrayFromData(jl_Object, [$rt_s(126), jur_AbstractCharClass$LazyRange__init_(3456, 3583)]), $rt_createArrayFromData(jl_Object, [$rt_s(127),
-    jur_AbstractCharClass$LazyRange__init_(3584, 3711)]), $rt_createArrayFromData(jl_Object, [$rt_s(128), jur_AbstractCharClass$LazyRange__init_(3712, 3839)]), $rt_createArrayFromData(jl_Object, [$rt_s(129), jur_AbstractCharClass$LazyRange__init_(3840, 4095)]), $rt_createArrayFromData(jl_Object, [$rt_s(130), jur_AbstractCharClass$LazyRange__init_(4096, 4255)]), $rt_createArrayFromData(jl_Object, [$rt_s(131), jur_AbstractCharClass$LazyRange__init_(4256, 4351)]), $rt_createArrayFromData(jl_Object, [$rt_s(132),
-    jur_AbstractCharClass$LazyRange__init_(4352, 4607)]), $rt_createArrayFromData(jl_Object, [$rt_s(133), jur_AbstractCharClass$LazyRange__init_(4608, 4991)]), $rt_createArrayFromData(jl_Object, [$rt_s(134), jur_AbstractCharClass$LazyRange__init_(4992, 5023)]), $rt_createArrayFromData(jl_Object, [$rt_s(135), jur_AbstractCharClass$LazyRange__init_(5024, 5119)]), $rt_createArrayFromData(jl_Object, [$rt_s(136), jur_AbstractCharClass$LazyRange__init_(5120, 5759)]), $rt_createArrayFromData(jl_Object, [$rt_s(137),
-    jur_AbstractCharClass$LazyRange__init_(5760, 5791)]), $rt_createArrayFromData(jl_Object, [$rt_s(138), jur_AbstractCharClass$LazyRange__init_(5792, 5887)]), $rt_createArrayFromData(jl_Object, [$rt_s(139), jur_AbstractCharClass$LazyRange__init_(5888, 5919)]), $rt_createArrayFromData(jl_Object, [$rt_s(140), jur_AbstractCharClass$LazyRange__init_(5920, 5951)]), $rt_createArrayFromData(jl_Object, [$rt_s(141), jur_AbstractCharClass$LazyRange__init_(5952, 5983)]), $rt_createArrayFromData(jl_Object, [$rt_s(142),
-    jur_AbstractCharClass$LazyRange__init_(5984, 6015)]), $rt_createArrayFromData(jl_Object, [$rt_s(143), jur_AbstractCharClass$LazyRange__init_(6016, 6143)]), $rt_createArrayFromData(jl_Object, [$rt_s(144), jur_AbstractCharClass$LazyRange__init_(6144, 6319)]), $rt_createArrayFromData(jl_Object, [$rt_s(145), jur_AbstractCharClass$LazyRange__init_(6400, 6479)]), $rt_createArrayFromData(jl_Object, [$rt_s(146), jur_AbstractCharClass$LazyRange__init_(6480, 6527)]), $rt_createArrayFromData(jl_Object, [$rt_s(147),
-    jur_AbstractCharClass$LazyRange__init_(6528, 6623)]), $rt_createArrayFromData(jl_Object, [$rt_s(148), jur_AbstractCharClass$LazyRange__init_(6624, 6655)]), $rt_createArrayFromData(jl_Object, [$rt_s(149), jur_AbstractCharClass$LazyRange__init_(6656, 6687)]), $rt_createArrayFromData(jl_Object, [$rt_s(150), jur_AbstractCharClass$LazyRange__init_(7424, 7551)]), $rt_createArrayFromData(jl_Object, [$rt_s(151), jur_AbstractCharClass$LazyRange__init_(7552, 7615)]), $rt_createArrayFromData(jl_Object, [$rt_s(152),
-    jur_AbstractCharClass$LazyRange__init_(7616, 7679)]), $rt_createArrayFromData(jl_Object, [$rt_s(153), jur_AbstractCharClass$LazyRange__init_(7680, 7935)]), $rt_createArrayFromData(jl_Object, [$rt_s(154), jur_AbstractCharClass$LazyRange__init_(7936, 8191)]), $rt_createArrayFromData(jl_Object, [$rt_s(155), jur_AbstractCharClass$LazyRange__init_(8192, 8303)]), $rt_createArrayFromData(jl_Object, [$rt_s(156), jur_AbstractCharClass$LazyRange__init_(8304, 8351)]), $rt_createArrayFromData(jl_Object, [$rt_s(157),
-    jur_AbstractCharClass$LazyRange__init_(8352, 8399)]), $rt_createArrayFromData(jl_Object, [$rt_s(158), jur_AbstractCharClass$LazyRange__init_(8400, 8447)]), $rt_createArrayFromData(jl_Object, [$rt_s(159), jur_AbstractCharClass$LazyRange__init_(8448, 8527)]), $rt_createArrayFromData(jl_Object, [$rt_s(160), jur_AbstractCharClass$LazyRange__init_(8528, 8591)]), $rt_createArrayFromData(jl_Object, [$rt_s(161), jur_AbstractCharClass$LazyRange__init_(8592, 8703)]), $rt_createArrayFromData(jl_Object, [$rt_s(162),
-    jur_AbstractCharClass$LazyRange__init_(8704, 8959)]), $rt_createArrayFromData(jl_Object, [$rt_s(163), jur_AbstractCharClass$LazyRange__init_(8960, 9215)]), $rt_createArrayFromData(jl_Object, [$rt_s(164), jur_AbstractCharClass$LazyRange__init_(9216, 9279)]), $rt_createArrayFromData(jl_Object, [$rt_s(165), jur_AbstractCharClass$LazyRange__init_(9280, 9311)]), $rt_createArrayFromData(jl_Object, [$rt_s(166), jur_AbstractCharClass$LazyRange__init_(9312, 9471)]), $rt_createArrayFromData(jl_Object, [$rt_s(167),
-    jur_AbstractCharClass$LazyRange__init_(9472, 9599)]), $rt_createArrayFromData(jl_Object, [$rt_s(168), jur_AbstractCharClass$LazyRange__init_(9600, 9631)]), $rt_createArrayFromData(jl_Object, [$rt_s(169), jur_AbstractCharClass$LazyRange__init_(9632, 9727)]), $rt_createArrayFromData(jl_Object, [$rt_s(170), jur_AbstractCharClass$LazyRange__init_(9728, 9983)]), $rt_createArrayFromData(jl_Object, [$rt_s(171), jur_AbstractCharClass$LazyRange__init_(9984, 10175)]), $rt_createArrayFromData(jl_Object, [$rt_s(172),
-    jur_AbstractCharClass$LazyRange__init_(10176, 10223)]), $rt_createArrayFromData(jl_Object, [$rt_s(173), jur_AbstractCharClass$LazyRange__init_(10224, 10239)]), $rt_createArrayFromData(jl_Object, [$rt_s(174), jur_AbstractCharClass$LazyRange__init_(10240, 10495)]), $rt_createArrayFromData(jl_Object, [$rt_s(175), jur_AbstractCharClass$LazyRange__init_(10496, 10623)]), $rt_createArrayFromData(jl_Object, [$rt_s(176), jur_AbstractCharClass$LazyRange__init_(10624, 10751)]), $rt_createArrayFromData(jl_Object, [$rt_s(177),
-    jur_AbstractCharClass$LazyRange__init_(10752, 11007)]), $rt_createArrayFromData(jl_Object, [$rt_s(178), jur_AbstractCharClass$LazyRange__init_(11008, 11263)]), $rt_createArrayFromData(jl_Object, [$rt_s(179), jur_AbstractCharClass$LazyRange__init_(11264, 11359)]), $rt_createArrayFromData(jl_Object, [$rt_s(180), jur_AbstractCharClass$LazyRange__init_(11392, 11519)]), $rt_createArrayFromData(jl_Object, [$rt_s(181), jur_AbstractCharClass$LazyRange__init_(11520, 11567)]), $rt_createArrayFromData(jl_Object, [$rt_s(182),
-    jur_AbstractCharClass$LazyRange__init_(11568, 11647)]), $rt_createArrayFromData(jl_Object, [$rt_s(183), jur_AbstractCharClass$LazyRange__init_(11648, 11743)]), $rt_createArrayFromData(jl_Object, [$rt_s(184), jur_AbstractCharClass$LazyRange__init_(11776, 11903)]), $rt_createArrayFromData(jl_Object, [$rt_s(185), jur_AbstractCharClass$LazyRange__init_(11904, 12031)]), $rt_createArrayFromData(jl_Object, [$rt_s(186), jur_AbstractCharClass$LazyRange__init_(12032, 12255)]), $rt_createArrayFromData(jl_Object, [$rt_s(187),
-    jur_AbstractCharClass$LazyRange__init_(12272, 12287)]), $rt_createArrayFromData(jl_Object, [$rt_s(188), jur_AbstractCharClass$LazyRange__init_(12288, 12351)]), $rt_createArrayFromData(jl_Object, [$rt_s(189), jur_AbstractCharClass$LazyRange__init_(12352, 12447)]), $rt_createArrayFromData(jl_Object, [$rt_s(190), jur_AbstractCharClass$LazyRange__init_(12448, 12543)]), $rt_createArrayFromData(jl_Object, [$rt_s(191), jur_AbstractCharClass$LazyRange__init_(12544, 12591)]), $rt_createArrayFromData(jl_Object, [$rt_s(192),
-    jur_AbstractCharClass$LazyRange__init_(12592, 12687)]), $rt_createArrayFromData(jl_Object, [$rt_s(193), jur_AbstractCharClass$LazyRange__init_(12688, 12703)]), $rt_createArrayFromData(jl_Object, [$rt_s(194), jur_AbstractCharClass$LazyRange__init_(12704, 12735)]), $rt_createArrayFromData(jl_Object, [$rt_s(195), jur_AbstractCharClass$LazyRange__init_(12736, 12783)]), $rt_createArrayFromData(jl_Object, [$rt_s(196), jur_AbstractCharClass$LazyRange__init_(12784, 12799)]), $rt_createArrayFromData(jl_Object, [$rt_s(197),
-    jur_AbstractCharClass$LazyRange__init_(12800, 13055)]), $rt_createArrayFromData(jl_Object, [$rt_s(198), jur_AbstractCharClass$LazyRange__init_(13056, 13311)]), $rt_createArrayFromData(jl_Object, [$rt_s(199), jur_AbstractCharClass$LazyRange__init_(13312, 19893)]), $rt_createArrayFromData(jl_Object, [$rt_s(200), jur_AbstractCharClass$LazyRange__init_(19904, 19967)]), $rt_createArrayFromData(jl_Object, [$rt_s(201), jur_AbstractCharClass$LazyRange__init_(19968, 40959)]), $rt_createArrayFromData(jl_Object, [$rt_s(202),
-    jur_AbstractCharClass$LazyRange__init_(40960, 42127)]), $rt_createArrayFromData(jl_Object, [$rt_s(203), jur_AbstractCharClass$LazyRange__init_(42128, 42191)]), $rt_createArrayFromData(jl_Object, [$rt_s(204), jur_AbstractCharClass$LazyRange__init_(42752, 42783)]), $rt_createArrayFromData(jl_Object, [$rt_s(205), jur_AbstractCharClass$LazyRange__init_(43008, 43055)]), $rt_createArrayFromData(jl_Object, [$rt_s(206), jur_AbstractCharClass$LazyRange__init_(44032, 55203)]), $rt_createArrayFromData(jl_Object, [$rt_s(207),
-    jur_AbstractCharClass$LazyRange__init_(55296, 56191)]), $rt_createArrayFromData(jl_Object, [$rt_s(208), jur_AbstractCharClass$LazyRange__init_(56192, 56319)]), $rt_createArrayFromData(jl_Object, [$rt_s(209), jur_AbstractCharClass$LazyRange__init_(56320, 57343)]), $rt_createArrayFromData(jl_Object, [$rt_s(210), jur_AbstractCharClass$LazyRange__init_(57344, 63743)]), $rt_createArrayFromData(jl_Object, [$rt_s(211), jur_AbstractCharClass$LazyRange__init_(63744, 64255)]), $rt_createArrayFromData(jl_Object, [$rt_s(212),
-    jur_AbstractCharClass$LazyRange__init_(64256, 64335)]), $rt_createArrayFromData(jl_Object, [$rt_s(213), jur_AbstractCharClass$LazyRange__init_(64336, 65023)]), $rt_createArrayFromData(jl_Object, [$rt_s(214), jur_AbstractCharClass$LazyRange__init_(65024, 65039)]), $rt_createArrayFromData(jl_Object, [$rt_s(215), jur_AbstractCharClass$LazyRange__init_(65040, 65055)]), $rt_createArrayFromData(jl_Object, [$rt_s(216), jur_AbstractCharClass$LazyRange__init_(65056, 65071)]), $rt_createArrayFromData(jl_Object, [$rt_s(217),
-    jur_AbstractCharClass$LazyRange__init_(65072, 65103)]), $rt_createArrayFromData(jl_Object, [$rt_s(218), jur_AbstractCharClass$LazyRange__init_(65104, 65135)]), $rt_createArrayFromData(jl_Object, [$rt_s(219), jur_AbstractCharClass$LazyRange__init_(65136, 65279)]), $rt_createArrayFromData(jl_Object, [$rt_s(220), jur_AbstractCharClass$LazyRange__init_(65280, 65519)]), $rt_createArrayFromData(jl_Object, [$rt_s(221), jur_AbstractCharClass$LazyRange__init_(0, 1114111)]), $rt_createArrayFromData(jl_Object, [$rt_s(222),
-    jur_AbstractCharClass$LazySpecialsBlock__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(223), jur_AbstractCharClass$LazyCategory__init_(0, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(224), jur_AbstractCharClass$LazyCategoryScope__init_(62, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(225), jur_AbstractCharClass$LazyCategory__init_(1, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(226), jur_AbstractCharClass$LazyCategory__init_(2, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(227), jur_AbstractCharClass$LazyCategory__init_(3,
-    0)]), $rt_createArrayFromData(jl_Object, [$rt_s(228), jur_AbstractCharClass$LazyCategory__init_(4, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(229), jur_AbstractCharClass$LazyCategory__init_(5, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(230), jur_AbstractCharClass$LazyCategoryScope__init_(448, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(231), jur_AbstractCharClass$LazyCategory__init_(6, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(232), jur_AbstractCharClass$LazyCategory__init_(7, 0)]), $rt_createArrayFromData(jl_Object,
-    [$rt_s(233), jur_AbstractCharClass$LazyCategory__init_(8, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(234), jur_AbstractCharClass$LazyCategoryScope__init_(3584, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(235), jur_AbstractCharClass$LazyCategory__init_(9, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(236), jur_AbstractCharClass$LazyCategory__init_(10, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(237), jur_AbstractCharClass$LazyCategory__init_(11, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(238),
-    jur_AbstractCharClass$LazyCategoryScope__init_(28672, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(239), jur_AbstractCharClass$LazyCategory__init_(12, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(240), jur_AbstractCharClass$LazyCategory__init_(13, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(241), jur_AbstractCharClass$LazyCategory__init_(14, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(242), jur_AbstractCharClass$LazyCategoryScope__init_0(983040, 1, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(243),
-    jur_AbstractCharClass$LazyCategory__init_(15, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(244), jur_AbstractCharClass$LazyCategory__init_(16, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(245), jur_AbstractCharClass$LazyCategory__init_(18, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(246), jur_AbstractCharClass$LazyCategory__init_0(19, 0, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(247), jur_AbstractCharClass$LazyCategoryScope__init_(1643118592, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(248),
-    jur_AbstractCharClass$LazyCategory__init_(20, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(249), jur_AbstractCharClass$LazyCategory__init_(21, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(250), jur_AbstractCharClass$LazyCategory__init_(22, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(251), jur_AbstractCharClass$LazyCategory__init_(23, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(252), jur_AbstractCharClass$LazyCategory__init_(24, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(253), jur_AbstractCharClass$LazyCategoryScope__init_(2113929216,
-    1)]), $rt_createArrayFromData(jl_Object, [$rt_s(254), jur_AbstractCharClass$LazyCategory__init_(25, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(255), jur_AbstractCharClass$LazyCategory__init_(26, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(256), jur_AbstractCharClass$LazyCategory__init_(27, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(257), jur_AbstractCharClass$LazyCategory__init_(28, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(258), jur_AbstractCharClass$LazyCategory__init_(29, 0)]), $rt_createArrayFromData(jl_Object,
-    [$rt_s(259), jur_AbstractCharClass$LazyCategory__init_(30, 0)])]);
+    jur_AbstractCharClass$PredefinedCharacterClasses_contents = $rt_createArrayFromData($rt_arraycls(jl_Object), [$rt_createArrayFromData(jl_Object, [$rt_s(68), jur_AbstractCharClass$LazyLower__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(69), jur_AbstractCharClass$LazyUpper__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(70), jur_AbstractCharClass$LazyASCII__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(71), jur_AbstractCharClass$LazyAlpha__init_()]), $rt_createArrayFromData(jl_Object,
+    [$rt_s(72), jur_AbstractCharClass$PredefinedCharacterClasses_digit]), $rt_createArrayFromData(jl_Object, [$rt_s(73), jur_AbstractCharClass$LazyAlnum__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(74), jur_AbstractCharClass$LazyPunct__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(75), jur_AbstractCharClass$LazyGraph__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(76), jur_AbstractCharClass$LazyPrint__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(77), jur_AbstractCharClass$LazyBlank__init_()]),
+    $rt_createArrayFromData(jl_Object, [$rt_s(78), jur_AbstractCharClass$LazyCntrl__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(79), jur_AbstractCharClass$LazyXDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(80), jur_AbstractCharClass$LazyJavaLowerCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(81), jur_AbstractCharClass$LazyJavaUpperCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(82), jur_AbstractCharClass$LazyJavaWhitespace__init_()]), $rt_createArrayFromData(jl_Object,
+    [$rt_s(83), jur_AbstractCharClass$LazyJavaMirrored__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(84), jur_AbstractCharClass$LazyJavaDefined__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(85), jur_AbstractCharClass$LazyJavaDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(86), jur_AbstractCharClass$LazyJavaIdentifierIgnorable__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(87), jur_AbstractCharClass$LazyJavaISOControl__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(88),
+    jur_AbstractCharClass$LazyJavaJavaIdentifierPart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(89), jur_AbstractCharClass$LazyJavaJavaIdentifierStart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(90), jur_AbstractCharClass$LazyJavaLetter__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(91), jur_AbstractCharClass$LazyJavaLetterOrDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(92), jur_AbstractCharClass$LazyJavaSpaceChar__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(93),
+    jur_AbstractCharClass$LazyJavaTitleCase__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(94), jur_AbstractCharClass$LazyJavaUnicodeIdentifierPart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(95), jur_AbstractCharClass$LazyJavaUnicodeIdentifierStart__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(96), jur_AbstractCharClass$PredefinedCharacterClasses_space]), $rt_createArrayFromData(jl_Object, [$rt_s(97), jur_AbstractCharClass$LazyWord__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(98),
+    jur_AbstractCharClass$LazyNonWord__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(99), jur_AbstractCharClass$PredefinedCharacterClasses_space]), $rt_createArrayFromData(jl_Object, [$rt_s(100), jur_AbstractCharClass$LazyNonSpace__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(101), jur_AbstractCharClass$PredefinedCharacterClasses_digit]), $rt_createArrayFromData(jl_Object, [$rt_s(102), jur_AbstractCharClass$LazyNonDigit__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(103), jur_AbstractCharClass$LazyRange__init_(0,
+    127)]), $rt_createArrayFromData(jl_Object, [$rt_s(104), jur_AbstractCharClass$LazyRange__init_(128, 255)]), $rt_createArrayFromData(jl_Object, [$rt_s(105), jur_AbstractCharClass$LazyRange__init_(256, 383)]), $rt_createArrayFromData(jl_Object, [$rt_s(106), jur_AbstractCharClass$LazyRange__init_(384, 591)]), $rt_createArrayFromData(jl_Object, [$rt_s(107), jur_AbstractCharClass$LazyRange__init_(592, 687)]), $rt_createArrayFromData(jl_Object, [$rt_s(108), jur_AbstractCharClass$LazyRange__init_(688, 767)]), $rt_createArrayFromData(jl_Object,
+    [$rt_s(109), jur_AbstractCharClass$LazyRange__init_(768, 879)]), $rt_createArrayFromData(jl_Object, [$rt_s(110), jur_AbstractCharClass$LazyRange__init_(880, 1023)]), $rt_createArrayFromData(jl_Object, [$rt_s(111), jur_AbstractCharClass$LazyRange__init_(1024, 1279)]), $rt_createArrayFromData(jl_Object, [$rt_s(112), jur_AbstractCharClass$LazyRange__init_(1280, 1327)]), $rt_createArrayFromData(jl_Object, [$rt_s(113), jur_AbstractCharClass$LazyRange__init_(1328, 1423)]), $rt_createArrayFromData(jl_Object, [$rt_s(114),
+    jur_AbstractCharClass$LazyRange__init_(1424, 1535)]), $rt_createArrayFromData(jl_Object, [$rt_s(115), jur_AbstractCharClass$LazyRange__init_(1536, 1791)]), $rt_createArrayFromData(jl_Object, [$rt_s(116), jur_AbstractCharClass$LazyRange__init_(1792, 1871)]), $rt_createArrayFromData(jl_Object, [$rt_s(117), jur_AbstractCharClass$LazyRange__init_(1872, 1919)]), $rt_createArrayFromData(jl_Object, [$rt_s(118), jur_AbstractCharClass$LazyRange__init_(1920, 1983)]), $rt_createArrayFromData(jl_Object, [$rt_s(119),
+    jur_AbstractCharClass$LazyRange__init_(2304, 2431)]), $rt_createArrayFromData(jl_Object, [$rt_s(120), jur_AbstractCharClass$LazyRange__init_(2432, 2559)]), $rt_createArrayFromData(jl_Object, [$rt_s(121), jur_AbstractCharClass$LazyRange__init_(2560, 2687)]), $rt_createArrayFromData(jl_Object, [$rt_s(122), jur_AbstractCharClass$LazyRange__init_(2688, 2815)]), $rt_createArrayFromData(jl_Object, [$rt_s(123), jur_AbstractCharClass$LazyRange__init_(2816, 2943)]), $rt_createArrayFromData(jl_Object, [$rt_s(124),
+    jur_AbstractCharClass$LazyRange__init_(2944, 3071)]), $rt_createArrayFromData(jl_Object, [$rt_s(125), jur_AbstractCharClass$LazyRange__init_(3072, 3199)]), $rt_createArrayFromData(jl_Object, [$rt_s(126), jur_AbstractCharClass$LazyRange__init_(3200, 3327)]), $rt_createArrayFromData(jl_Object, [$rt_s(127), jur_AbstractCharClass$LazyRange__init_(3328, 3455)]), $rt_createArrayFromData(jl_Object, [$rt_s(128), jur_AbstractCharClass$LazyRange__init_(3456, 3583)]), $rt_createArrayFromData(jl_Object, [$rt_s(129),
+    jur_AbstractCharClass$LazyRange__init_(3584, 3711)]), $rt_createArrayFromData(jl_Object, [$rt_s(130), jur_AbstractCharClass$LazyRange__init_(3712, 3839)]), $rt_createArrayFromData(jl_Object, [$rt_s(131), jur_AbstractCharClass$LazyRange__init_(3840, 4095)]), $rt_createArrayFromData(jl_Object, [$rt_s(132), jur_AbstractCharClass$LazyRange__init_(4096, 4255)]), $rt_createArrayFromData(jl_Object, [$rt_s(133), jur_AbstractCharClass$LazyRange__init_(4256, 4351)]), $rt_createArrayFromData(jl_Object, [$rt_s(134),
+    jur_AbstractCharClass$LazyRange__init_(4352, 4607)]), $rt_createArrayFromData(jl_Object, [$rt_s(135), jur_AbstractCharClass$LazyRange__init_(4608, 4991)]), $rt_createArrayFromData(jl_Object, [$rt_s(136), jur_AbstractCharClass$LazyRange__init_(4992, 5023)]), $rt_createArrayFromData(jl_Object, [$rt_s(137), jur_AbstractCharClass$LazyRange__init_(5024, 5119)]), $rt_createArrayFromData(jl_Object, [$rt_s(138), jur_AbstractCharClass$LazyRange__init_(5120, 5759)]), $rt_createArrayFromData(jl_Object, [$rt_s(139),
+    jur_AbstractCharClass$LazyRange__init_(5760, 5791)]), $rt_createArrayFromData(jl_Object, [$rt_s(140), jur_AbstractCharClass$LazyRange__init_(5792, 5887)]), $rt_createArrayFromData(jl_Object, [$rt_s(141), jur_AbstractCharClass$LazyRange__init_(5888, 5919)]), $rt_createArrayFromData(jl_Object, [$rt_s(142), jur_AbstractCharClass$LazyRange__init_(5920, 5951)]), $rt_createArrayFromData(jl_Object, [$rt_s(143), jur_AbstractCharClass$LazyRange__init_(5952, 5983)]), $rt_createArrayFromData(jl_Object, [$rt_s(144),
+    jur_AbstractCharClass$LazyRange__init_(5984, 6015)]), $rt_createArrayFromData(jl_Object, [$rt_s(145), jur_AbstractCharClass$LazyRange__init_(6016, 6143)]), $rt_createArrayFromData(jl_Object, [$rt_s(146), jur_AbstractCharClass$LazyRange__init_(6144, 6319)]), $rt_createArrayFromData(jl_Object, [$rt_s(147), jur_AbstractCharClass$LazyRange__init_(6400, 6479)]), $rt_createArrayFromData(jl_Object, [$rt_s(148), jur_AbstractCharClass$LazyRange__init_(6480, 6527)]), $rt_createArrayFromData(jl_Object, [$rt_s(149),
+    jur_AbstractCharClass$LazyRange__init_(6528, 6623)]), $rt_createArrayFromData(jl_Object, [$rt_s(150), jur_AbstractCharClass$LazyRange__init_(6624, 6655)]), $rt_createArrayFromData(jl_Object, [$rt_s(151), jur_AbstractCharClass$LazyRange__init_(6656, 6687)]), $rt_createArrayFromData(jl_Object, [$rt_s(152), jur_AbstractCharClass$LazyRange__init_(7424, 7551)]), $rt_createArrayFromData(jl_Object, [$rt_s(153), jur_AbstractCharClass$LazyRange__init_(7552, 7615)]), $rt_createArrayFromData(jl_Object, [$rt_s(154),
+    jur_AbstractCharClass$LazyRange__init_(7616, 7679)]), $rt_createArrayFromData(jl_Object, [$rt_s(155), jur_AbstractCharClass$LazyRange__init_(7680, 7935)]), $rt_createArrayFromData(jl_Object, [$rt_s(156), jur_AbstractCharClass$LazyRange__init_(7936, 8191)]), $rt_createArrayFromData(jl_Object, [$rt_s(157), jur_AbstractCharClass$LazyRange__init_(8192, 8303)]), $rt_createArrayFromData(jl_Object, [$rt_s(158), jur_AbstractCharClass$LazyRange__init_(8304, 8351)]), $rt_createArrayFromData(jl_Object, [$rt_s(159),
+    jur_AbstractCharClass$LazyRange__init_(8352, 8399)]), $rt_createArrayFromData(jl_Object, [$rt_s(160), jur_AbstractCharClass$LazyRange__init_(8400, 8447)]), $rt_createArrayFromData(jl_Object, [$rt_s(161), jur_AbstractCharClass$LazyRange__init_(8448, 8527)]), $rt_createArrayFromData(jl_Object, [$rt_s(162), jur_AbstractCharClass$LazyRange__init_(8528, 8591)]), $rt_createArrayFromData(jl_Object, [$rt_s(163), jur_AbstractCharClass$LazyRange__init_(8592, 8703)]), $rt_createArrayFromData(jl_Object, [$rt_s(164),
+    jur_AbstractCharClass$LazyRange__init_(8704, 8959)]), $rt_createArrayFromData(jl_Object, [$rt_s(165), jur_AbstractCharClass$LazyRange__init_(8960, 9215)]), $rt_createArrayFromData(jl_Object, [$rt_s(166), jur_AbstractCharClass$LazyRange__init_(9216, 9279)]), $rt_createArrayFromData(jl_Object, [$rt_s(167), jur_AbstractCharClass$LazyRange__init_(9280, 9311)]), $rt_createArrayFromData(jl_Object, [$rt_s(168), jur_AbstractCharClass$LazyRange__init_(9312, 9471)]), $rt_createArrayFromData(jl_Object, [$rt_s(169),
+    jur_AbstractCharClass$LazyRange__init_(9472, 9599)]), $rt_createArrayFromData(jl_Object, [$rt_s(170), jur_AbstractCharClass$LazyRange__init_(9600, 9631)]), $rt_createArrayFromData(jl_Object, [$rt_s(171), jur_AbstractCharClass$LazyRange__init_(9632, 9727)]), $rt_createArrayFromData(jl_Object, [$rt_s(172), jur_AbstractCharClass$LazyRange__init_(9728, 9983)]), $rt_createArrayFromData(jl_Object, [$rt_s(173), jur_AbstractCharClass$LazyRange__init_(9984, 10175)]), $rt_createArrayFromData(jl_Object, [$rt_s(174),
+    jur_AbstractCharClass$LazyRange__init_(10176, 10223)]), $rt_createArrayFromData(jl_Object, [$rt_s(175), jur_AbstractCharClass$LazyRange__init_(10224, 10239)]), $rt_createArrayFromData(jl_Object, [$rt_s(176), jur_AbstractCharClass$LazyRange__init_(10240, 10495)]), $rt_createArrayFromData(jl_Object, [$rt_s(177), jur_AbstractCharClass$LazyRange__init_(10496, 10623)]), $rt_createArrayFromData(jl_Object, [$rt_s(178), jur_AbstractCharClass$LazyRange__init_(10624, 10751)]), $rt_createArrayFromData(jl_Object, [$rt_s(179),
+    jur_AbstractCharClass$LazyRange__init_(10752, 11007)]), $rt_createArrayFromData(jl_Object, [$rt_s(180), jur_AbstractCharClass$LazyRange__init_(11008, 11263)]), $rt_createArrayFromData(jl_Object, [$rt_s(181), jur_AbstractCharClass$LazyRange__init_(11264, 11359)]), $rt_createArrayFromData(jl_Object, [$rt_s(182), jur_AbstractCharClass$LazyRange__init_(11392, 11519)]), $rt_createArrayFromData(jl_Object, [$rt_s(183), jur_AbstractCharClass$LazyRange__init_(11520, 11567)]), $rt_createArrayFromData(jl_Object, [$rt_s(184),
+    jur_AbstractCharClass$LazyRange__init_(11568, 11647)]), $rt_createArrayFromData(jl_Object, [$rt_s(185), jur_AbstractCharClass$LazyRange__init_(11648, 11743)]), $rt_createArrayFromData(jl_Object, [$rt_s(186), jur_AbstractCharClass$LazyRange__init_(11776, 11903)]), $rt_createArrayFromData(jl_Object, [$rt_s(187), jur_AbstractCharClass$LazyRange__init_(11904, 12031)]), $rt_createArrayFromData(jl_Object, [$rt_s(188), jur_AbstractCharClass$LazyRange__init_(12032, 12255)]), $rt_createArrayFromData(jl_Object, [$rt_s(189),
+    jur_AbstractCharClass$LazyRange__init_(12272, 12287)]), $rt_createArrayFromData(jl_Object, [$rt_s(190), jur_AbstractCharClass$LazyRange__init_(12288, 12351)]), $rt_createArrayFromData(jl_Object, [$rt_s(191), jur_AbstractCharClass$LazyRange__init_(12352, 12447)]), $rt_createArrayFromData(jl_Object, [$rt_s(192), jur_AbstractCharClass$LazyRange__init_(12448, 12543)]), $rt_createArrayFromData(jl_Object, [$rt_s(193), jur_AbstractCharClass$LazyRange__init_(12544, 12591)]), $rt_createArrayFromData(jl_Object, [$rt_s(194),
+    jur_AbstractCharClass$LazyRange__init_(12592, 12687)]), $rt_createArrayFromData(jl_Object, [$rt_s(195), jur_AbstractCharClass$LazyRange__init_(12688, 12703)]), $rt_createArrayFromData(jl_Object, [$rt_s(196), jur_AbstractCharClass$LazyRange__init_(12704, 12735)]), $rt_createArrayFromData(jl_Object, [$rt_s(197), jur_AbstractCharClass$LazyRange__init_(12736, 12783)]), $rt_createArrayFromData(jl_Object, [$rt_s(198), jur_AbstractCharClass$LazyRange__init_(12784, 12799)]), $rt_createArrayFromData(jl_Object, [$rt_s(199),
+    jur_AbstractCharClass$LazyRange__init_(12800, 13055)]), $rt_createArrayFromData(jl_Object, [$rt_s(200), jur_AbstractCharClass$LazyRange__init_(13056, 13311)]), $rt_createArrayFromData(jl_Object, [$rt_s(201), jur_AbstractCharClass$LazyRange__init_(13312, 19893)]), $rt_createArrayFromData(jl_Object, [$rt_s(202), jur_AbstractCharClass$LazyRange__init_(19904, 19967)]), $rt_createArrayFromData(jl_Object, [$rt_s(203), jur_AbstractCharClass$LazyRange__init_(19968, 40959)]), $rt_createArrayFromData(jl_Object, [$rt_s(204),
+    jur_AbstractCharClass$LazyRange__init_(40960, 42127)]), $rt_createArrayFromData(jl_Object, [$rt_s(205), jur_AbstractCharClass$LazyRange__init_(42128, 42191)]), $rt_createArrayFromData(jl_Object, [$rt_s(206), jur_AbstractCharClass$LazyRange__init_(42752, 42783)]), $rt_createArrayFromData(jl_Object, [$rt_s(207), jur_AbstractCharClass$LazyRange__init_(43008, 43055)]), $rt_createArrayFromData(jl_Object, [$rt_s(208), jur_AbstractCharClass$LazyRange__init_(44032, 55203)]), $rt_createArrayFromData(jl_Object, [$rt_s(209),
+    jur_AbstractCharClass$LazyRange__init_(55296, 56191)]), $rt_createArrayFromData(jl_Object, [$rt_s(210), jur_AbstractCharClass$LazyRange__init_(56192, 56319)]), $rt_createArrayFromData(jl_Object, [$rt_s(211), jur_AbstractCharClass$LazyRange__init_(56320, 57343)]), $rt_createArrayFromData(jl_Object, [$rt_s(212), jur_AbstractCharClass$LazyRange__init_(57344, 63743)]), $rt_createArrayFromData(jl_Object, [$rt_s(213), jur_AbstractCharClass$LazyRange__init_(63744, 64255)]), $rt_createArrayFromData(jl_Object, [$rt_s(214),
+    jur_AbstractCharClass$LazyRange__init_(64256, 64335)]), $rt_createArrayFromData(jl_Object, [$rt_s(215), jur_AbstractCharClass$LazyRange__init_(64336, 65023)]), $rt_createArrayFromData(jl_Object, [$rt_s(216), jur_AbstractCharClass$LazyRange__init_(65024, 65039)]), $rt_createArrayFromData(jl_Object, [$rt_s(217), jur_AbstractCharClass$LazyRange__init_(65040, 65055)]), $rt_createArrayFromData(jl_Object, [$rt_s(218), jur_AbstractCharClass$LazyRange__init_(65056, 65071)]), $rt_createArrayFromData(jl_Object, [$rt_s(219),
+    jur_AbstractCharClass$LazyRange__init_(65072, 65103)]), $rt_createArrayFromData(jl_Object, [$rt_s(220), jur_AbstractCharClass$LazyRange__init_(65104, 65135)]), $rt_createArrayFromData(jl_Object, [$rt_s(221), jur_AbstractCharClass$LazyRange__init_(65136, 65279)]), $rt_createArrayFromData(jl_Object, [$rt_s(222), jur_AbstractCharClass$LazyRange__init_(65280, 65519)]), $rt_createArrayFromData(jl_Object, [$rt_s(223), jur_AbstractCharClass$LazyRange__init_(0, 1114111)]), $rt_createArrayFromData(jl_Object, [$rt_s(224),
+    jur_AbstractCharClass$LazySpecialsBlock__init_()]), $rt_createArrayFromData(jl_Object, [$rt_s(225), jur_AbstractCharClass$LazyCategory__init_(0, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(226), jur_AbstractCharClass$LazyCategoryScope__init_(62, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(227), jur_AbstractCharClass$LazyCategory__init_(1, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(228), jur_AbstractCharClass$LazyCategory__init_(2, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(229), jur_AbstractCharClass$LazyCategory__init_(3,
+    0)]), $rt_createArrayFromData(jl_Object, [$rt_s(230), jur_AbstractCharClass$LazyCategory__init_(4, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(231), jur_AbstractCharClass$LazyCategory__init_(5, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(232), jur_AbstractCharClass$LazyCategoryScope__init_(448, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(233), jur_AbstractCharClass$LazyCategory__init_(6, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(234), jur_AbstractCharClass$LazyCategory__init_(7, 0)]), $rt_createArrayFromData(jl_Object,
+    [$rt_s(235), jur_AbstractCharClass$LazyCategory__init_(8, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(236), jur_AbstractCharClass$LazyCategoryScope__init_(3584, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(237), jur_AbstractCharClass$LazyCategory__init_(9, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(238), jur_AbstractCharClass$LazyCategory__init_(10, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(239), jur_AbstractCharClass$LazyCategory__init_(11, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(240),
+    jur_AbstractCharClass$LazyCategoryScope__init_(28672, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(241), jur_AbstractCharClass$LazyCategory__init_(12, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(242), jur_AbstractCharClass$LazyCategory__init_(13, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(243), jur_AbstractCharClass$LazyCategory__init_(14, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(244), jur_AbstractCharClass$LazyCategoryScope__init_0(983040, 1, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(245),
+    jur_AbstractCharClass$LazyCategory__init_(15, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(246), jur_AbstractCharClass$LazyCategory__init_(16, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(247), jur_AbstractCharClass$LazyCategory__init_(18, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(248), jur_AbstractCharClass$LazyCategory__init_0(19, 0, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(249), jur_AbstractCharClass$LazyCategoryScope__init_(1643118592, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(250),
+    jur_AbstractCharClass$LazyCategory__init_(20, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(251), jur_AbstractCharClass$LazyCategory__init_(21, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(252), jur_AbstractCharClass$LazyCategory__init_(22, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(253), jur_AbstractCharClass$LazyCategory__init_(23, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(254), jur_AbstractCharClass$LazyCategory__init_(24, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(255), jur_AbstractCharClass$LazyCategoryScope__init_(2113929216,
+    1)]), $rt_createArrayFromData(jl_Object, [$rt_s(256), jur_AbstractCharClass$LazyCategory__init_(25, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(257), jur_AbstractCharClass$LazyCategory__init_(26, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(258), jur_AbstractCharClass$LazyCategory__init_(27, 0)]), $rt_createArrayFromData(jl_Object, [$rt_s(259), jur_AbstractCharClass$LazyCategory__init_(28, 1)]), $rt_createArrayFromData(jl_Object, [$rt_s(260), jur_AbstractCharClass$LazyCategory__init_(29, 0)]), $rt_createArrayFromData(jl_Object,
+    [$rt_s(261), jur_AbstractCharClass$LazyCategory__init_(30, 0)])]);
 }
 function jur_AbstractCharClass$LazyCharClass() {
     var a = this; jl_Object.call(a);
@@ -10143,7 +10216,7 @@ function jur_AbstractCharClass$LazyCategoryScope_computeValue($this) {
 var otjc_JSString = $rt_classWithoutFields();
 function otciu_UnicodeHelper$Range() {
     var a = this; jl_Object.call(a);
-    a.$start4 = 0;
+    a.$start2 = 0;
     a.$end0 = 0;
     a.$data = null;
 }
@@ -10153,7 +10226,7 @@ function otciu_UnicodeHelper$Range__init_(var_0, var_1, var_2) {
     return var_3;
 }
 function otciu_UnicodeHelper$Range__init_0($this, $start, $end, $data) {
-    $this.$start4 = $start;
+    $this.$start2 = $start;
     $this.$end0 = $end;
     $this.$data = $data;
 }
@@ -10359,6 +10432,16 @@ function jur_CharClass$16_contains($this, $ch) {
 }
 var jl_IllegalStateException = $rt_classWithoutFields(jl_Exception);
 var jnc_CoderMalfunctionError = $rt_classWithoutFields(jl_Error);
+function jnc_CoderMalfunctionError__init_(var_0) {
+    var var_1 = new jnc_CoderMalfunctionError();
+    jnc_CoderMalfunctionError__init_0(var_1, var_0);
+    return var_1;
+}
+function jnc_CoderMalfunctionError__init_0($this, $cause) {
+    $this.$suppressionEnabled = 1;
+    $this.$writableStackTrace = 1;
+    $this.$cause = $cause;
+}
 var jur_BackReferencedSingleSet = $rt_classWithoutFields(jur_SingleSet);
 function jur_BackReferencedSingleSet_find($this, $startSearch, $testString, $matchResult) {
     var $res, $lastIndex, $saveStart;
@@ -10455,16 +10538,24 @@ function jur_Matcher_start($this) {
 function jur_Matcher_end($this) {
     return jur_MatchResultImpl_end0($this.$matchResult, 0);
 }
+var otcic_StdoutOutputStream = $rt_classWithoutFields(ji_OutputStream);
+var otcic_StdoutOutputStream_INSTANCE = null;
+function otcic_StdoutOutputStream_write($this, $b) {
+    $rt_putStdout($b);
+}
+function otcic_StdoutOutputStream__clinit_() {
+    otcic_StdoutOutputStream_INSTANCE = new otcic_StdoutOutputStream;
+}
 var jl_UnsupportedOperationException = $rt_classWithoutFields(jl_RuntimeException);
 function jnci_BufferedEncoder$Controller() {
     var a = this; jl_Object.call(a);
     a.$in = null;
-    a.$out0 = null;
+    a.$out1 = null;
     a.$inPosition = 0;
     a.$outPosition = 0;
 }
 function jnci_BufferedEncoder$Controller_hasMoreOutput($this, $sz) {
-    return jn_Buffer_remaining($this.$out0) < $sz ? 0 : 1;
+    return jn_Buffer_remaining($this.$out1) < $sz ? 0 : 1;
 }
 function jur_AbstractCharClass$LazyJavaLowerCase$1() {
     jur_AbstractCharClass.call(this);
@@ -10870,7 +10961,7 @@ jl_LinkageError, 0, jl_Error, [], 0, 3, 0, 0, 0,
 jl_NoClassDefFoundError, 0, jl_LinkageError, [], 0, 3, 0, 0, 0,
 jl_AbstractStringBuilder, 0, jl_Object, [ji_Serializable, jl_CharSequence], 0, 0, 0, 0, ["$ensureCapacity", $rt_wrapFunction1(jl_AbstractStringBuilder_ensureCapacity), "$toString", $rt_wrapFunction0(jl_AbstractStringBuilder_toString)],
 jl_Appendable, 0, jl_Object, [], 3, 3, 0, 0, 0,
-jl_StringBuilder, 0, jl_AbstractStringBuilder, [jl_Appendable], 0, 3, 0, 0, ["$insert1", $rt_wrapFunction4(jl_StringBuilder_insert), "$append1", $rt_wrapFunction3(jl_StringBuilder_append1), "$toString", $rt_wrapFunction0(jl_StringBuilder_toString), "$ensureCapacity", $rt_wrapFunction1(jl_StringBuilder_ensureCapacity), "$insert0", $rt_wrapFunction2(jl_StringBuilder_insert0)],
+jl_StringBuilder, 0, jl_AbstractStringBuilder, [jl_Appendable], 0, 3, 0, 0, ["$insert1", $rt_wrapFunction4(jl_StringBuilder_insert0), "$append1", $rt_wrapFunction3(jl_StringBuilder_append1), "$toString", $rt_wrapFunction0(jl_StringBuilder_toString), "$ensureCapacity", $rt_wrapFunction1(jl_StringBuilder_ensureCapacity), "$insert0", $rt_wrapFunction2(jl_StringBuilder_insert1)],
 jl_Number, 0, jl_Object, [ji_Serializable], 1, 3, 0, 0, 0,
 jl_Integer, 0, jl_Number, [jl_Comparable], 0, 3, 0, 0, 0,
 jl_IncompatibleClassChangeError, 0, jl_LinkageError, [], 0, 3, 0, 0, 0,
@@ -10878,6 +10969,11 @@ jl_NoSuchFieldError, 0, jl_IncompatibleClassChangeError, [], 0, 3, 0, 0, 0,
 jl_NoSuchMethodError, 0, jl_IncompatibleClassChangeError, [], 0, 3, 0, 0, 0,
 jl_Exception, 0, jl_Throwable, [], 0, 3, 0, 0, 0,
 jl_RuntimeException, 0, jl_Exception, [], 0, 3, 0, 0, 0,
+otj_JSObject, 0, jl_Object, [], 3, 3, 0, 0, 0,
+otjdx_Node, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
+otjdx_Document, 0, jl_Object, [otjdx_Node], 3, 3, 0, 0, 0,
+otjde_EventTarget, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
+otjdh_HTMLDocument, 0, jl_Object, [otjdx_Document, otjde_EventTarget], 3, 3, 0, 0, 0,
 g_Game, 0, jl_Object, [], 0, 3, 0, 0, 0,
 gpb_GameLoader$Observer, 0, jl_Object, [], 3, 3, 0, 0, 0,
 gpb_PresentationPhase, 0, jl_Object, [gpb_GameLoader$Observer], 0, 3, 0, 0, 0,
@@ -10885,11 +10981,21 @@ gpb_DownloadObserver, 0, jl_Object, [], 3, 3, 0, 0, 0,
 gpb_TileImageLoader$Observer, 0, jl_Object, [], 3, 3, 0, 0, 0,
 gpb_GameLoader, 0, jl_Object, [gpb_DownloadObserver, gpb_TileImageLoader$Observer], 0, 3, 0, 0, 0,
 otci_IntegerUtil, 0, jl_Object, [], 4, 3, 0, 0, 0,
+otjde_FocusEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
+otjde_MouseEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
+otjde_KeyboardEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
+otjde_LoadEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
+otjde_GamepadEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
+otjb_WindowEventTarget, 0, jl_Object, [otjde_EventTarget, otjde_FocusEventTarget, otjde_MouseEventTarget, otjde_KeyboardEventTarget, otjde_LoadEventTarget, otjde_GamepadEventTarget], 3, 3, 0, 0, 0,
+otjb_StorageProvider, 0, jl_Object, [], 3, 3, 0, 0, 0,
+otjc_JSArrayReader, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
+otjb_Window, 0, jl_Object, [otj_JSObject, otjb_WindowEventTarget, otjb_StorageProvider, otjc_JSArrayReader], 1, 3, 0, 0, ["$addEventListener$exported$0", $rt_wrapFunction2(otjb_Window_addEventListener$exported$0), "$removeEventListener$exported$1", $rt_wrapFunction2(otjb_Window_removeEventListener$exported$1), "$get$exported$2", $rt_wrapFunction1(otjb_Window_get$exported$2), "$removeEventListener$exported$3", $rt_wrapFunction3(otjb_Window_removeEventListener$exported$3), "$dispatchEvent$exported$4", $rt_wrapFunction1(otjb_Window_dispatchEvent$exported$4),
+"$getLength$exported$5", $rt_wrapFunction0(otjb_Window_getLength$exported$5), "$addEventListener$exported$6", $rt_wrapFunction3(otjb_Window_addEventListener$exported$6)],
 jl_Iterable, 0, jl_Object, [], 3, 3, 0, 0, 0,
 ju_Collection, 0, jl_Object, [jl_Iterable], 3, 3, 0, 0, 0,
 ju_AbstractCollection, 0, jl_Object, [ju_Collection], 1, 3, 0, 0, 0,
-ju_List, 0, jl_Object, [ju_Collection], 3, 3, 0, 0, 0,
-ju_AbstractList, 0, ju_AbstractCollection, [ju_List], 1, 3, 0, 0, 0,
+ju_List, 0, jl_Object, [ju_Collection], 3, 3, 0, 0, 0]);
+$rt_metadata([ju_AbstractList, 0, ju_AbstractCollection, [ju_List], 1, 3, 0, 0, 0,
 jl_Cloneable, 0, jl_Object, [], 3, 3, 0, 0, 0,
 ju_RandomAccess, 0, jl_Object, [], 3, 3, 0, 0, 0,
 ju_ArrayList, 0, ju_AbstractList, [jl_Cloneable, ji_Serializable, ju_RandomAccess], 0, 3, 0, 0, 0,
@@ -10900,10 +11006,9 @@ jl_String$_clinit_$lambda$_81_0, 0, jl_Object, [ju_Comparator], 0, 3, 0, 0, 0,
 jl_Character, 0, jl_Object, [jl_Comparable], 0, 3, 0, 0, 0,
 jl_IndexOutOfBoundsException, 0, jl_RuntimeException, [], 0, 3, 0, 0, 0,
 jl_StringIndexOutOfBoundsException, 0, jl_IndexOutOfBoundsException, [], 0, 3, 0, 0, 0,
-otj_JSObject, 0, jl_Object, [], 3, 3, 0, 0, 0,
 otja_ReadyStateChangeHandler, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
-gpb_TileSetLoader, 0, jl_Object, [otja_ReadyStateChangeHandler], 0, 3, 0, 0, ["$stateChanged$exported$0", $rt_wrapFunction0(gpb_TileSetLoader_stateChanged$exported$0)]]);
-$rt_metadata([g_TileMap, 0, jl_Object, [], 0, 3, 0, 0, 0,
+gpb_TileSetLoader, 0, jl_Object, [otja_ReadyStateChangeHandler], 0, 3, 0, 0, ["$stateChanged$exported$0", $rt_wrapFunction0(gpb_TileSetLoader_stateChanged$exported$0)],
+g_TileMap, 0, jl_Object, [], 0, 3, 0, 0, 0,
 gpb_TileMapLoader, 0, jl_Object, [otja_ReadyStateChangeHandler], 0, 3, 0, 0, ["$stateChanged$exported$0", $rt_wrapFunction0(gpb_TileMapLoader_stateChanged$exported$0)],
 otja_XMLHttpRequest, 0, jl_Object, [otj_JSObject], 1, 3, 0, 0, 0,
 jl_Enum, 0, jl_Object, [jl_Comparable, ji_Serializable], 1, 3, 0, 0, 0,
@@ -10926,23 +11031,9 @@ ju_TreeMap, 0, ju_AbstractMap, [jl_Cloneable, ji_Serializable, ju_NavigableMap],
 otjde_EventListener, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
 gpb_TileImageLoader, 0, jl_Object, [otjde_EventListener], 0, 3, 0, 0, ["$handleEvent$exported$0", $rt_wrapFunction1(gpb_TileImageLoader_handleEvent$exported$0)],
 g_IrregularTileLayer, 0, jl_Object, [], 0, 3, 0, 0, 0,
-otjdx_Node, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
-otjdx_Document, 0, jl_Object, [otjdx_Node], 3, 3, 0, 0, 0,
-otjde_EventTarget, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
-otjdh_HTMLDocument, 0, jl_Object, [otjdx_Document, otjde_EventTarget], 3, 3, 0, 0, 0,
-otjde_LoadEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
 jl_IllegalArgumentException, 0, jl_RuntimeException, [], 0, 3, 0, 0, 0,
 jl_NumberFormatException, 0, jl_IllegalArgumentException, [], 0, 3, 0, 0, 0,
 ju_TreeMap$1, 0, jl_Object, [ju_Comparator], 0, 0, 0, 0, 0,
-otjde_FocusEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
-otjde_MouseEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
-otjde_KeyboardEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
-otjde_GamepadEventTarget, 0, jl_Object, [otjde_EventTarget], 3, 3, 0, 0, 0,
-otjb_WindowEventTarget, 0, jl_Object, [otjde_EventTarget, otjde_FocusEventTarget, otjde_MouseEventTarget, otjde_KeyboardEventTarget, otjde_LoadEventTarget, otjde_GamepadEventTarget], 3, 3, 0, 0, 0,
-otjb_StorageProvider, 0, jl_Object, [], 3, 3, 0, 0, 0,
-otjc_JSArrayReader, 0, jl_Object, [otj_JSObject], 3, 3, 0, 0, 0,
-otjb_Window, 0, jl_Object, [otj_JSObject, otjb_WindowEventTarget, otjb_StorageProvider, otjc_JSArrayReader], 1, 3, 0, 0, ["$addEventListener$exported$0", $rt_wrapFunction2(otjb_Window_addEventListener$exported$0), "$removeEventListener$exported$1", $rt_wrapFunction2(otjb_Window_removeEventListener$exported$1), "$get$exported$2", $rt_wrapFunction1(otjb_Window_get$exported$2), "$removeEventListener$exported$3", $rt_wrapFunction3(otjb_Window_removeEventListener$exported$3), "$dispatchEvent$exported$4", $rt_wrapFunction1(otjb_Window_dispatchEvent$exported$4),
-"$getLength$exported$5", $rt_wrapFunction0(otjb_Window_getLength$exported$5), "$addEventListener$exported$6", $rt_wrapFunction3(otjb_Window_addEventListener$exported$6)],
 gm_Matrix, 0, jl_Object, [], 0, 3, 0, 0, 0,
 jl_CloneNotSupportedException, 0, jl_Exception, [], 0, 3, 0, 0, 0,
 otpp_ResourceAccessor, 0, jl_Object, [], 4, 0, 0, 0, 0,
@@ -10971,7 +11062,7 @@ ji_Flushable, 0, jl_Object, [], 3, 3, 0, 0, 0,
 ji_OutputStream, 0, jl_Object, [ji_Closeable, ji_Flushable], 1, 3, 0, 0, 0,
 ji_FilterOutputStream, 0, ji_OutputStream, [], 0, 3, 0, 0, 0,
 ji_PrintStream, 0, ji_FilterOutputStream, [], 0, 3, 0, 0, 0,
-otcic_StderrOutputStream, 0, ji_OutputStream, [], 0, 3, 0, 0, 0,
+otcic_StderrOutputStream, 0, ji_OutputStream, [], 0, 3, 0, 0, ["$write", $rt_wrapFunction1(otcic_StderrOutputStream_write)],
 g_GameRenderer, 0, jl_Object, [], 0, 3, 0, 0, 0,
 g_RenderCommandQueue, 0, jl_Object, [], 0, 3, 0, 0, 0,
 jl_NullPointerException, 0, jl_RuntimeException, [], 0, 3, 0, 0, 0,
@@ -11159,6 +11250,7 @@ jnc_CoderMalfunctionError, 0, jl_Error, [], 0, 3, 0, 0, 0,
 jur_BackReferencedSingleSet, 0, jur_SingleSet, [], 0, 0, 0, 0, ["$find0", $rt_wrapFunction3(jur_BackReferencedSingleSet_find), "$findBack", $rt_wrapFunction4(jur_BackReferencedSingleSet_findBack), "$processBackRefReplacement", $rt_wrapFunction0(jur_BackReferencedSingleSet_processBackRefReplacement)],
 jur_MatchResult, 0, jl_Object, [], 3, 3, 0, 0, 0,
 jur_Matcher, 0, jl_Object, [jur_MatchResult], 4, 3, 0, 0, 0,
+otcic_StdoutOutputStream, 0, ji_OutputStream, [], 0, 3, 0, 0, ["$write", $rt_wrapFunction1(otcic_StdoutOutputStream_write)],
 jl_UnsupportedOperationException, 0, jl_RuntimeException, [], 0, 3, 0, 0, 0,
 jnci_BufferedEncoder$Controller, 0, jl_Object, [], 0, 3, 0, 0, 0,
 jur_AbstractCharClass$LazyJavaLowerCase$1, "AbstractCharClass$LazyJavaLowerCase$1", 2, jur_AbstractCharClass, [], 0, 0, 0, 0, ["$contains", $rt_wrapFunction1(jur_AbstractCharClass$LazyJavaLowerCase$1_contains)],
@@ -11215,8 +11307,8 @@ $rt_setCloneMethod($rt_array.prototype, function() {
     }
     return new $rt_array(this.type, dataCopy);
 });
-$rt_stringPool(["@", "0", "WEB-INF/classes/", "Patter is null", "", "null", "String contains invalid digits: ", "String contains digits out of radix ", ": ", "The value is too big for int type: ", "String is null or empty", "Illegal radix: ", "grassy_plains.tmx", "house_interior.tmx", "village.tmx", "UTF-8", "Index out of bounds", "Action must be non-null", "../textures/", "Failed to download tile set (", ")", "Failed to download tile map (", "Failed to get resposne XML", "tile", "image", "source", "objectgroup",
-"id", "object", "polygon", "Failed to get XML response", "layer", "data", "encoding", "csv", "chunk", "x", "y", "width", "height", "Unsupported layer encoding", "TILE_MAP", "TILE_SET", "points", " ", ",", "Either src or dest is null", "New position ", " is outside of range [0;", "]", "The last byte in src ", " is outside of array of size ", "Length ", " must be non-negative", "Offset ", "IGNORE", "REPLACE", "REPORT", "Replacement preconditions do not hold", "BIG_ENDIAN", "LITTLE_ENDIAN", "The last char in dst ",
+$rt_stringPool(["@", "0", "WEB-INF/classes/", "Patter is null", "", "null", "String contains invalid digits: ", "String contains digits out of radix ", ": ", "The value is too big for int type: ", "String is null or empty", "Illegal radix: ", "grassy_plains.tmx", "house_interior.tmx", "village.tmx", "../textures/", "Failed to download tile set (", ")", "Failed to download tile map (", "Failed to get resposne XML", "tile", "image", "source", "objectgroup", "id", "object", "polygon", "Failed to get XML response",
+"layer", "data", "encoding", "csv", "chunk", "x", "y", "width", "height", "Unsupported layer encoding", "TILE_MAP", "TILE_SET", "points", " ", ",", "Either src or dest is null", "UTF-8", "Index out of bounds", "Action must be non-null", "Replacement preconditions do not hold", "New position ", " is outside of range [0;", "]", "The last byte in src ", " is outside of array of size ", "Length ", " must be non-negative", "Offset ", "IGNORE", "REPLACE", "REPORT", "BIG_ENDIAN", "LITTLE_ENDIAN", "rgba(", ", ", "The last char in dst ",
 "Is", "In", "{", "}", "Lower", "Upper", "ASCII", "Alpha", "Digit", "Alnum", "Punct", "Graph", "Print", "Blank", "Cntrl", "XDigit", "javaLowerCase", "javaUpperCase", "javaWhitespace", "javaMirrored", "javaDefined", "javaDigit", "javaIdentifierIgnorable", "javaISOControl", "javaJavaIdentifierPart", "javaJavaIdentifierStart", "javaLetter", "javaLetterOrDigit", "javaSpaceChar", "javaTitleCase", "javaUnicodeIdentifierPart", "javaUnicodeIdentifierStart", "Space", "w", "W", "s", "S", "d", "D", "BasicLatin", "Latin-1Supplement",
 "LatinExtended-A", "LatinExtended-B", "IPAExtensions", "SpacingModifierLetters", "CombiningDiacriticalMarks", "Greek", "Cyrillic", "CyrillicSupplement", "Armenian", "Hebrew", "Arabic", "Syriac", "ArabicSupplement", "Thaana", "Devanagari", "Bengali", "Gurmukhi", "Gujarati", "Oriya", "Tamil", "Telugu", "Kannada", "Malayalam", "Sinhala", "Thai", "Lao", "Tibetan", "Myanmar", "Georgian", "HangulJamo", "Ethiopic", "EthiopicSupplement", "Cherokee", "UnifiedCanadianAboriginalSyllabics", "Ogham", "Runic", "Tagalog",
 "Hanunoo", "Buhid", "Tagbanwa", "Khmer", "Mongolian", "Limbu", "TaiLe", "NewTaiLue", "KhmerSymbols", "Buginese", "PhoneticExtensions", "PhoneticExtensionsSupplement", "CombiningDiacriticalMarksSupplement", "LatinExtendedAdditional", "GreekExtended", "GeneralPunctuation", "SuperscriptsandSubscripts", "CurrencySymbols", "CombiningMarksforSymbols", "LetterlikeSymbols", "NumberForms", "Arrows", "MathematicalOperators", "MiscellaneousTechnical", "ControlPictures", "OpticalCharacterRecognition", "EnclosedAlphanumerics",
@@ -11776,12 +11868,6 @@ function $rt_invalidPointer() {
 main = $rt_mainStarter(gpb_Client_main);
 (function() {
     var c;
-    c = gpb_TileSetLoader.prototype;
-    c.stateChanged = c.$stateChanged$exported$0;
-    c = gpb_TileMapLoader.prototype;
-    c.stateChanged = c.$stateChanged$exported$0;
-    c = gpb_TileImageLoader.prototype;
-    c.handleEvent = c.$handleEvent$exported$0;
     c = otjb_Window.prototype;
     c.dispatchEvent = c.$dispatchEvent$exported$4;
     c.addEventListener = c.$addEventListener$exported$0;
@@ -11790,6 +11876,12 @@ main = $rt_mainStarter(gpb_Client_main);
     c.get = c.$get$exported$2;
     c.addEventListener = c.$addEventListener$exported$6;
     c.removeEventListener = c.$removeEventListener$exported$3;
+    c = gpb_TileSetLoader.prototype;
+    c.stateChanged = c.$stateChanged$exported$0;
+    c = gpb_TileMapLoader.prototype;
+    c.stateChanged = c.$stateChanged$exported$0;
+    c = gpb_TileImageLoader.prototype;
+    c.handleEvent = c.$handleEvent$exported$0;
 })();
 })();
 

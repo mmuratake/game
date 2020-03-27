@@ -15,9 +15,13 @@ import game.math.Rect;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import java.awt.Color;
+
 import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLImageElement;
+
+import org.teavm.jso.browser.Window;
 
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
 import org.teavm.jso.canvas.CanvasImageSource;
@@ -54,11 +58,11 @@ public class GameView implements RenderCommandVisitor {
 
     this.game = game;
 
-    this.canvas = (HTMLCanvasElement) document.createElement("canvas");
+    Window window = Window.current();
 
-    /* TODO : size to fill window */
-    this.canvas.setWidth(640);
-    this.canvas.setHeight(480);
+    this.canvas = (HTMLCanvasElement) document.createElement("canvas");
+    this.canvas.setWidth(window.getInnerWidth());
+    this.canvas.setHeight(window.getInnerHeight());
 
     this.context = (CanvasRenderingContext2D) this.canvas.getContext("2d");
 
@@ -93,13 +97,44 @@ public class GameView implements RenderCommandVisitor {
 
     Rect<Integer> targetArea = drawTileCommand.getRect();
 
+    double x_scale = 1;
+    double y_scale = 1;
+
+    double angle = 0;
+
+    int x_offset = 0;
+    int y_offset = 0;
+
     long tileID = drawTileCommand.getTileID();
 
-    this.context.drawImage(images.get((int) TileID.toIndex(tileID)),
-                           targetArea.getX(),
-                           targetArea.getY(),
-                           targetArea.getWidth(),
-                           targetArea.getHeight());
+    int tileIndex = (int) TileID.toIndex(tileID);
+
+    if (TileID.isFlippedDiagonally(tileID)) {
+      angle = -(Math.PI / 2);
+      y_scale *= -1;
+    }
+
+    if (TileID.isFlippedHorizontally(tileID)) {
+      x_scale *= -1;
+      x_offset = -targetArea.getWidth();
+    }
+
+    if (TileID.isFlippedVertically(tileID)) {
+      y_scale *= -1;
+      y_offset = -targetArea.getWidth();
+    }
+
+    this.context.save();
+
+    this.context.translate(targetArea.getX(), targetArea.getY());
+
+    this.context.scale(x_scale, y_scale);
+
+    this.context.rotate(angle);
+
+    this.context.drawImage(images.get(tileIndex), x_offset, y_offset);
+
+    this.context.restore();
   }
 
   /** Fills a rectangle on the canvas with a specified color.
@@ -108,5 +143,30 @@ public class GameView implements RenderCommandVisitor {
    * */
   @Override
   public void visit(FillRectCommand fillRectCommand) {
+
+    Color color = fillRectCommand.getColor();
+
+    Rect<Integer> area = fillRectCommand.getRect();
+
+    String fillStyle = "rgba(";
+    fillStyle += color.getRed();
+    fillStyle += ", ";
+    fillStyle += color.getGreen();
+    fillStyle += ", ";
+    fillStyle += color.getBlue();
+    fillStyle += ", ";
+    fillStyle += color.getAlpha();
+    fillStyle += ")";
+
+    System.out.println(fillStyle);
+    System.out.println(area.getWidth());
+    System.out.println(area.getHeight());
+
+    //this.context.setFillStyle(fillStyle);
+
+    this.context.fillRect(area.getX(),
+                          area.getY(),
+                          area.getWidth(),
+                          area.getHeight());
   }
 }

@@ -27,7 +27,7 @@ public class TileID {
   final static long firstGID = 1L;
 
   /** Indicates whether or not a tile is flipped diagonally.
-   * @param tileID The ID of the tile to check for horizontal flipping.
+   * @param tileID The ID of the tile to check for diagonal flipping.
    * @return True if the tile is diagonally flipped, false otherwise.
    * */
   public static boolean isFlippedDiagonally(long tileID) {
