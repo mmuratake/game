@@ -15,9 +15,13 @@ import game.math.Rect;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import java.awt.Color;
+
 import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLImageElement;
+
+import org.teavm.jso.browser.Window;
 
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
 import org.teavm.jso.canvas.CanvasImageSource;
@@ -54,11 +58,11 @@ public class GameView implements RenderCommandVisitor {
 
     this.game = game;
 
-    this.canvas = (HTMLCanvasElement) document.createElement("canvas");
+    Window window = Window.current();
 
-    /* TODO : size to fill window */
-    this.canvas.setWidth(640);
-    this.canvas.setHeight(480);
+    this.canvas = (HTMLCanvasElement) document.createElement("canvas");
+    this.canvas.setWidth(window.getInnerWidth());
+    this.canvas.setHeight(window.getInnerHeight());
 
     this.context = (CanvasRenderingContext2D) this.canvas.getContext("2d");
 
@@ -108,5 +112,30 @@ public class GameView implements RenderCommandVisitor {
    * */
   @Override
   public void visit(FillRectCommand fillRectCommand) {
+
+    Color color = fillRectCommand.getColor();
+
+    Rect<Integer> area = fillRectCommand.getRect();
+
+    String fillStyle = "rgba(";
+    fillStyle += color.getRed();
+    fillStyle += ", ";
+    fillStyle += color.getGreen();
+    fillStyle += ", ";
+    fillStyle += color.getBlue();
+    fillStyle += ", ";
+    fillStyle += color.getAlpha();
+    fillStyle += ")";
+
+    System.out.println(fillStyle);
+    System.out.println(area.getWidth());
+    System.out.println(area.getHeight());
+
+    //this.context.setFillStyle(fillStyle);
+
+    this.context.fillRect(area.getX(),
+                          area.getY(),
+                          area.getWidth(),
+                          area.getHeight());
   }
 }
