@@ -97,13 +97,44 @@ public class GameView implements RenderCommandVisitor {
 
     Rect<Integer> targetArea = drawTileCommand.getRect();
 
+    double x_scale = 1;
+    double y_scale = 1;
+
+    double angle = 0;
+
+    int x_offset = 0;
+    int y_offset = 0;
+
     long tileID = drawTileCommand.getTileID();
 
-    this.context.drawImage(images.get((int) TileID.toIndex(tileID)),
-                           targetArea.getX(),
-                           targetArea.getY(),
-                           targetArea.getWidth(),
-                           targetArea.getHeight());
+    int tileIndex = (int) TileID.toIndex(tileID);
+
+    if (TileID.isFlippedDiagonally(tileID)) {
+      angle = -(Math.PI / 2);
+      y_scale *= -1;
+    }
+
+    if (TileID.isFlippedHorizontally(tileID)) {
+      x_scale *= -1;
+      x_offset = -targetArea.getWidth();
+    }
+
+    if (TileID.isFlippedVertically(tileID)) {
+      y_scale *= -1;
+      y_offset = -targetArea.getWidth();
+    }
+
+    this.context.save();
+
+    this.context.translate(targetArea.getX(), targetArea.getY());
+
+    this.context.scale(x_scale, y_scale);
+
+    this.context.rotate(angle);
+
+    this.context.drawImage(images.get(tileIndex), x_offset, y_offset);
+
+    this.context.restore();
   }
 
   /** Fills a rectangle on the canvas with a specified color.
