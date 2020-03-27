@@ -26,6 +26,94 @@ import org.teavm.jso.browser.Window;
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
 import org.teavm.jso.canvas.CanvasImageSource;
 
+import org.teavm.jso.dom.events.EventListener;
+import org.teavm.jso.dom.events.KeyboardEvent;
+
+/** Represents the axis of a controller.
+ * In this case, the controller is the keyboard.
+ * */
+class ControlAxis {
+  /** The X value of the control axis. */
+  double x;
+  /** The Y value of the control axis. */
+  double y;
+  /// Constructs a new control axis instance.
+  public ControlAxis() {
+    x = 0;
+    y = 0;
+  }
+  public double getX() { return x; }
+  public double getY() { return y; }
+  public void setX(double x) { this.x = x; }
+  public void setY(double y) { this.y = y; }
+}
+
+/** Used for handling keyboard events.
+ * These are usually interpreted as game controls.
+ * */
+class KeyListener implements EventListener<KeyboardEvent> {
+
+  /** The game to pass the controls to. */
+  private Game game;
+
+  /** The key state that this listener is for. */
+  private boolean keyState;
+
+  /** The control axis to modify. */
+  private ControlAxis axis;
+
+  /** Constructs a new keyboard listener.
+   * @param game The game instance to pass the controls to.
+   * @param keyState The key state that this key listener is for.
+   * True indicates it's for key press events, false indicates
+   * it's for key release events.
+   * */
+  public KeyListener(Game game, ControlAxis axis, boolean keyState) {
+    this.game = game;
+    this.keyState = keyState;
+    this.axis = axis;
+  }
+
+  /** Handles a keyboard event.
+   * The controls, if the key matches,
+   * are passed to the game for processing. */
+  @Override
+  public void handleEvent(KeyboardEvent event) {
+
+    double x = axis.getX();
+    double y = axis.getY();
+
+    switch (event.getKeyCode()) {
+      case 65: /* A */
+      case 37: /* Arrow Left */
+        x = keyState ? -1 : 0;
+        break;
+      case 87: /* W */
+      case 38: /* Arrow Up */
+        y = keyState ? 1 : 0;
+        break;
+      case 68: /* D */
+      case 39: /* Arrow Right */
+        x = keyState ? 1 : 0;
+        break;
+      case 83: /* S */
+      case 40: /* Arrow Down */
+        y = keyState ? -1 : 0;
+        break;
+    }
+
+    if ((x == axis.getX()) && (y == axis.getY())) {
+      // No change
+      return;
+    }
+
+    axis.setX(x);
+    axis.setY(y);
+
+    game.axisUpdate(0, x, y);
+  }
+}
+
 /** This class provides a view of the game.
  * Internally, it creates a 'canvas' HTML element
  * for the game to be drawn with.
@@ -50,6 +138,15 @@ public class GameView implements RenderCommandVisitor {
   /** The render commands used to describe the scene. */
   private RenderCommandQueue renderCmdQueue;
 
+  /** The controller axis. */
+  private ControlAxis controlAxis;
+
+  /** The key release listener, affecting the game controls. */
+  private KeyListener keyReleaseListener;
+
+  /** The key press listener, affecting the game controls. */
+  private KeyListener keyPressListener;
+
   /** Constructs a new game view instance.
    * @param game The game to be viewed.
    * @param document The document to add the game view to.
@@ -57,6 +154,14 @@ public class GameView implements RenderCommandVisitor {
   public GameView(Game game, TreeMap<Integer, HTMLImageElement> images, HTMLDocument document) {
 
     this.game = game;
+
+    this.controlAxis = new ControlAxis();
+
+    this.keyReleaseListener = new KeyListener(game, this.controlAxis, false);
+    this.keyPressListener = new KeyListener(game, this.controlAxis, true);
+
+    document.getBody().addEventListener("keydown", this.keyPressListener);
+    document.getBody().addEventListener("keyup", this.keyReleaseListener);
 
     Window window = Window.current();
 
@@ -68,7 +173,6 @@ public class GameView implements RenderCommandVisitor {
 
     this.images = images;
 
-    // Breaks the build
     this.gameRenderer = new GameRenderer();
 
     this.renderCmdQueue = new RenderCommandQueue();
@@ -157,10 +261,6 @@ public class GameView implements RenderCommandVisitor {
     fillStyle += ", ";
     fillStyle += color.getAlpha();
     fillStyle += ")";
-
-    System.out.println(fillStyle);
-    System.out.println(area.getWidth());
-    System.out.println(area.getHeight());
 
     //this.context.setFillStyle(fillStyle);
 
