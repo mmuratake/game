@@ -5,6 +5,9 @@ import game.Game;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import org.teavm.jso.browser.AnimationFrameCallback;
+import org.teavm.jso.browser.Window;
+
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLElement;
 import org.teavm.jso.dom.html.HTMLImageElement;
@@ -33,9 +36,9 @@ public class PresentationPhase implements GameLoader.Observer {
 
     HTMLDocument document = HTMLDocument.current();
 
-    GameView gameView = new GameView(game, images, document);
+    Window window = Window.current();
 
-    gameView.render();
+    window.requestAnimationFrame(new GameView(game, images, document));
   }
 
   /** Handles the case of an error occuring while loading the game.
