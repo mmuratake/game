@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.1" name="house_interior" tilewidth="400" tileheight="400" tilecount="17" columns="0">
+<tileset version="1.2" tiledversion="1.3.1" name="house_interior" tilewidth="400" tileheight="400" tilecount="20" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="100" height="100" source="../textures/house_interior/concave_corner.png"/>
@@ -66,5 +66,14 @@
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="100" height="82"/>
   </objectgroup>
+ </tile>
+ <tile id="22">
+  <image width="100" height="100" source="../textures/house_interior/bed2.png"/>
+ </tile>
+ <tile id="23">
+  <image width="100" height="101" source="../textures/house_interior/window.png"/>
+ </tile>
+ <tile id="24">
+  <image width="100" height="100" source="../textures/house_interior/tableP.png"/>
  </tile>
 </tileset>
