@@ -21,6 +21,7 @@ import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
 import org.teavm.jso.dom.html.HTMLImageElement;
 
+import org.teavm.jso.browser.AnimationFrameCallback;
 import org.teavm.jso.browser.Window;
 
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
@@ -90,7 +91,7 @@ class KeyListener implements EventListener<KeyboardEvent> {
         break;
       case 87: /* W */
       case 38: /* Arrow Up */
-        y = keyState ? 1 : 0;
+        y = keyState ? -1 : 0;
         break;
       case 68: /* D */
       case 39: /* Arrow Right */
@@ -98,7 +99,7 @@ class KeyListener implements EventListener<KeyboardEvent> {
         break;
       case 83: /* S */
       case 40: /* Arrow Down */
-        y = keyState ? -1 : 0;
+        y = keyState ? 1 : 0;
         break;
     }
 
@@ -118,7 +119,7 @@ class KeyListener implements EventListener<KeyboardEvent> {
  * Internally, it creates a 'canvas' HTML element
  * for the game to be drawn with.
  * */
-public class GameView implements RenderCommandVisitor {
+public class GameView implements RenderCommandVisitor, AnimationFrameCallback {
 
   /** The game being viewed. */
   private Game game;
@@ -146,6 +147,9 @@ public class GameView implements RenderCommandVisitor {
 
   /** The key press listener, affecting the game controls. */
   private KeyListener keyPressListener;
+
+  /** The timestamp of the last rendered frame. */
+  private double lastTimestamp;
 
   /** Constructs a new game view instance.
    * @param game The game to be viewed.
@@ -178,6 +182,8 @@ public class GameView implements RenderCommandVisitor {
     this.renderCmdQueue = new RenderCommandQueue();
 
     document.getBody().appendChild(canvas);
+
+    this.lastTimestamp = -1;
   }
 
   /** Renders the game to the canvas. */
@@ -201,42 +207,30 @@ public class GameView implements RenderCommandVisitor {
 
     Rect<Integer> targetArea = drawTileCommand.getRect();
 
-    double x_scale = 1;
-    double y_scale = 1;
-
-    double angle = 0;
-
-    int x_offset = 0;
-    int y_offset = 0;
-
     long tileID = drawTileCommand.getTileID();
 
     int tileIndex = (int) TileID.toIndex(tileID);
-
-    if (TileID.isFlippedDiagonally(tileID)) {
-      angle = -(Math.PI / 2);
-      y_scale *= -1;
-    }
-
-    if (TileID.isFlippedHorizontally(tileID)) {
-      x_scale *= -1;
-      x_offset = -targetArea.getWidth();
-    }
-
-    if (TileID.isFlippedVertically(tileID)) {
-      y_scale *= -1;
-      y_offset = -targetArea.getWidth();
-    }
 
     this.context.save();
 
     this.context.translate(targetArea.getX(), targetArea.getY());
 
-    this.context.scale(x_scale, y_scale);
+    if (TileID.isFlippedHorizontally(tileID)) {
+      this.context.scale(-1, 1);
+      this.context.translate(-targetArea.getWidth(), 0);
+    }
 
-    this.context.rotate(angle);
+    if (TileID.isFlippedHorizontally(tileID)) {
+      this.context.scale(1, -1);
+      this.context.translate(0, -targetArea.getHeight());
+    }
 
-    this.context.drawImage(images.get(tileIndex), x_offset, y_offset);
+    if (TileID.isFlippedDiagonally(tileID)) {
+      this.context.rotate(-Math.PI / 2.0);
+      this.context.translate(-targetArea.getWidth(), 0);
+    }
+
+    this.context.drawImage(images.get(tileIndex), 0, 0);
 
     this.context.restore();
   }
@@ -268,5 +262,25 @@ public class GameView implements RenderCommandVisitor {
                           area.getY(),
                           area.getWidth(),
                           area.getHeight());
+  }
+
+  /** Called when the browser requests a new animation frame.
+   * @param timestamp The number of timestamp of the current frame.
+   * */
+  @Override
+  public void onAnimationFrame(double timestamp) {
+
+    // Handles the case of the first timestamp
+    if (this.lastTimestamp >= 0) {
+      this.game.advance((int) (timestamp - this.lastTimestamp));
+    }
+
+    this.lastTimestamp = timestamp;
+
+    this.render();
+
+    Window window = Window.current();
+
+    window.requestAnimationFrame(this);
   }
 }
