@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.3.1" name="house_interior" tilewidth="400" tileheight="400" tilecount="20" columns="0">
+<tileset version="1.2" tiledversion="1.3.1" name="house_interior" tilewidth="100" tileheight="101" tilecount="19" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="100" height="100" source="../textures/house_interior/concave_corner.png"/>
@@ -39,9 +39,6 @@
  </tile>
  <tile id="14">
   <image width="100" height="100" source="../textures/templates/todo.png"/>
- </tile>
- <tile id="16">
-  <image width="400" height="400" source="../textures/characters/fairy.gif"/>
  </tile>
  <tile id="17">
   <image width="100" height="100" source="../textures/house_interior/bed.png"/>
