@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://characters/eman/Eman.tscn" type="PackedScene" id=1]
+[ext_resource path="res://levels/State.gd" type="Script" id=34]
+[ext_resource path="res://levels/Global.gd" type="Script" id=35]
+
+[node name="Root" type="Node2D"]
+script = ExtResource( 35 )
+
+[node name="State" type="Node" parent="."]
+script = ExtResource( 34 )
+
+[node name="Eman" parent="." instance=ExtResource( 1 )]

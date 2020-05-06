@@ -3,6 +3,8 @@
 set -e
 set -u
 
+exit 0
+
 if [ "$TRAVIS_REPO_SLUG" != "tay10r/game" ]; then
   echo "Skipping documentation, invalid repo slug"
   exit 0

@@ -1,6 +1,5 @@
 dist: bionic
 sudo: false
 os: linux
-language: java
 script: ci/build.sh
 after_success: ci/deploy.sh
